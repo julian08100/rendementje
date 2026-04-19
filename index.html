@@ -9,11 +9,17 @@
         :root { --brand-green: #2ecc71; }
         .bg-brand { background-color: var(--brand-green); }
         .text-brand { color: var(--brand-green); }
-        
-        /* Language Logic */
+
+        /* Logic: Hide NL by default, show EN */
         .nl { display: none; }
+        .en { display: inline; }
+
+        /* Logic: When 'show-dutch' class is on body, swap them */
         body.show-dutch .en { display: none; }
-        body.show-dutch .nl { display: inline-block; }
+        body.show-dutch .nl { display: inline; }
+        
+        /* Ensure block elements stay block when shown */
+        body.show-dutch h1.nl, body.show-dutch h3.nl, body.show-dutch p.nl { display: block; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased">
@@ -23,9 +29,9 @@
             <img src="AppIcon.jpg" alt="Logo" class="w-10 h-10 rounded-xl shadow-sm">
             <span class="text-2xl font-bold tracking-tight text-gray-900">Rendementje</span>
         </div>
-        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-full hover:bg-gray-100 transition">
-            <span class="en">Nederlands</span>
-            <span class="nl">English</span>
+        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-100 transition shadow-sm">
+            <span class="en">🇳l Nederlands</span>
+            <span class="nl">🇬🇧 English</span>
         </button>
     </nav>
 
@@ -88,7 +94,7 @@
             localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
         }
 
-        // Run detection on load
+        // Auto-detect browser or saved preference
         (function() {
             const savedLang = localStorage.getItem('preferredLang');
             const browserLang = navigator.language || navigator.userLanguage;
