@@ -92,10 +92,20 @@
         }
 
         function toggleLanguage() {
-            const current = document.documentElement.lang;
-            setLanguage(current === 'en' ? 'nl' : 'en');
-        }
+        document.body.classList.toggle('show-dutch');
+        const isDutch = document.body.classList.contains('show-dutch');
+        localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
+    }
 
+    // Auto-detect on load
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedLang = localStorage.getItem('preferredLang');
+        const browserLang = navigator.language || navigator.userLanguage;
+        
+        if (savedLang === 'nl' || (!savedLang && browserLang.startsWith('nl'))) {
+            document.body.classList.add('show-dutch');
+        }
+    });
         // Auto-detect browser language
         const userLang = navigator.language || navigator.userLanguage;
         if (userLang.startsWith('nl')) {
@@ -104,5 +114,19 @@
             setLanguage('en');
         }
     </script>
+    <style>
+    :root { --brand-green: #2ecc71; }
+    .bg-brand { background-color: var(--brand-green); }
+    .text-brand { color: var(--brand-green); }
+    
+    /* Hide NL by default, show EN */
+    .lang-nl { display: none; }
+    
+    /* When the body has the 'show-dutch' class, swap them */
+    body.show-dutch .lang-en { display: none; }
+    body.show-dutch .lang-nl { display: block; }
+    /* Handle inline spans too */
+    body.show-dutch span.lang-nl { display: inline; }
+</style>
 </body>
 </html>
