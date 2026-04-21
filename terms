@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - Rendementje</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --brand-green: #2ecc71; }
+        .bg-brand { background-color: var(--brand-green); }
+        .text-brand { color: var(--brand-green); }
+
+        .nl { display: none; }
+        .en { display: inline; }
+
+        body.show-dutch .en { display: none; }
+        body.show-dutch .nl { display: inline; }
+        
+        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl, body.show-dutch p.nl, body.show-dutch div.nl { display: block; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased text-gray-900">
+
+    <nav class="p-6 flex justify-between items-center max-w-4xl mx-auto">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
+            <img src="AppIcon.png" alt="Logo" class="w-8 h-8 rounded-lg shadow-sm">
+            <span class="text-xl font-bold tracking-tight">Rendementje</span>
+        </a>
+        <button onclick="toggleLanguage()" class="text-xs font-medium border border-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 transition shadow-sm">
+            <span class="en">🇳l Nederlands</span>
+            <span class="nl">🇬🇧 English</span>
+        </button>
+    </nav>
+
+    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
+        <div class="bg-white rounded-3xl p-8 md:p-16 shadow-sm border border-gray-100">
+            
+            <header class="mb-12 text-center md:text-left">
+                <h1 class="text-4xl font-extrabold mb-4">
+                    <span class="en">Terms of Service</span>
+                    <span class="nl">Gebruiksvoorwaarden</span>
+                </h1>
+                <p class="text-gray-400 font-medium">
+                    <span class="en">Last updated: April 19, 2026</span>
+                    <span class="nl">Laatst bijgewerkt: 19 april 2026</span>
+                </p>
+                <p class="mt-4 text-gray-600">
+                    <span class="en">By using Rendementje, you agree to these terms:</span>
+                    <span class="nl">Door Rendementje te gebruiken, ga je akkoord met deze voorwaarden:</span>
+                </p>
+            </header>
+
+            <div class="grid gap-10">
+                
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">1.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Informational Use</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Informatief Gebruik</h2>
+                        <p class="text-gray-600">
+                            <span class="en">Rendementje is for personal portfolio tracking, education, and estimation. It is not financial, tax, legal, or investment advice.</span>
+                            <span class="nl">Rendementje is bedoeld voor het bijhouden van je persoonlijke portfolio, educatie en schattingen. Het is geen financieel, fiscaal, juridisch of beleggingsadvies.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">2.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">No Trading Capability</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Geen Handelsfunctionaliteit</h2>
+                        <p class="text-gray-600">
+                            <span class="en">Rendementje does not execute trades, withdrawals, or orders on your behalf. Any API integration is read-only import functionality.</span>
+                            <span class="nl">Rendementje voert geen transacties, opnames of orders uit in jouw naam. Elke API-integratie is uitsluitend bedoeld voor lees-rechten en import-functionaliteit.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">3.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Data Accuracy</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Data Nauwkeurigheid</h2>
+                        <p class="text-gray-600">
+                            <span class="en">Prices and imports may contain delays or mismatches due to third-party data quality. You remain responsible for verifying all values.</span>
+                            <span class="nl">Prijzen en importgegevens kunnen vertragingen of afwijkingen bevatten door de datakwaliteit van derden. Je blijft zelf verantwoordelijk voor het controleren van alle waarden.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">4.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">User Responsibility</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Verantwoordelijkheid Gebruiker</h2>
+                        <p class="text-gray-600">
+                            <span class="en">You are responsible for maintaining secure API credentials and configuring read-only permissions where supported.</span>
+                            <span class="nl">Je bent zelf verantwoordelijk voor het veilig bewaren van API-gegevens en het instellen van 'read-only' (alleen-lezen) rechten waar dit ondersteund wordt.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div class="text-brand font-bold text-xl">5.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Limitation of Liability</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Beperking van Aansprakelijkheid</h2>
+                        <p class="text-gray-600">
+                            <span class="en">The app is provided "as is" without warranties. The developer is not liable for losses, damages, tax filings, or investment outcomes.</span>
+                            <span class="nl">De app wordt geleverd "zoals deze is" (as is) zonder garanties. De ontwikkelaar is niet aansprakelijk voor verliezen, schade, belastingaangiften of resultaten van beleggingen.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">6.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Analytics</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Analyse</h2>
+                        <p class="text-gray-600">
+                            <span class="en">Rendementje uses Hotjar (via Contentsquare) for anonymous analytics. Session recordings automatically mask all monetary amounts and financial data.</span>
+                            <span class="nl">Rendementje gebruikt Hotjar (via Contentsquare) voor anonieme analyse. Sessie-opnames maskeren automatisch alle geldbedragen en financiële gegevens.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">7.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Changes</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Wijzigingen</h2>
+                        <p class="text-gray-600">
+                            <span class="en">Terms and privacy text may be updated in future app releases.</span>
+                            <span class="nl">De voorwaarden en privacyteksten kunnen worden bijgewerkt in toekomstige app-versies.</span>
+                        </p>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+            <a href="index.html" class="text-brand font-semibold hover:underline decoration-2 underline-offset-4">
+                <span class="en">← Back to home</span>
+                <span class="nl">← Terug naar home</span>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        function toggleLanguage() {
+            document.body.classList.toggle('show-dutch');
+            const isDutch = document.body.classList.contains('show-dutch');
+            localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
+        }
+
+        (function() {
+            const savedLang = localStorage.getItem('preferredLang');
+            const browserLang = navigator.language || navigator.userLanguage;
+            if (savedLang === 'nl' || (!savedLang && browserLang.startsWith('nl'))) {
+                document.body.classList.add('show-dutch');
+            }
+        })();
+    </script>
+</body>
+</html>
