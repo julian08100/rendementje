@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rendementje — Portfolio App</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<style>
+:root{--g:#2ecc71}
+*{box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9fafb}
+.g{color:var(--g)}.bg-g{background:var(--g)}.border-g{border-color:var(--g)}
+.tab-active{color:var(--g);border-bottom:2.5px solid var(--g)}
+.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,.06);border:1px solid #f0f0f0;margin-bottom:14px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;padding:24px}
+input,select,textarea{border:1px solid #e5e7eb;border-radius:10px;padding:8px 12px;font-size:14px;width:100%;outline:none;background:#fff}
+input:focus,select:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(46,204,113,.1)}
+.btn{border:none;border-radius:12px;padding:10px 18px;font-weight:600;cursor:pointer;font-size:14px;transition:opacity .15s}
+.btn:hover{opacity:.88}
+.btn-g{background:var(--g);color:#fff}
+.btn-w{background:#fff;color:#374151;border:1px solid #e5e7eb}
+.btn-r{background:#fee2e2;color:#dc2626}
+.btn-sm{padding:6px 12px;font-size:13px}
+progress{appearance:none;height:6px;border-radius:4px;width:100%;display:block}
+progress::-webkit-progress-bar{background:#f3f4f6;border-radius:4px}
+progress::-webkit-progress-value{background:var(--g);border-radius:4px}
+progress.orange::-webkit-progress-value{background:#f59e0b}
+.divider{border-top:1px solid #f3f4f6;margin:8px 0}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.tag-buy{background:#dcfce7;color:#16a34a}
+.tag-sell{background:#fee2e2;color:#dc2626}
+.tag-div{background:#dbeafe;color:#1d4ed8}
+</style>
+</head>
+<body>
+
+<!-- PRIVACY BANNER -->
+<div id="privBanner" style="background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;justify-content:space-between;gap:8px">
+  <span>🔒 <strong>Privacy-first:</strong> Alle data wordt alleen in je browsertabblad bewaard en automatisch verwijderd zodra je het tabblad sluit. Er worden nooit gegevens naar externe servers verstuurd.</span>
+  <button onclick="this.parentElement.remove()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#3b82f6;flex-shrink:0">×</button>
+</div>
+
+<!-- HEADER -->
+<header style="background:#fff;border-bottom:1px solid #f0f0f0;position:sticky;top:0;z-index:40">
+  <div style="max-width:640px;margin:0 auto;padding:0 16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0 0">
+      <div style="display:flex;align-items:center;gap:8px">
+        <img src="AppIcon.png" style="width:32px;height:32px;border-radius:8px" onerror="this.style.display='none'">
+        <span style="font-weight:700;font-size:17px;color:#111">Rendementje</span>
+      </div>
+      <a href="index.html" style="font-size:12px;color:#6b7280;border:1px solid #e5e7eb;padding:4px 10px;border-radius:20px;text-decoration:none">← Website</a>
+    </div>
+    <nav style="display:flex;gap:4px;overflow-x:auto;padding-bottom:0;margin-top:4px" id="tabNav">
+      <button class="tab-active btn" style="background:none;padding:10px 14px;font-weight:500;font-size:14px;white-space:nowrap;border-radius:0;color:var(--g)" onclick="showTab('portfolio')" data-tab="portfolio">📊 Portfolio</button>
+      <button class="btn" style="background:none;padding:10px 14px;font-weight:500;font-size:14px;white-space:nowrap;border-radius:0;color:#6b7280" onclick="showTab('transactions')" data-tab="transactions">🔄 Transacties</button>
+      <button class="btn" style="background:none;padding:10px 14px;font-weight:500;font-size:14px;white-space:nowrap;border-radius:0;color:#6b7280" onclick="showTab('tax')" data-tab="tax">🏛️ Belasting</button>
+      <button class="btn" style="background:none;padding:10px 14px;font-weight:500;font-size:14px;white-space:nowrap;border-radius:0;color:#6b7280" onclick="showTab('debt')" data-tab="debt">🏦 Schulden</button>
+    </nav>
+  </div>
+</header>
+
+<main style="max-width:640px;margin:0 auto;padding:16px">
+
+<!-- ═══════════════ PORTFOLIO ═══════════════ -->
+<div id="tab-portfolio">
+  <div id="pf-empty" style="text-align:center;padding:60px 20px;display:none">
+    <div style="font-size:48px;margin-bottom:12px">📈</div>
+    <h3 style="font-size:18px;font-weight:600;color:#111;margin:0 0 8px">Nog geen beleggingen</h3>
+    <p style="color:#6b7280;font-size:14px;margin:0 0 20px">Voeg transacties toe via het tabblad Transacties.</p>
+    <button class="btn btn-g" onclick="showTab('transactions')">Transacties toevoegen</button>
+  </div>
+
+  <div id="pf-content">
+    <div class="card" style="text-align:center">
+      <p style="font-size:13px;color:#9ca3af;margin:0 0 4px">Totale portefeuillewaarde</p>
+      <h2 id="pf-value" style="font-size:32px;font-weight:700;color:#111;margin:0 0 6px">—</h2>
+      <div id="pf-gl" style="font-size:14px;font-weight:500;margin-bottom:12px"></div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-w btn-sm" onclick="refreshPrices()" id="refreshBtn">↻ Prijzen ophalen</button>
+        <button class="btn btn-w btn-sm" onclick="showTab('transactions')">+ Transactie</button>
+      </div>
+      <p id="pf-status" style="font-size:12px;color:#9ca3af;margin-top:8px"></p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-weight:600;margin:0 0 12px;font-size:15px">Verdeling</h3>
+      <div style="position:relative;max-width:280px;margin:0 auto"><canvas id="allocChart"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-weight:600;margin:0 0 12px;font-size:15px">Prestaties (winst/verlies %)</h3>
+      <canvas id="perfChart"></canvas>
+    </div>
+
+    <div class="card">
+      <h3 style="font-weight:600;margin:0 0 12px;font-size:15px">Posities</h3>
+      <div id="pf-holdings"></div>
+    </div>
+
+    <div class="card" id="pf-analytics" style="display:none">
+      <h3 style="font-weight:600;margin:0 0 12px;font-size:15px">Analyse</h3>
+      <div id="pf-analytics-content"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TRANSACTIONS ═══════════════ -->
+<div id="tab-transactions" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h2 style="font-size:18px;font-weight:700;margin:0">Transacties</h2>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-g btn-sm" onclick="openTxnModal()">+ Toevoegen</button>
+      <button class="btn btn-w btn-sm" onclick="document.getElementById('csvFile').click()">↓ DEGIRO</button>
+      <input type="file" id="csvFile" accept=".csv,.txt" style="display:none" onchange="importDEGIRO(event)">
+    </div>
+  </div>
+
+  <div id="txn-empty" style="text-align:center;padding:60px 20px;display:none">
+    <div style="font-size:48px;margin-bottom:12px">🔄</div>
+    <h3 style="font-size:18px;font-weight:600;color:#111;margin:0 0 8px">Geen transacties</h3>
+    <p style="color:#6b7280;font-size:14px;margin:0 0 20px">Voeg handmatig toe of importeer vanuit DEGIRO.</p>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn btn-g" onclick="openTxnModal()">Toevoegen</button>
+      <button class="btn btn-w" onclick="document.getElementById('csvFile').click()">DEGIRO importeren</button>
+    </div>
+  </div>
+
+  <div id="txn-summary" class="card" style="display:none">
+    <div style="display:flex;justify-content:space-between">
+      <div><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Totaal gekocht</p><p id="txn-bought" style="font-weight:700;color:#dc2626;margin:0">€0</p></div>
+      <div style="text-align:right"><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Totaal verkocht</p><p id="txn-sold" style="font-weight:700;color:var(--g);margin:0">€0</p></div>
+    </div>
+  </div>
+
+  <div id="txn-list"></div>
+</div>
+
+<!-- ═══════════════ TAX ═══════════════ -->
+<div id="tab-tax" style="display:none">
+  <h2 style="font-size:18px;font-weight:700;margin:0 0 14px">Belastingberekening</h2>
+
+  <div class="card">
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button id="btn-prive" class="btn btn-g" style="flex:1;font-size:13px" onclick="setEntity('prive')">Privé (Box 3)</button>
+      <button id="btn-bv" class="btn btn-w" style="flex:1;font-size:13px" onclick="setEntity('bv')">BV (Box 2)</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <label style="font-size:13px;color:#6b7280;white-space:nowrap">Belastingjaar:</label>
+      <select id="taxYear" onchange="S.settings.taxYear=+this.value;saveState();renderTax()" style="flex:1;font-size:13px">
+        <option>2020</option><option>2021</option><option>2022</option><option>2023</option><option>2024</option>
+        <option selected>2025</option><option>2026</option>
+      </select>
+    </div>
+  </div>
+
+  <div id="tax-content"></div>
+</div>
+
+<!-- ═══════════════ DEBT ═══════════════ -->
+<div id="tab-debt" style="display:none">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <h2 style="font-size:18px;font-weight:700;margin:0">Schulden</h2>
+    <button class="btn btn-g btn-sm" onclick="openDebtModal()">+ Toevoegen</button>
+  </div>
+
+  <div id="debt-empty" style="text-align:center;padding:60px 20px;display:none">
+    <div style="font-size:48px;margin-bottom:12px">🏦</div>
+    <h3 style="font-size:18px;font-weight:600;color:#111;margin:0 0 8px">Geen schulden</h3>
+    <p style="color:#6b7280;font-size:14px;margin:0 0 20px">Voeg je hypotheek, studieschuld of andere leningen toe.</p>
+    <button class="btn btn-g" onclick="openDebtModal()">Schuld toevoegen</button>
+  </div>
+
+  <div id="debt-summary" class="card" style="display:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Totale schuld</p><p id="d-total" style="font-weight:700;color:#111;margin:0">€0</p></div>
+      <div><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Maandlasten</p><p id="d-monthly" style="font-weight:700;color:#111;margin:0">€0</p></div>
+      <div><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Gem. rente</p><p id="d-rate" style="font-weight:700;color:#111;margin:0">0%</p></div>
+      <div><p style="font-size:12px;color:#9ca3af;margin:0 0 2px">Jaarlijkse rente</p><p id="d-annual" style="font-weight:700;color:#111;margin:0">€0</p></div>
+    </div>
+  </div>
+
+  <div id="debt-list"></div>
+</div>
+
+</main>
+
+<!-- ════════════ MODAL: TRANSACTION ════════════ -->
+<div id="txn-modal" class="modal-bg" style="display:none" onclick="if(event.target===this)closeTxnModal()">
+<div class="sheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h3 style="font-weight:700;font-size:17px;margin:0" id="txn-modal-title">Transactie toevoegen</h3>
+    <button onclick="closeTxnModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#9ca3af">×</button>
+  </div>
+  <form id="txn-form" onsubmit="saveTxn(event)">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Type</label>
+        <select id="tf-type">
+          <option value="buy">Koop (Buy)</option>
+          <option value="sell">Verkoop (Sell)</option>
+          <option value="dividend">Dividend</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Datum</label>
+        <input type="date" id="tf-date" required>
+      </div>
+    </div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Tickersymbool (Yahoo Finance)</label>
+      <input type="text" id="tf-symbol" placeholder="AAPL, VWRL.AS, BTC-EUR…" required style="text-transform:uppercase">
+    </div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Naam</label>
+      <input type="text" id="tf-name" placeholder="Apple Inc." required>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Aantal</label>
+        <input type="number" id="tf-qty" step="any" min="0.000001" placeholder="10" required>
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Prijs/stuk</label>
+        <input type="number" id="tf-price" step="any" min="0" placeholder="150.00" required>
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Valuta</label>
+        <select id="tf-currency">
+          <option value="EUR">EUR</option>
+          <option value="USD">USD</option>
+          <option value="GBP">GBP</option>
+          <option value="CHF">CHF</option>
+          <option value="SEK">SEK</option>
+          <option value="NOK">NOK</option>
+        </select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Transactiekosten (€)</label>
+        <input type="number" id="tf-costs" step="any" min="0" value="0">
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Totaal EUR (optioneel)</label>
+        <input type="number" id="tf-total" step="any" placeholder="Uit DEGIRO export">
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button type="button" class="btn btn-w" style="flex:1" onclick="closeTxnModal()">Annuleren</button>
+      <button type="submit" class="btn btn-g" style="flex:1">Opslaan</button>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- ════════════ MODAL: PRICE UPDATE ════════════ -->
+<div id="price-modal" class="modal-bg" style="display:none" onclick="if(event.target===this)closePriceModal()">
+<div class="sheet" style="max-height:50vh">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h3 style="font-weight:700;font-size:17px;margin:0">Prijs bijwerken</h3>
+    <button onclick="closePriceModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#9ca3af">×</button>
+  </div>
+  <p id="pm-symbol" style="color:#6b7280;font-size:14px;margin:0 0 12px"></p>
+  <div style="margin-bottom:10px">
+    <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Huidige prijs</label>
+    <input type="number" id="pm-price" step="any" min="0" placeholder="0.00">
+  </div>
+  <div style="margin-bottom:16px">
+    <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Valuta</label>
+    <select id="pm-currency">
+      <option value="EUR">EUR</option><option value="USD">USD</option>
+      <option value="GBP">GBP</option><option value="CHF">CHF</option>
+    </select>
+  </div>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-w" style="flex:1" onclick="closePriceModal()">Annuleren</button>
+    <button class="btn btn-g" style="flex:1" onclick="savePriceUpdate()">Opslaan</button>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ MODAL: ISIN RESOLVER ════════════ -->
+<div id="isin-modal" class="modal-bg" style="display:none">
+<div class="sheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h3 style="font-weight:700;font-size:17px;margin:0">Tickers oplossen</h3>
+  </div>
+  <p style="font-size:13px;color:#6b7280;margin:0 0 16px">Sommige producten konden niet automatisch worden gekoppeld aan een ticker. Voer de Yahoo Finance ticker in, of laat leeg om de ISIN te gebruiken.</p>
+  <div id="isin-list" style="margin-bottom:16px"></div>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-w" style="flex:1" onclick="finalizeImport(false)">Alles overslaan</button>
+    <button class="btn btn-g" style="flex:1" onclick="finalizeImport(true)">Importeren</button>
+  </div>
+</div>
+</div>
+
+<!-- ════════════ MODAL: DEBT ════════════ -->
+<div id="debt-modal" class="modal-bg" style="display:none" onclick="if(event.target===this)closeDebtModal()">
+<div class="sheet">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <h3 id="debt-modal-title" style="font-weight:700;font-size:17px;margin:0">Schuld toevoegen</h3>
+    <button onclick="closeDebtModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#9ca3af">×</button>
+  </div>
+  <form id="debt-form" onsubmit="saveDebt(event)">
+    <div style="margin-bottom:10px">
+      <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Naam</label>
+      <input type="text" id="df-name" placeholder="Hypotheek, Studieschuld…" required>
+    </div>
+    <div style="margin-bottom:10px">
+      <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Type lening</label>
+      <select id="df-type" onchange="updateDebtFormUI()">
+        <option value="annuity">Annuïteit</option>
+        <option value="linear">Lineair</option>
+        <option value="interestOnly">Aflossingsvrij</option>
+        <option value="studiefinanciering">Studiefinanciering (DUO)</option>
+      </select>
+    </div>
+
+    <div id="df-normal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div>
+          <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Totale leensom (€)</label>
+          <input type="number" id="df-total" step="any" min="0" placeholder="300000">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Resterende schuld (€)</label>
+          <input type="number" id="df-balance" step="any" min="0" placeholder="250000" oninput="updateDebtEst()">
+        </div>
+      </div>
+    </div>
+
+    <div id="df-studie" style="display:none">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div>
+          <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Maandbedrag uitkering (€)</label>
+          <input type="number" id="df-disb" step="any" min="0" placeholder="1000" oninput="updateDebtEst()">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Uitkeringsperiode</label>
+          <select id="df-disbmonths">
+            <option value="12">12 maanden</option><option value="24">24 maanden</option>
+            <option value="36">36 maanden</option><option value="48" selected>48 maanden</option>
+            <option value="60">60 maanden</option><option value="72">72 maanden</option>
+          </select>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Aanloopfase</label>
+          <select id="df-grace">
+            <option value="0">Geen</option><option value="12">12 maanden</option>
+            <option value="24" selected>24 maanden</option><option value="36">36 maanden</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Rente (%/jaar)</label>
+        <input type="number" id="df-rate" step="0.01" min="0" placeholder="4.50" oninput="updateDebtEst()">
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Maandelijkse betaling (€)</label>
+        <input type="number" id="df-payment" step="any" min="0" placeholder="1200" oninput="updateDebtEst()">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Looptijd</label>
+        <select id="df-term">
+          <option value="1">1 jaar</option><option value="2">2 jaar</option><option value="3">3 jaar</option>
+          <option value="5">5 jaar</option><option value="10">10 jaar</option><option value="15">15 jaar</option>
+          <option value="20">20 jaar</option><option value="25">25 jaar</option><option value="30" selected>30 jaar</option>
+          <option value="35">35 jaar</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px;color:#6b7280;display:block;margin-bottom:4px">Startdatum</label>
+        <input type="date" id="df-start">
+      </div>
+    </div>
+
+    <div id="df-estimate" style="background:#f9fafb;border-radius:12px;padding:12px;margin-bottom:14px;display:none">
+      <p style="font-size:12px;font-weight:600;color:#374151;margin:0 0 8px">Schatting</p>
+      <div id="df-est-content"></div>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button type="button" id="df-delete" class="btn btn-r btn-sm" style="display:none" onclick="deleteDebt()">Verwijderen</button>
+      <button type="button" class="btn btn-w" style="flex:1" onclick="closeDebtModal()">Annuleren</button>
+      <button type="submit" class="btn btn-g" style="flex:1">Opslaan</button>
+    </div>
+  </form>
+</div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;font-weight:500;z-index:100;display:none;pointer-events:none"></div>
+
+<script>
+// ════════ CONSTANTS ════════
+const TAX = {
+  box3Rate: 0.36, hffVermogen: 57684,
+  forfInvest: 0.0588, forfSavings: 0.0137, forfDebt: 0.027,
+  divBelasting: 0.15,
+  vpbLow: 0.19, vpbLowThresh: 200000, vpbHigh: 0.258,
+  box2Low: 0.245, box2LowThresh: 67804, box2High: 0.31,
+};
+const COLORS = ['#2ecc71','#3498db','#e74c3c','#f39c12','#9b59b6','#1abc9c','#e67e22','#34495e','#e91e63','#00bcd4'];
+
+// ════════ STATE ════════
+const SK = 'rj_s';
+let S = { transactions:[], debts:[], box3Assets:[], prices:{}, settings:{entityType:'prive',taxYear:2025,lang:'nl'} };
+
+function loadState(){try{const r=sessionStorage.getItem(SK);if(r){const p=JSON.parse(r);S={...S,...p}}}catch(e){}}
+function saveState(){try{sessionStorage.setItem(SK,JSON.stringify(S))}catch(e){}}
+
+// ════════ TABS ════════
+const TABS=['portfolio','transactions','tax','debt'];
+function showTab(tab){
+  TABS.forEach(t=>{
+    const el=document.getElementById('tab-'+t);
+    if(el)el.style.display=t===tab?'block':'none';
+    const btn=document.querySelector('[data-tab="'+t+'"]');
+    if(btn){btn.className=t===tab?'btn tab-active':'btn';btn.style.background='none';btn.style.padding='10px 14px';btn.style.fontWeight='500';btn.style.fontSize='14px';btn.style.whiteSpace='nowrap';btn.style.borderRadius='0';btn.style.color=t===tab?'var(--g)':'#6b7280';}
+  });
+  if(tab==='portfolio')renderPortfolio();
+  if(tab==='transactions')renderTransactions();
+  if(tab==='tax')renderTax();
+  if(tab==='debt')renderDebt();
+}
+
+// ════════ HELPERS ════════
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2)}
+function eur(v,dec=2){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',maximumFractionDigits:dec}).format(v)}
+function pct(v,dec=1){if(v==null||isNaN(v))return'—';return(v>=0?'+':'')+v.toFixed(dec)+'%'}
+function num(v){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat('nl-NL',{maximumFractionDigits:8}).format(v)}
+function toast(msg,ms=2500){const e=document.getElementById('toast');e.textContent=msg;e.style.display='block';setTimeout(()=>e.style.display='none',ms)}
+
+// ════════ DERIVED HOLDINGS ════════
+function deriveHoldings(asOf){
+  const cutoff=asOf?new Date(asOf):null;
+  const h={};
+  for(const t of S.transactions){
+    if(t.type==='dividend')continue;
+    if(cutoff&&new Date(t.date)>cutoff)continue;
+    if(!h[t.symbol])h[t.symbol]={symbol:t.symbol,name:t.name,currency:t.currency,qty:0,totalCost:0,costs:0};
+    const e=h[t.symbol];
+    if(t.type==='buy'){e.totalCost+=t.qty*t.price;e.costs+=t.costs||0;e.qty+=t.qty;e.currency=t.currency;}
+    else{const avg=e.qty>0?e.totalCost/e.qty:0;e.totalCost=Math.max(0,e.totalCost-avg*t.qty);e.qty-=t.qty;}
+  }
+  return Object.values(h).filter(e=>e.qty>0.000001);
+}
+
+function getPrice(sym){return S.prices[sym]||null}
+function eurRate(cur){if(cur==='EUR')return 1;const p=S.prices['EUR'+cur];return p?1/p.price:null}
+
+// ════════ PORTFOLIO ════════
+let allocInst=null,perfInst=null;
+
+function renderPortfolio(){
+  const hList=deriveHoldings();
+  if(hList.length===0){document.getElementById('pf-empty').style.display='block';document.getElementById('pf-content').style.display='none';return;}
+  document.getElementById('pf-empty').style.display='none';document.getElementById('pf-content').style.display='block';
+
+  const rows=hList.map(h=>{
+    const p=getPrice(h.symbol);
+    const cur=p?.currency||h.currency;
+    const rate=cur==='EUR'?1:(eurRate(cur)||1);
+    const currPrice=p?.price||null;
+    const invested=(h.totalCost+h.costs);
+    const investedEUR=invested*(cur==='EUR'?1:(getPrice('EUR'+cur)?1/getPrice('EUR'+cur).price:rate));
+    const value=currPrice!=null?h.qty*currPrice*rate:null;
+    const gl=value!=null?value-investedEUR:null;
+    const glPct=investedEUR>0&&gl!=null?(gl/investedEUR)*100:null;
+    return{...h,cur,currPrice,value,gl,glPct,investedEUR};
+  });
+
+  const withVal=rows.filter(r=>r.value!=null);
+  const totalVal=withVal.reduce((s,r)=>s+r.value,0);
+  const totalInv=withVal.reduce((s,r)=>s+r.investedEUR,0);
+  const totalGL=totalVal-totalInv;
+  const totalGLpct=totalInv>0?(totalGL/totalInv)*100:0;
+
+  document.getElementById('pf-value').textContent=totalVal>0?eur(totalVal):'—';
+  const glEl=document.getElementById('pf-gl');
+  if(withVal.length>0){glEl.innerHTML=`<span style="color:${totalGL>=0?'var(--g)':'#ef4444'}">${eur(totalGL)} (${pct(totalGLpct)})</span>`;}
+  else{glEl.innerHTML='<span style="color:#9ca3af;font-size:13px">Geen actuele prijzen — klik "Prijzen ophalen" of voer ze handmatig in</span>';}
+
+  // Allocation chart
+  if(allocInst)allocInst.destroy();
+  const actx=document.getElementById('allocChart').getContext('2d');
+  if(withVal.length>0){
+    allocInst=new Chart(actx,{type:'doughnut',data:{
+      labels:withVal.map(r=>r.name.length>22?r.name.slice(0,20)+'…':r.name),
+      datasets:[{data:withVal.map(r=>+r.value.toFixed(2)),backgroundColor:withVal.map((_,i)=>COLORS[i%COLORS.length]),borderWidth:2,borderColor:'#fff'}]
+    },options:{responsive:true,cutout:'60%',plugins:{legend:{position:'bottom',labels:{font:{size:11},boxWidth:10}}}}});
+  } else {
+    actx.clearRect(0,0,actx.canvas.width,actx.canvas.height);
+    actx.fillStyle='#9ca3af';actx.font='13px sans-serif';actx.textAlign='center';
+    actx.fillText('Voer prijzen in om grafiek te zien',actx.canvas.width/2,80);
+  }
+
+  // Performance chart
+  if(perfInst)perfInst.destroy();
+  const pctx=document.getElementById('perfChart').getContext('2d');
+  const withPct=rows.filter(r=>r.glPct!=null).sort((a,b)=>b.glPct-a.glPct).slice(0,8);
+  if(withPct.length>0){
+    perfInst=new Chart(pctx,{type:'bar',data:{
+      labels:withPct.map(r=>r.name.length>16?r.name.slice(0,14)+'…':r.name),
+      datasets:[{data:withPct.map(r=>+r.glPct.toFixed(2)),backgroundColor:withPct.map(r=>r.glPct>=0?'#2ecc71':'#ef4444'),borderRadius:6}]
+    },options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'%'}}}}});
+  }
+
+  // Holdings list
+  document.getElementById('pf-holdings').innerHTML=rows.map(r=>`
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f9fafb">
+      <div style="flex:1;min-width:0">
+        <p style="font-weight:600;color:#111;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${r.name}</p>
+        <p style="font-size:12px;color:#9ca3af;margin:2px 0 0">${r.symbol} · ${num(r.qty)} st</p>
+      </div>
+      <div style="text-align:right;margin-left:12px;flex-shrink:0">
+        ${r.value!=null
+          ?`<p style="font-weight:600;color:#111;margin:0">${eur(r.value)}</p><p style="font-size:12px;margin:2px 0 0;color:${r.gl>=0?'var(--g)':'#ef4444'}">${pct(r.glPct)}</p>`
+          :`<button class="btn btn-w btn-sm" onclick="openPriceModal('${r.symbol}','${r.currency}')">Prijs invoeren</button>`}
+      </div>
+    </div>
+  `).join('')+'<p style="font-size:11px;color:#d1d5db;margin:10px 0 0;text-align:right">Tip: klik op "Prijzen ophalen" voor live koersen</p>';
+
+  // Sharpe analytics (simple proxy: weighted avg return / std dev of individual returns)
+  const withGainPct=rows.filter(r=>r.glPct!=null);
+  if(withGainPct.length>=2&&totalVal>0){
+    const mean=withGainPct.reduce((s,r)=>s+(r.glPct/100)*(r.value/totalVal),0);
+    const variance=withGainPct.reduce((s,r)=>s+Math.pow((r.glPct/100)-mean,2)*(r.value/totalVal),0);
+    const stddev=Math.sqrt(variance);
+    const sharpe=stddev>0?(mean-0.035)/stddev:null;
+    const anaEl=document.getElementById('pf-analytics');
+    anaEl.style.display='block';
+    let sharpeColor=sharpe>=1?'var(--g)':sharpe>=0.5?'#f59e0b':'#ef4444';
+    let sharpeDesc=sharpe>=2?'Uitstekend':sharpe>=1?'Goed':sharpe>=0.5?'Gemiddeld':sharpe>=0?'Onder gemiddeld':'Negatief';
+    document.getElementById('pf-analytics-content').innerHTML=`
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div><p style="font-size:13px;font-weight:600;color:#374151;margin:0">Sharpe Ratio (indicatief)</p><p style="font-size:12px;color:#9ca3af;margin:2px 0 0">Gebaseerd op huidige koersen</p></div>
+        <span style="font-size:22px;font-weight:700;color:${sharpeColor}">${sharpe!=null?sharpe.toFixed(2):'—'}</span>
+      </div>
+      ${sharpe!=null?`<p style="font-size:12px;color:#6b7280;background:#f9fafb;padding:8px 12px;border-radius:8px;margin:0">${sharpeDesc} risicogecorrigeerd rendement</p>`:''}
+    `;
+  }
+}
+
+// ════════ PRICE FETCH ════════
+async function refreshPrices(){
+  const btn=document.getElementById('refreshBtn');
+  const status=document.getElementById('pf-status');
+  btn.textContent='Bezig…';btn.disabled=true;
+  status.textContent='Live prijzen ophalen…';status.style.color='#9ca3af';
+
+  const hList=deriveHoldings();
+  let ok=0,fail=[];
+
+  for(const h of hList){
+    const d=await tryFetchQuote(h.symbol);
+    if(d){S.prices[h.symbol]=d;ok++;}
+    else fail.push(h.symbol);
+  }
+
+  // EUR conversion rates
+  const curs=[...new Set(hList.map(h=>S.prices[h.symbol]?.currency||h.currency))].filter(c=>c!=='EUR');
+  for(const cur of curs){
+    const d=await tryFetchQuote('EUR'+cur+'=X');
+    if(d)S.prices['EUR'+cur]=d;
+  }
+
+  saveState();
+  btn.textContent='↻ Prijzen ophalen';btn.disabled=false;
+
+  if(ok>0){
+    status.textContent=`${ok} prijs(en) bijgewerkt${fail.length?` · Mislukt: ${fail.join(', ')}`:''} · ${new Date().toLocaleTimeString('nl-NL',{hour:'2-digit',minute:'2-digit'})}`;
+    status.style.color='var(--g)';
+  } else {
+    status.textContent='Live prijzen niet beschikbaar (CORS). Voer prijzen handmatig in.';
+    status.style.color='#ef4444';
+  }
+  renderPortfolio();
+}
+
+async function tryFetchQuote(sym){
+  try{
+    const r=await fetch(`https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=1d`);
+    const d=await r.json();
+    const res=d?.chart?.result?.[0];
+    if(!res?.meta?.regularMarketPrice)return null;
+    return{price:res.meta.regularMarketPrice,currency:res.meta.currency||'USD'};
+  }catch{return null;}
+}
+
+let priceTarget=null;
+function openPriceModal(sym,cur){
+  priceTarget=sym;
+  document.getElementById('pm-symbol').textContent='Actuele prijs voor '+sym;
+  document.getElementById('pm-price').value=S.prices[sym]?.price||'';
+  document.getElementById('pm-currency').value=S.prices[sym]?.currency||cur;
+  document.getElementById('price-modal').style.display='flex';
+}
+function closePriceModal(){document.getElementById('price-modal').style.display='none';priceTarget=null;}
+function savePriceUpdate(){
+  const p=parseFloat(document.getElementById('pm-price').value);
+  const c=document.getElementById('pm-currency').value;
+  if(priceTarget&&!isNaN(p)&&p>0){S.prices[priceTarget]={price:p,currency:c};saveState();closePriceModal();renderPortfolio();toast('Prijs bijgewerkt');}
+}
+
+// ════════ TRANSACTIONS ════════
+function renderTransactions(){
+  const txns=[...S.transactions].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  document.getElementById('txn-empty').style.display=txns.length===0?'block':'none';
+  document.getElementById('txn-summary').style.display=txns.length>0?'block':'none';
+  if(txns.length===0){document.getElementById('txn-list').innerHTML='';return;}
+
+  const bought=txns.filter(t=>t.type==='buy').reduce((s,t)=>s+Math.abs(t.totalEUR||(t.qty*t.price+(t.costs||0))),0);
+  const sold=txns.filter(t=>t.type==='sell').reduce((s,t)=>s+Math.abs(t.totalEUR||(t.qty*t.price)),0);
+  document.getElementById('txn-bought').textContent=eur(bought);
+  document.getElementById('txn-sold').textContent=eur(sold);
+
+  const grouped={};
+  for(const t of txns){
+    const k=new Date(t.date).toLocaleDateString('nl-NL',{month:'long',year:'numeric'});
+    if(!grouped[k])grouped[k]=[];
+    grouped[k].push(t);
+  }
+
+  const typeLabel={buy:'Koop',sell:'Verkoop',dividend:'Dividend'};
+  const tagClass={buy:'tag-buy',sell:'tag-sell',dividend:'tag-div'};
+
+  document.getElementById('txn-list').innerHTML=Object.entries(grouped).map(([month,ts])=>`
+    <div class="card">
+      <p style="font-size:11px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px">${month}</p>
+      ${ts.map(t=>`
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f9fafb">
+          <span class="tag ${tagClass[t.type]}">${typeLabel[t.type]}</span>
+          <div style="flex:1;min-width:0">
+            <p style="font-weight:500;color:#111;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px">${t.name}</p>
+            <p style="font-size:11px;color:#9ca3af;margin:2px 0 0">${num(t.qty)} @ ${t.price} ${t.currency}</p>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <p style="font-weight:600;color:#111;margin:0;font-size:14px">${eur(t.totalEUR||t.qty*t.price)}</p>
+            <p style="font-size:11px;color:#9ca3af;margin:2px 0 0">${new Date(t.date).toLocaleDateString('nl-NL',{day:'numeric',month:'short'})}</p>
+          </div>
+          <button onclick="deleteTxn('${t.id}')" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:16px;padding:4px;flex-shrink:0" title="Verwijderen">×</button>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function openTxnModal(id){
+  document.getElementById('txn-modal-title').textContent='Transactie toevoegen';
+  document.getElementById('txn-form').reset();
+  document.getElementById('tf-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('txn-modal').style.display='flex';
+}
+function closeTxnModal(){document.getElementById('txn-modal').style.display='none';}
+
+function saveTxn(e){
+  e.preventDefault();
+  const sym=document.getElementById('tf-symbol').value.toUpperCase().trim();
+  const totalEUR=parseFloat(document.getElementById('tf-total').value)||0;
+  const txn={
+    id:uid(),type:document.getElementById('tf-type').value,
+    date:document.getElementById('tf-date').value,symbol:sym,
+    name:document.getElementById('tf-name').value.trim(),
+    qty:parseFloat(document.getElementById('tf-qty').value),
+    price:parseFloat(document.getElementById('tf-price').value),
+    currency:document.getElementById('tf-currency').value,
+    costs:parseFloat(document.getElementById('tf-costs').value)||0,
+    totalEUR
+  };
+  S.transactions.push(txn);saveState();closeTxnModal();renderTransactions();renderPortfolio();toast('Transactie opgeslagen');
+}
+
+function deleteTxn(id){
+  if(!confirm('Transactie verwijderen?'))return;
+  S.transactions=S.transactions.filter(t=>t.id!==id);saveState();renderTransactions();renderPortfolio();
+}
+
+// ════════ DEGIRO IMPORT ════════
+let pendingImport=null;
+
+function importDEGIRO(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const rd=new FileReader();
+  rd.onload=async e=>{
+    try{
+      const txns=parseDEGIROcsv(e.target.result);
+      toast(`${txns.length} transacties gevonden, ISIN's oplossen…`);
+      const isins=[...new Set(txns.map(t=>t.isin))];
+      const resolved={};
+      for(const isin of isins){
+        const r=await searchYahoo(isin);
+        if(r)resolved[isin]=r;
+      }
+      const unres=isins.filter(i=>!resolved[i]);
+      if(unres.length>0){
+        pendingImport={txns,resolved,unresolved:Object.fromEntries(unres.map(i=>[i,txns.find(t=>t.isin===i)?.product||i]))};
+        document.getElementById('isin-list').innerHTML=unres.map(isin=>`
+          <div style="margin-bottom:12px">
+            <p style="font-weight:500;font-size:13px;color:#111;margin:0 0 2px">${pendingImport.unresolved[isin]}</p>
+            <p style="font-size:11px;color:#9ca3af;margin:0 0 6px">${isin}</p>
+            <input type="text" id="ir_${isin}" placeholder="Ticker (bijv. AAPL) — leeg laat = ISIN gebruiken" style="font-size:13px">
+          </div>`).join('');
+        document.getElementById('isin-modal').style.display='flex';
+      } else {
+        completeImport(txns,resolved);
+      }
+    }catch(err){toast('Fout: '+err.message);}
+    ev.target.value='';
+  };
+  rd.readAsText(f);
+}
+
+async function searchYahoo(q){
+  try{
+    const r=await fetch(`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=5&newsCount=0`);
+    const d=await r.json();
+    const quote=d?.quotes?.[0];
+    if(!quote?.symbol)return null;
+    const typeMap={EQUITY:'stock',ETF:'etf',CRYPTOCURRENCY:'crypto'};
+    return{symbol:quote.symbol,assetType:typeMap[quote.quoteType]||'stock'};
+  }catch{return null;}
+}
+
+function finalizeImport(useManual){
+  const{txns,resolved,unresolved}=pendingImport;
+  const full={...resolved};
+  for(const isin of Object.keys(unresolved)){
+    const v=document.getElementById('ir_'+isin)?.value?.trim();
+    full[isin]={symbol:v||isin,assetType:'stock'};
+  }
+  document.getElementById('isin-modal').style.display='none';
+  completeImport(txns,full);pendingImport=null;
+}
+
+function completeImport(degTxns,lookup){
+  let count=0;
+  for(const t of degTxns){
+    const l=lookup[t.isin];
+    S.transactions.push({
+      id:uid(),type:t.quantity>0?'buy':'sell',date:t.date,
+      symbol:l?.symbol||t.isin,name:t.product,
+      qty:Math.abs(t.quantity),price:t.pricePerUnit,
+      currency:t.currency||'EUR',costs:t.transactionCosts||0,
+      totalEUR:Math.abs(t.totalEUR)||0
+    });count++;
+  }
+  saveState();renderTransactions();renderPortfolio();toast(`${count} transacties geïmporteerd`);
+}
+
+function parseDEGIROcsv(text){
+  const lines=text.replace(/﻿/g,'').split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+  if(lines.length<2)throw new Error('Bestand te kort');
+  const hdr=lines[0].toLowerCase();
+  if(!hdr.includes('datum')&&!hdr.includes('product'))throw new Error('Geen geldig DEGIRO-bestand');
+  const delim=hdr.includes(';')?';':(hdr.includes('\t')?'\t':',');
+  const results=[];
+  for(let i=1;i<lines.length;i++){
+    const f=csvLine(lines[i],delim);
+    if(f.length<16)continue;
+    const date=dutchDate(f[0]);if(!date)continue;
+    const qty=parseInt(f[6]);if(isNaN(qty))continue;
+    const price=dutchNum(f[7]);if(isNaN(price))continue;
+    results.push({date,product:f[2],isin:f[3],quantity:qty,pricePerUnit:Math.abs(price),currency:f[8]||'EUR',totalEUR:dutchNum(f[15])||0,transactionCosts:Math.abs(dutchNum(f[14])||0)});
+  }
+  if(!results.length)throw new Error('Geen transacties gevonden');
+  return results;
+}
+
+function csvLine(line,delim){
+  const r=[];let cur='',inQ=false;
+  for(const c of line){if(c==='"')inQ=!inQ;else if(c===delim&&!inQ){r.push(cur.trim());cur='';}else cur+=c;}
+  r.push(cur.trim());return r;
+}
+function dutchDate(s){const m=s.match(/^(\d{1,2})-(\d{2})-(\d{4})$/);return m?`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`:null;}
+function dutchNum(s){
+  if(!s)return NaN;s=s.trim();
+  const hC=s.includes(','),hD=s.includes('.');
+  if(hC&&hD)return s.lastIndexOf(',')>s.lastIndexOf('.')?parseFloat(s.replace(/\./g,'').replace(',','.')):parseFloat(s.replace(/,/g,''));
+  if(hC)return parseFloat(s.replace(',','.'));
+  return parseFloat(s);
+}
+
+// ════════ TAX ════════
+function setEntity(type){
+  S.settings.entityType=type;saveState();
+  document.getElementById('btn-prive').className='btn '+(type==='prive'?'btn-g':'btn-w');
+  document.getElementById('btn-bv').className='btn '+(type==='bv'?'btn-g':'btn-w');
+  renderTax();
+}
+
+function renderTax(){
+  const yr=S.settings.taxYear;
+  document.getElementById('taxYear').value=yr;
+  const jan1=new Date(yr,0,1),dec31=new Date(yr,11,31);
+  const isCurYr=yr===new Date().getFullYear();
+  const endDate=isCurYr?new Date():dec31;
+
+  const holdJan=deriveHoldings(new Date(yr-1,11,31).toISOString().split('T')[0]);
+  const holdEnd=deriveHoldings(endDate.toISOString().split('T')[0]);
+
+  function valOf(holdings){
+    return holdings.reduce((s,h)=>{
+      const p=getPrice(h.symbol);if(!p)return s;
+      const r=p.currency==='EUR'?1:(eurRate(p.currency)||1);
+      return s+h.qty*p.price*r;
+    },0);
+  }
+
+  const valJan1=valOf(holdJan);
+  const valEnd=valOf(holdEnd);
+
+  // Net purchases in year
+  const yearTxns=S.transactions.filter(t=>{const d=new Date(t.date);return d>=jan1&&d<=endDate&&t.type!=='dividend';});
+  const netPurch=yearTxns.reduce((s,t)=>{
+    const amt=Math.abs(t.totalEUR||(t.qty*t.price+(t.costs||0)));
+    return t.type==='buy'?s+amt:s-amt;
+  },0);
+
+  const divInYear=S.transactions.filter(t=>{const d=new Date(t.date);return t.type==='dividend'&&d>=jan1&&d<=endDate;}).reduce((s,t)=>s+Math.abs(t.totalEUR||t.qty*t.price),0);
+  const grossGain=valEnd-valJan1-netPurch;
+
+  // Debt
+  const debtJan1=S.debts.filter(d=>new Date(d.startDate)<jan1).reduce((s,d)=>s+d.remainingBalance,0);
+  const totalDebtInterest=S.debts.reduce((s,d)=>{
+    const ds=new Date(d.startDate);if(ds>endDate)return s;
+    const from=Math.max(ds.getTime(),jan1.getTime());
+    const to=endDate.getTime();if(from>to)return s;
+    const daysYear=(endDate.getTime()-jan1.getTime())/86400000+1;
+    const daysActive=(to-from)/86400000+1;
+    return s+(d.remainingBalance*(d.annualInterestRate/100))*(daysActive/daysYear);
+  },0);
+
+  const hasPrices=holdEnd.some(h=>getPrice(h.symbol));
+  const missingPricesNote=!hasPrices?`<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#92400e">⚠️ <strong>Geen prijzen beschikbaar.</strong> Haal prijzen op in het Portfolio-tabblad voor nauwkeurige berekeningen. Huidige waarden worden geschat op €0.</div>`:'';
+
+  let html=missingPricesNote;
+
+  if(S.settings.entityType==='prive'){
+    const netW=valJan1-debtJan1;
+    const txBase=Math.max(netW-TAX.hffVermogen,0);
+    const invPct=netW>0?Math.max(valJan1,0)/Math.max(netW,1):0;
+    const debtPct=netW>0?Math.max(debtJan1,0)/Math.max(netW,1):0;
+    const wRate=invPct*TAX.forfInvest-debtPct*TAX.forfDebt;
+    const forfRet=txBase*Math.max(wRate,0);
+    const forfAcc=forfRet*TAX.box3Rate;
+    const divBel=divInYear*TAX.divBelasting;
+    const forfPay=Math.max(forfAcc-divBel,0);
+
+    const werkReturn=grossGain+divInYear-totalDebtInterest;
+    const werkTax=Math.max(werkReturn,0)*TAX.box3Rate;
+    const werkPay=Math.max(werkTax-divBel,0);
+
+    const forfBetter=forfPay<=werkPay;
+    const saving=Math.abs(forfPay-werkPay);
+
+    html+=`
+    <div class="card">
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 14px">Vergelijking ${yr}</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+        <div style="text-align:center;padding:14px;border-radius:12px;background:${forfBetter&&saving>0?'#f0fdf4':'#f9fafb'}">
+          <p style="font-size:12px;color:#6b7280;margin:0 0 4px">Forfaitair rendement</p>
+          <p style="font-size:20px;font-weight:700;margin:0;color:${forfBetter&&saving>0?'var(--g)':'#ef4444'}">${eur(forfPay)}</p>
+          ${forfBetter&&saving>0?'<p style="font-size:11px;color:var(--g);font-weight:600;margin:4px 0 0">✓ Lager</p>':''}
+        </div>
+        <div style="text-align:center;padding:14px;border-radius:12px;background:${!forfBetter&&saving>0?'#f0fdf4':'#f9fafb'}">
+          <p style="font-size:12px;color:#6b7280;margin:0 0 4px">Werkelijk rendement</p>
+          <p style="font-size:20px;font-weight:700;margin:0;color:${!forfBetter&&saving>0?'var(--g)':'#ef4444'}">${eur(werkPay)}</p>
+          ${!forfBetter&&saving>0?'<p style="font-size:11px;color:var(--g);font-weight:600;margin:4px 0 0">✓ Lager</p>':''}
+        </div>
+      </div>
+      ${saving>1?`<div style="background:#f0fdf4;border-radius:10px;padding:10px 14px">
+        <p style="font-size:13px;font-weight:600;color:#166534;margin:0">💡 Kies <strong>${forfBetter?'forfaitair':'werkelijk'} rendement</strong> — besparing: ${eur(saving)}</p>
+      </div>`:saving>0?'<p style="font-size:13px;color:#6b7280;text-align:center;margin:0">Beide methoden geven hetzelfde resultaat</p>':'<p style="font-size:13px;color:#6b7280;text-align:center;margin:0">Geen belasting verschuldigd</p>'}
+    </div>
+
+    <div class="card">
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">Forfaitaire Rendement — detail</h3>
+      ${tr('Beleggingen (1 jan '+yr+')',eur(valJan1),'@ '+pctRaw(TAX.forfInvest))}
+      ${debtJan1>0?tr('Schulden (1 jan)',eur(-debtJan1),'@ '+pctRaw(TAX.forfDebt),'#ef4444'):''}
+      <div class="divider"></div>
+      ${tr('Nettovermogen',eur(netW),'','','600')}
+      ${tr('Heffingsvrij vermogen',eur(-TAX.hffVermogen),'','var(--g)')}
+      ${tr('Belastbaar vermogen',eur(txBase),'','','600')}
+      <div class="divider"></div>
+      ${tr('Forfaitair rendement',eur(forfRet),pctRaw(Math.max(wRate,0))+' gewogen')}
+      <div class="divider"></div>
+      ${tr('Verschuldigde belasting (36%)',eur(forfAcc),'','#ef4444')}
+      ${divBel>0?tr('Dividendbelasting verrekening (15%)',eur(-divBel),'','var(--g)'):''}
+      ${trBig('Te betalen belasting',eur(forfPay),'','#ef4444')}
+    </div>
+
+    <div class="card">
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">Werkelijk Rendement — detail</h3>
+      <div style="display:flex;align-items:center;justify-content:space-around;padding:10px 0;margin-bottom:8px">
+        <div style="text-align:center"><p style="font-size:11px;color:#9ca3af;margin:0 0 2px">1 jan ${yr}</p><p style="font-weight:700;color:#111;margin:0">${eur(valJan1)}</p></div>
+        <span style="color:#9ca3af">→</span>
+        <div style="text-align:center"><p style="font-size:11px;color:#9ca3af;margin:0 0 2px">${isCurYr?'Vandaag':'31 dec '+yr}</p><p style="font-weight:700;color:#111;margin:0">${eur(valEnd)}</p></div>
+      </div>
+      <div class="divider"></div>
+      ${tr('Koerswinst (excl. nieuwe inleg)',eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
+      ${divInYear>0?tr('Ontvangen dividenden',eur(divInYear),'','var(--g)'):''}
+      ${divBel>0?tr('Dividendbelasting (15%)',eur(-divBel),'','#ef4444'):''}
+      ${totalDebtInterest>0?tr('Betaalde rente (aftrekbaar)',eur(-totalDebtInterest),'','var(--g)'):''}
+      ${tr('Totaal werkelijk rendement',eur(werkReturn),'',werkReturn>=0?'var(--g)':'#ef4444','600')}
+      <div class="divider"></div>
+      ${tr('Verschuldigde belasting (36%)',eur(werkTax),'','#ef4444')}
+      ${divBel>0?tr('Dividendbelasting verrekening',eur(-divBel),'','var(--g)'):''}
+      ${trBig('Te betalen belasting',eur(werkPay),'','#ef4444')}
+    </div>
+
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;font-size:12px;color:#92400e;margin-bottom:14px">
+      <strong>Disclaimer:</strong> Dit is een schatting. Prijzen voor 1 jan worden benaderd met de meest recente bekende prijs. Forfaitaire tarieven: 5,88% beleggingen, 1,37% spaargeld, 2,70% schulden aftrek (2025 definitief). Raadpleeg een belastingadviseur voor officiële aangifte.
+    </div>`;
+  } else {
+    const vpb=Math.min(Math.max(grossGain,0),TAX.vpbLowThresh)*TAX.vpbLow+Math.max(Math.max(grossGain,0)-TAX.vpbLowThresh,0)*TAX.vpbHigh;
+    const afterVpb=Math.max(grossGain-vpb,0);
+    const box2=Math.min(afterVpb,TAX.box2LowThresh)*TAX.box2Low+Math.max(afterVpb-TAX.box2LowThresh,0)*TAX.box2High;
+    const divCredit=afterVpb*TAX.divBelasting;
+    const box2Pay=Math.max(box2-divCredit,0);
+    const totalPay=(grossGain>0?vpb:0)+box2Pay;
+
+    html+=`
+    <div class="card">
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">BV Box 2 — ${yr}</h3>
+      ${tr('BV Winst (koerswinst)',eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
+      <div class="divider"></div>
+      ${tr('Vennootschapsbelasting (VPB)',eur(-vpb),'19% / 25,8%','#ef4444')}
+      ${tr('Winst na VPB',eur(afterVpb),'','','600')}
+      <div class="divider"></div>
+      ${tr('Box 2 belasting',eur(-box2),'24,5% / 31%','#ef4444')}
+      ${divCredit>0?tr('Dividendbelasting verrekening (15%)',eur(-divCredit),'','var(--g)'):''}
+      ${tr('Box 2 te betalen',eur(box2Pay),'','#ef4444')}
+      <div class="divider"></div>
+      ${trBig('Totaal te betalen (VPB + Box 2)',eur(totalPay),'','#ef4444')}
+    </div>`;
+  }
+
+  document.getElementById('tax-content').innerHTML=html;
+}
+
+function pctRaw(v){return(v*100).toFixed(2)+'%'}
+function tr(lbl,val,sub='',color='',weight=''){
+  return`<div style="display:flex;align-items:flex-start;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f9fafb">
+    <div><p style="font-size:12px;color:#6b7280;margin:0">${lbl}</p>${sub?`<p style="font-size:11px;color:#9ca3af;margin:2px 0 0">${sub}</p>`:''}</div>
+    <p style="font-size:13px;font-weight:${weight||'400'};color:${color||'#111'};margin:0;margin-left:12px">${val}</p>
+  </div>`;
+}
+function trBig(lbl,val,sub='',color=''){
+  return`<div style="display:flex;align-items:flex-start;justify-content:space-between;padding:8px 0">
+    <div><p style="font-size:12px;color:#6b7280;margin:0;font-weight:600">${lbl}</p>${sub?`<p style="font-size:11px;color:#9ca3af;margin:2px 0 0">${sub}</p>`:''}</div>
+    <p style="font-size:18px;font-weight:700;color:${color||'#111'};margin:0;margin-left:12px">${val}</p>
+  </div>`;
+}
+
+// ════════ DEBT ════════
+let editDebtId=null;
+
+function renderDebt(){
+  document.getElementById('debt-empty').style.display=S.debts.length===0?'block':'none';
+  document.getElementById('debt-summary').style.display=S.debts.length>0?'block':'none';
+  if(S.debts.length===0){document.getElementById('debt-list').innerHTML='';return;}
+
+  const tot=S.debts.reduce((s,d)=>s+d.remainingBalance,0);
+  const mthly=S.debts.reduce((s,d)=>s+d.monthlyPayment,0);
+  const avgR=tot>0?S.debts.reduce((s,d)=>s+d.annualInterestRate*(d.remainingBalance/tot),0):0;
+  const annInt=S.debts.reduce((s,d)=>s+d.remainingBalance*d.annualInterestRate/100,0);
+
+  document.getElementById('d-total').textContent=eur(tot);
+  document.getElementById('d-monthly').textContent=eur(mthly);
+  document.getElementById('d-rate').textContent=avgR.toFixed(2)+'%';
+  document.getElementById('d-annual').textContent=eur(annInt);
+
+  const tl={annuity:'Annuïteit',linear:'Lineair',interestOnly:'Aflossingsvrij',studiefinanciering:'Studiefinanciering'};
+
+  document.getElementById('debt-list').innerHTML=S.debts.map(d=>{
+    const mr=monthsRem(d);
+    const pct=(d.totalAmount>0?((d.totalAmount-d.remainingBalance)/d.totalAmount)*100:0).toFixed(1);
+    const y=Math.floor(mr/12),m=mr%12;
+    return`<div class="card" style="cursor:pointer" onclick="openDebtModal('${d.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
+        <div><p style="font-weight:600;color:#111;margin:0">${d.name}</p><p style="font-size:12px;color:#9ca3af;margin:2px 0 0">${tl[d.debtType]||d.debtType}</p></div>
+        <p style="font-weight:700;color:#111;margin:0;font-size:16px">${eur(d.remainingBalance)}</p>
+      </div>
+      <progress value="${pct}" max="100" class="${parseFloat(pct)>50?'':'orange'}"></progress>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-top:6px">
+        <span>${d.annualInterestRate.toFixed(2)}% · ${eur(d.monthlyPayment)}/mnd</span>
+        <span>${pct}% afgelost</span>
+      </div>
+      <p style="font-size:12px;color:#9ca3af;margin:4px 0 0">${mr>0?`${y>0?y+'j ':''}${m}m resterend · ${eur(d.remainingBalance*d.annualInterestRate/100)}/jaar`:mr===-1?'<span style="color:#ef4444">Betaling < rente</span>':'<span style="color:var(--g)">Afgelost!</span>'}</p>
+    </div>`;
+  }).join('');
+}
+
+function monthsRem(d){
+  if(!d.monthlyPayment||d.monthlyPayment<=0)return 0;
+  if(d.debtType==='interestOnly')return d.termYears*12;
+  const r=d.annualInterestRate/100/12;
+  if(r===0)return Math.ceil(d.remainingBalance/d.monthlyPayment);
+  const mi=r*d.remainingBalance;
+  if(d.monthlyPayment<=mi)return -1;
+  return Math.ceil(-Math.log(1-(r*d.remainingBalance/d.monthlyPayment))/Math.log(1+r));
+}
+
+function openDebtModal(id){
+  editDebtId=id||null;
+  const d=id?S.debts.find(x=>x.id===id):null;
+  document.getElementById('debt-modal-title').textContent=d?'Schuld bewerken':'Schuld toevoegen';
+  document.getElementById('df-delete').style.display=d?'block':'none';
+  document.getElementById('df-name').value=d?.name||'';
+  document.getElementById('df-type').value=d?.debtType||'annuity';
+  document.getElementById('df-total').value=d?.totalAmount||'';
+  document.getElementById('df-balance').value=d?.remainingBalance||'';
+  document.getElementById('df-rate').value=d?.annualInterestRate||'';
+  document.getElementById('df-payment').value=d?.monthlyPayment||'';
+  document.getElementById('df-term').value=d?.termYears||30;
+  document.getElementById('df-start').value=d?.startDate||new Date().toISOString().split('T')[0];
+  updateDebtFormUI();
+  document.getElementById('debt-modal').style.display='flex';
+}
+function closeDebtModal(){document.getElementById('debt-modal').style.display='none';editDebtId=null;}
+
+function updateDebtFormUI(){
+  const t=document.getElementById('df-type').value;
+  document.getElementById('df-normal').style.display=t==='studiefinanciering'?'none':'block';
+  document.getElementById('df-studie').style.display=t==='studiefinanciering'?'block':'none';
+  updateDebtEst();
+}
+
+function updateDebtEst(){
+  const bal=parseFloat(document.getElementById('df-balance').value);
+  const rate=parseFloat(document.getElementById('df-rate').value);
+  const pmt=parseFloat(document.getElementById('df-payment').value);
+  const estEl=document.getElementById('df-estimate');
+  if(!bal||!rate||!pmt||bal<=0){estEl.style.display='none';return;}
+  estEl.style.display='block';
+  const r=rate/100/12,mi=r*bal,ai=bal*rate/100;
+  let html=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">Maandelijkse rente</span><span>${eur(mi)}</span></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">Jaarlijkse rente</span><span>${eur(ai)}</span></div>`;
+  if(pmt>mi&&r>0){
+    const n=-Math.log(1-(r*bal/pmt))/Math.log(1+r);
+    const y=Math.floor(n/12),m=Math.ceil(n%12);
+    html+=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">Tot aflossing</span><span>${y}j ${m}m</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">Totale rente</span><span>${eur(Math.ceil(n)*pmt-bal)}</span></div>`;
+  }
+  document.getElementById('df-est-content').innerHTML=html;
+}
+
+function saveDebt(e){
+  e.preventDefault();
+  const type=document.getElementById('df-type').value;
+  let total=parseFloat(document.getElementById('df-total').value)||0;
+  let bal=parseFloat(document.getElementById('df-balance').value)||0;
+  if(type==='studiefinanciering'){
+    const disb=parseFloat(document.getElementById('df-disb').value)||0;
+    const dm=parseInt(document.getElementById('df-disbmonths').value)||48;
+    const gm=parseInt(document.getElementById('df-grace').value)||0;
+    const r=(parseFloat(document.getElementById('df-rate').value)||0)/100/12;
+    let acc=0;for(let i=0;i<dm;i++)acc=(acc+disb)*(1+r);for(let i=0;i<gm;i++)acc*=(1+r);
+    total=acc;bal=acc;
+  }
+  const debt={
+    id:editDebtId||uid(),name:document.getElementById('df-name').value.trim(),
+    debtType:type,totalAmount:total,remainingBalance:bal,
+    annualInterestRate:parseFloat(document.getElementById('df-rate').value)||0,
+    monthlyPayment:parseFloat(document.getElementById('df-payment').value)||0,
+    termYears:parseInt(document.getElementById('df-term').value)||30,
+    startDate:document.getElementById('df-start').value,
+  };
+  if(editDebtId)S.debts=S.debts.map(d=>d.id===editDebtId?debt:d);
+  else S.debts.push(debt);
+  saveState();closeDebtModal();renderDebt();toast('Schuld opgeslagen');
+}
+
+function deleteDebt(){
+  if(!editDebtId||!confirm('Schuld verwijderen?'))return;
+  S.debts=S.debts.filter(d=>d.id!==editDebtId);
+  saveState();closeDebtModal();renderDebt();toast('Schuld verwijderd');
+}
+
+// ════════ INIT ════════
+loadState();
+document.getElementById('btn-prive').className='btn '+(S.settings.entityType==='prive'?'btn-g':'btn-w');
+document.getElementById('btn-bv').className='btn '+(S.settings.entityType==='bv'?'btn-g':'btn-w');
+showTab('portfolio');
+</script>
+</body>
+</html>
