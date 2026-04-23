@@ -15,8 +15,8 @@
 
         body.show-dutch .en { display: none; }
         body.show-dutch .nl { display: inline; }
-        
-        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl, body.show-dutch p.nl, body.show-dutch div.nl { display: block; }
+        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl,
+        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl { display: block; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-900">
@@ -34,32 +34,32 @@
 
     <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
         <div class="bg-white rounded-3xl p-8 md:p-16 shadow-sm border border-gray-100">
-            
+
             <header class="mb-12 text-center md:text-left">
                 <h1 class="text-4xl font-extrabold mb-4">
                     <span class="en">Terms of Service</span>
                     <span class="nl">Gebruiksvoorwaarden</span>
                 </h1>
                 <p class="text-gray-400 font-medium">
-                    <span class="en">Last updated: April 19, 2026</span>
-                    <span class="nl">Laatst bijgewerkt: 19 april 2026</span>
+                    <span class="en">Last updated: April 23, 2026</span>
+                    <span class="nl">Laatst bijgewerkt: 23 april 2026</span>
                 </p>
                 <p class="mt-4 text-gray-600">
-                    <span class="en">By using Rendementje, you agree to these terms:</span>
-                    <span class="nl">Door Rendementje te gebruiken, ga je akkoord met deze voorwaarden:</span>
+                    <span class="en">By using Rendementje — including the iOS app, the web app at rendementje.nl/app, or the rendementje.nl website — you agree to these terms.</span>
+                    <span class="nl">Door gebruik te maken van Rendementje — inclusief de iOS-app, de webapp op rendementje.nl/app of de rendementje.nl-website — ga je akkoord met deze voorwaarden.</span>
                 </p>
             </header>
 
             <div class="grid gap-10">
-                
+
                 <section class="flex gap-4">
                     <div class="text-brand font-bold text-xl">1.</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Informational Use</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Informatief Gebruik</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Informational Use Only</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Uitsluitend Informatief Gebruik</h2>
                         <p class="text-gray-600">
-                            <span class="en">Rendementje is for personal portfolio tracking, education, and estimation. It is not financial, tax, legal, or investment advice.</span>
-                            <span class="nl">Rendementje is bedoeld voor het bijhouden van je persoonlijke portfolio, educatie en schattingen. Het is geen financieel, fiscaal, juridisch of beleggingsadvies.</span>
+                            <span class="en">Rendementje is a personal portfolio tracking, debt management, and tax estimation tool. It is not financial, tax, legal, or investment advice. Tax calculations are estimates based on published Dutch tax rates and should not be used as a substitute for a tax return or professional advice.</span>
+                            <span class="nl">Rendementje is een hulpmiddel voor het bijhouden van je persoonlijke portfolio, schuldbeheer en belastingschattingen. Het is geen financieel, fiscaal, juridisch of beleggingsadvies. Belastingberekeningen zijn schattingen op basis van gepubliceerde Nederlandse belastingtarieven en mogen niet worden gebruikt als vervanging voor een belastingaangifte of professioneel advies.</span>
                         </p>
                     </div>
                 </section>
@@ -70,8 +70,8 @@
                         <h2 class="text-xl font-bold text-gray-900 mb-2 en">No Trading Capability</h2>
                         <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Geen Handelsfunctionaliteit</h2>
                         <p class="text-gray-600">
-                            <span class="en">Rendementje does not execute trades, withdrawals, or orders on your behalf. Any API integration is read-only import functionality.</span>
-                            <span class="nl">Rendementje voert geen transacties, opnames of orders uit in jouw naam. Elke API-integratie is uitsluitend bedoeld voor lees-rechten en import-functionaliteit.</span>
+                            <span class="en">Rendementje does not execute trades, withdrawals, or orders on any exchange or broker on your behalf. DEGIRO import is a read-only CSV parsing feature — it does not connect to DEGIRO's systems or APIs.</span>
+                            <span class="nl">Rendementje voert geen transacties, opnames of orders uit bij een beurs of broker in jouw naam. DEGIRO-import is een read-only CSV-parserfunctie — het maakt geen verbinding met de systemen of API's van DEGIRO.</span>
                         </p>
                     </div>
                 </section>
@@ -79,11 +79,11 @@
                 <section class="flex gap-4">
                     <div class="text-brand font-bold text-xl">3.</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Data Accuracy</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Data Nauwkeurigheid</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Web App — Session Data</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Webapp — Sessiegegevens</h2>
                         <p class="text-gray-600">
-                            <span class="en">Prices and imports may contain delays or mismatches due to third-party data quality. You remain responsible for verifying all values.</span>
-                            <span class="nl">Prijzen en importgegevens kunnen vertragingen of afwijkingen bevatten door de datakwaliteit van derden. Je blijft zelf verantwoordelijk voor het controleren van alle waarden.</span>
+                            <span class="en">The web app stores all user-entered data exclusively in your browser's <code>sessionStorage</code>. This data is automatically and permanently deleted when you close the browser tab. You accept that closing the tab will erase all entered data with no possibility of recovery. Rendementje accepts no liability for data loss resulting from tab closure, browser crashes, or device restarts.</span>
+                            <span class="nl">De webapp slaat alle door de gebruiker ingevoerde gegevens uitsluitend op in de <code>sessionStorage</code> van je browser. Deze gegevens worden automatisch en permanent verwijderd wanneer je het browsertabblad sluit. Je accepteert dat het sluiten van het tabblad alle ingevoerde gegevens permanent wist zonder mogelijkheid tot herstel. Rendementje aanvaardt geen aansprakelijkheid voor gegevensverlies als gevolg van het sluiten van een tabblad, browsercrashes of het opnieuw opstarten van apparaten.</span>
                         </p>
                     </div>
                 </section>
@@ -91,23 +91,23 @@
                 <section class="flex gap-4">
                     <div class="text-brand font-bold text-xl">4.</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">User Responsibility</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Verantwoordelijkheid Gebruiker</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Analytics on the Marketing Website</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Analyse op de Marketingwebsite</h2>
                         <p class="text-gray-600">
-                            <span class="en">You are responsible for maintaining secure API credentials and configuring read-only permissions where supported.</span>
-                            <span class="nl">Je bent zelf verantwoordelijk voor het veilig bewaren van API-gegevens en het instellen van 'read-only' (alleen-lezen) rechten waar dit ondersteund wordt.</span>
+                            <span class="en">The rendementje.nl marketing pages (home, privacy, terms) use Contentsquare for website analytics. By visiting these pages you acknowledge this. The web app at rendementje.nl/app does not include Contentsquare or any other analytics or tracking scripts. See our <a href="privacy.html" class="text-brand underline">Privacy Policy</a> for full details.</span>
+                            <span class="nl">De rendementje.nl-marketingpagina's (home, privacy, voorwaarden) maken gebruik van Contentsquare voor websiteanalyse. Door deze pagina's te bezoeken erken je dit. De webapp op rendementje.nl/app bevat geen Contentsquare of andere analyse- of trackingscripts. Zie ons <a href="privacy.html" class="text-brand underline">Privacybeleid</a> voor volledige details.</span>
                         </p>
                     </div>
                 </section>
 
-                <section class="flex gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                <section class="flex gap-4">
                     <div class="text-brand font-bold text-xl">5.</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Limitation of Liability</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Beperking van Aansprakelijkheid</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Data Accuracy</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Nauwkeurigheid van Gegevens</h2>
                         <p class="text-gray-600">
-                            <span class="en">The app is provided "as is" without warranties. The developer is not liable for losses, damages, tax filings, or investment outcomes.</span>
-                            <span class="nl">De app wordt geleverd "zoals deze is" (as is) zonder garanties. De ontwikkelaar is niet aansprakelijk voor verliezen, schade, belastingaangiften of resultaten van beleggingen.</span>
+                            <span class="en">Market prices fetched from Yahoo Finance may contain delays, gaps, or inaccuracies. Tax rate constants are based on published Dutch fiscal year 2025 rates and may not reflect future changes. You remain responsible for verifying all values before making financial or tax decisions.</span>
+                            <span class="nl">Marktprijzen opgehaald via Yahoo Finance kunnen vertragingen, hiaten of onnauwkeurigheden bevatten. Belastingtarieven zijn gebaseerd op gepubliceerde Nederlandse tarieven voor belastingjaar 2025 en kunnen toekomstige wijzigingen niet weerspiegelen. Je blijft zelf verantwoordelijk voor het controleren van alle waarden voordat je financiële of fiscale beslissingen neemt.</span>
                         </p>
                     </div>
                 </section>
@@ -115,18 +115,42 @@
                 <section class="flex gap-4">
                     <div class="text-brand font-bold text-xl">6.</div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Changes</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Wijzigingen</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">User Responsibility</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Verantwoordelijkheid Gebruiker</h2>
                         <p class="text-gray-600">
-                            <span class="en">Terms and privacy text may be updated in future app releases.</span>
-                            <span class="nl">De voorwaarden en privacyteksten kunnen worden bijgewerkt in toekomstige app-versies.</span>
+                            <span class="en">You are responsible for the accuracy of data you manually enter or import. You are responsible for keeping your device and browser secure. Because the web app stores data only in your browser tab, you are responsible for exporting or recording any values you wish to retain before closing the tab.</span>
+                            <span class="nl">Je bent verantwoordelijk voor de juistheid van gegevens die je handmatig invoert of importeert. Je bent verantwoordelijk voor het beveiligen van je apparaat en browser. Omdat de webapp gegevens alleen in je browsertabblad opslaat, ben je zelf verantwoordelijk voor het exporteren of noteren van waarden die je wilt bewaren voordat je het tabblad sluit.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                    <div class="text-brand font-bold text-xl">7.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Limitation of Liability</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Beperking van Aansprakelijkheid</h2>
+                        <p class="text-gray-600">
+                            <span class="en">The app and web app are provided "as is" without warranties of any kind. The developer is not liable for financial losses, incorrect tax filings, investment outcomes, or data loss — including data lost due to browser tab closure or session expiry in the web app.</span>
+                            <span class="nl">De app en webapp worden geleverd "zoals ze zijn" (as is) zonder enige garanties. De ontwikkelaar is niet aansprakelijk voor financiële verliezen, onjuiste belastingaangiften, beleggingsresultaten of gegevensverlies — inclusief gegevens die verloren gaan door het sluiten van een browsertabblad of het verlopen van de sessie in de webapp.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <section class="flex gap-4">
+                    <div class="text-brand font-bold text-xl">8.</div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Changes to These Terms</h2>
+                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Wijzigingen in deze Voorwaarden</h2>
+                        <p class="text-gray-600">
+                            <span class="en">These terms may be updated when significant changes are made to the app, web app, or the services they rely on. The "last updated" date at the top of this page reflects the most recent revision.</span>
+                            <span class="nl">Deze voorwaarden kunnen worden bijgewerkt wanneer er significante wijzigingen worden aangebracht in de app, de webapp of de diensten waarvan zij afhankelijk zijn. De datum "Laatst bijgewerkt" bovenaan deze pagina geeft de meest recente versie aan.</span>
                         </p>
                     </div>
                 </section>
 
             </div>
         </div>
-        
+
         <div class="mt-12 text-center">
             <a href="index.html" class="text-brand font-semibold hover:underline decoration-2 underline-offset-4">
                 <span class="en">← Back to home</span>

@@ -9,23 +9,21 @@
         :root { --brand-green: #2ecc71; }
         .bg-brand { background-color: var(--brand-green); }
         .text-brand { color: var(--brand-green); }
+        .border-brand { border-color: var(--brand-green); }
 
-        /* Logic: Hide NL by default, show EN */
         .nl { display: none; }
         .en { display: inline; }
 
-        /* Logic: When 'show-dutch' class is on body, swap them */
         body.show-dutch .en { display: none; }
         body.show-dutch .nl { display: inline; }
-        
-        /* Ensure block elements stay block when shown */
-        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl, body.show-dutch p.nl, body.show-dutch div.nl { display: block; }
+        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl,
+        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl { display: block; }
     </style>
 </head>
 <body class="bg-gray-50 font-sans antialiased text-gray-900">
 
     <nav class="p-6 flex justify-between items-center max-w-4xl mx-auto">
-        <a href="/" class="flex items-center space-x-3 hover:opacity-80 transition">
+        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
             <img src="AppIcon.png" alt="Logo" class="w-8 h-8 rounded-lg shadow-sm">
             <span class="text-xl font-bold tracking-tight">Rendementje</span>
         </a>
@@ -37,76 +35,150 @@
 
     <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
         <div class="bg-white rounded-3xl p-8 md:p-16 shadow-sm border border-gray-100">
-            
+
             <header class="mb-12">
                 <h1 class="text-4xl font-extrabold mb-4">
                     <span class="en">Privacy Policy</span>
                     <span class="nl">Privacybeleid</span>
                 </h1>
                 <p class="text-gray-400 font-medium">
-                    <span class="en">Last updated: April 21, 2026</span>
-                    <span class="nl">Laatst bijgewerkt: 21 april 2026</span>
+                    <span class="en">Last updated: April 23, 2026</span>
+                    <span class="nl">Laatst bijgewerkt: 23 april 2026</span>
+                </p>
+                <p class="mt-4 text-gray-600">
+                    <span class="en">This policy covers the Rendementje iOS app, the Rendementje web app (rendementje.nl/app), and the rendementje.nl marketing website.</span>
+                    <span class="nl">Dit beleid is van toepassing op de Rendementje iOS-app, de Rendementje webapp (rendementje.nl/app) en de rendementje.nl-marketingwebsite.</span>
                 </p>
             </header>
 
             <div class="space-y-10 text-gray-600 leading-relaxed">
-                
+
+                <!-- 1. iOS APP -->
                 <section>
-                    <p class="text-lg">
-                        <span class="en">Rendementje stores your portfolio data locally on your device using Apple SwiftData.</span>
-                        <span class="nl">Rendementje slaat je portfolio-gegevens lokaal op je apparaat op met Apple SwiftData.</span>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">1. iOS App — data storage</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">1. iOS-app — gegevensopslag</h2>
+                    <p>
+                        <span class="en">The iOS app stores all your portfolio data — transactions, assets, debts, and settings — exclusively on your device using Apple SwiftData. No account is required and no data is transmitted to Rendementje servers.</span>
+                        <span class="nl">De iOS-app slaat al je portfoliogegevens — transacties, bezittingen, schulden en instellingen — uitsluitend op je eigen apparaat op via Apple SwiftData. Er is geen account vereist en er worden geen gegevens naar Rendementje-servers verstuurd.</span>
                     </p>
                 </section>
 
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">What we collect</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">Wat we verzamelen</h2>
+                <!-- 2. WEB APP -->
+                <section class="bg-green-50 rounded-2xl p-6 border-l-4 border-brand">
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">2. Web app — session-only storage</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">2. Webapp — alleen sessie-opslag</h2>
+                    <p class="mb-3">
+                        <span class="en">The web app (<strong>rendementje.nl/app</strong>) stores all data exclusively in your browser's <code>sessionStorage</code>. This means:</span>
+                        <span class="nl">De webapp (<strong>rendementje.nl/app</strong>) slaat alle gegevens uitsluitend op in de <code>sessionStorage</code> van je browser. Dit betekent:</span>
+                    </p>
                     <ul class="list-disc ml-5 space-y-2">
-                        <li class="en">Transactions and asset data you add or import.</li>
-                        <li class="nl">Transacties en bezittingen die je toevoegt of importeert.</li>
+                        <li class="en">Your data is <strong>automatically and permanently deleted</strong> when you close the browser tab.</li>
+                        <li class="nl">Je gegevens worden <strong>automatisch en permanent verwijderd</strong> zodra je het browsertabblad sluit.</li>
+                        <li class="en">Your data is never sent to Rendementje servers or any third-party server.</li>
+                        <li class="nl">Je gegevens worden nooit verstuurd naar Rendementje-servers of servers van derden.</li>
+                        <li class="en">No account, login, or registration is required or possible.</li>
+                        <li class="nl">Er is geen account, inlog of registratie vereist of mogelijk.</li>
+                        <li class="en">No tracking or analytics scripts run inside the web app.</li>
+                        <li class="nl">Er worden geen tracking- of analysescripts uitgevoerd binnen de webapp.</li>
                     </ul>
+                    <p class="mt-3 text-sm text-gray-500">
+                        <span class="en">You are informed of this at the top of every web app session via an in-app notice.</span>
+                        <span class="nl">Je wordt hierover geïnformeerd bovenaan elke webapp-sessie via een melding in de app.</span>
+                    </p>
                 </section>
 
+                <!-- 3. CONTENTSQUARE -->
+                <section>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">3. Analytics on the marketing website — Contentsquare</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">3. Analyse op de marketingwebsite — Contentsquare</h2>
+                    <p class="mb-3">
+                        <span class="en">The <strong>rendementje.nl marketing pages</strong> (home, privacy, terms) use <a href="https://contentsquare.com" target="_blank" rel="noopener" class="text-brand underline">Contentsquare</a>, a digital experience analytics service. Contentsquare may collect:</span>
+                        <span class="nl">De <strong>rendementje.nl-marketingpagina's</strong> (home, privacy, voorwaarden) maken gebruik van <a href="https://contentsquare.com" target="_blank" rel="noopener" class="text-brand underline">Contentsquare</a>, een dienst voor digitale ervaringsanalyse. Contentsquare kan het volgende verzamelen:</span>
+                    </p>
+                    <ul class="list-disc ml-5 space-y-2 mb-3">
+                        <li class="en">Page views and navigation patterns.</li>
+                        <li class="nl">Paginaweergaven en navigatiepatronen.</li>
+                        <li class="en">Mouse movements, clicks, and scroll behaviour (session replay).</li>
+                        <li class="nl">Muisbewegingen, klikken en scrollgedrag (sessieopname).</li>
+                        <li class="en">Device type, browser, and approximate location (country/region level).</li>
+                        <li class="nl">Apparaattype, browser en globale locatie (land/regio).</li>
+                    </ul>
+                    <p class="mb-3">
+                        <span class="en">This data is processed by Contentsquare under their own privacy policy. Contentsquare acts as a data processor on behalf of Rendementje.</span>
+                        <span class="nl">Deze gegevens worden verwerkt door Contentsquare op basis van hun eigen privacybeleid. Contentsquare treedt op als gegevensverwerker namens Rendementje.</span>
+                    </p>
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <p class="font-semibold text-gray-800 mb-1">
+                            <span class="en">⚠️ Contentsquare does NOT run inside the web app.</span>
+                            <span class="nl">⚠️ Contentsquare draait NIET binnen de webapp.</span>
+                        </p>
+                        <p class="text-sm">
+                            <span class="en">The web app at <strong>rendementje.nl/app</strong> deliberately excludes all analytics scripts, including Contentsquare. No behavioural tracking of any kind occurs while you use your financial data in the web app.</span>
+                            <span class="nl">De webapp op <strong>rendementje.nl/app</strong> sluit bewust alle analysescripts uit, inclusief Contentsquare. Er vindt geen enkel gedragstracking plaats terwijl je je financiële gegevens gebruikt in de webapp.</span>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- 4. PRICE DATA -->
+                <section>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">4. Third-party price data</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">4. Koersgegevens van derden</h2>
+                    <p>
+                        <span class="en">Both the iOS app and the web app may request current market prices and currency exchange rates from Yahoo Finance. These requests include the ticker symbols you look up and are made directly from your device or browser to Yahoo Finance's servers — not via Rendementje. Yahoo Finance's own privacy policy applies to these requests. No personal financial data (quantities, purchase prices, account details) is included in these requests.</span>
+                        <span class="nl">Zowel de iOS-app als de webapp kunnen actuele marktprijzen en wisselkoersen opvragen bij Yahoo Finance. Deze verzoeken bevatten de tickersymbolen die je opzoekt en worden rechtstreeks verstuurd van jouw apparaat of browser naar de servers van Yahoo Finance — niet via Rendementje. Het privacybeleid van Yahoo Finance is van toepassing op deze verzoeken. Er worden geen persoonlijke financiële gegevens (aantallen, aankoopprijzen, accountgegevens) meegestuurd in deze verzoeken.</span>
+                    </p>
+                </section>
+
+                <!-- 5. WHAT WE DO NOT DO -->
                 <section class="bg-gray-50 rounded-2xl p-6 border-l-4 border-brand">
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">What we do not do</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">Wat we niet doen</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">5. What we do not do</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">5. Wat we niet doen</h2>
                     <ul class="list-disc ml-5 space-y-2">
+                        <li class="en">We do not collect or store any personal financial data on our servers.</li>
+                        <li class="nl">Wij verzamelen of bewaren geen persoonlijke financiële gegevens op onze servers.</li>
                         <li class="en">We do not execute broker or exchange orders.</li>
                         <li class="nl">Wij voeren geen broker- of exchange-orders uit.</li>
-                        <li class="en">We do not place trades.</li>
-                        <li class="nl">Wij plaatsen geen beleggingstransacties.</li>
+                        <li class="en">We do not sell data to third parties.</li>
+                        <li class="nl">Wij verkopen geen gegevens aan derden.</li>
+                        <li class="en">We do not use cookies for advertising or cross-site tracking.</li>
+                        <li class="nl">Wij gebruiken geen cookies voor reclame of cross-site tracking.</li>
                     </ul>
                 </section>
 
+                <!-- 6. YOUR CONTROL -->
                 <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">Third-party services</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">Diensten van derden</h2>
-                    <p>
-                        <span class="en">Market prices and metadata may be fetched from third-party finance APIs.</span>
-                        <span class="nl">Marktprijzen en metadata kunnen worden opgehaald via finance-API's van derden.</span>
-                    </p>
-                </section>
-
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">Your control</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">Jouw controle</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">6. Your control</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">6. Jouw controle</h2>
                     <ul class="list-disc ml-5 space-y-2">
-                        <li class="en">You can delete all transactions from the Transactions screen.</li>
-                        <li class="nl">Je kunt alle transacties verwijderen via het Transactie-scherm.</li>
-                        <li class="en">You can remove the app to delete local storage.</li>
-                        <li class="nl">Je kunt de app verwijderen om de lokale opslag te wissen.</li>
+                        <li class="en"><strong>iOS app:</strong> Delete all transactions via the Transactions screen, or remove the app to wipe local storage.</li>
+                        <li class="nl"><strong>iOS-app:</strong> Verwijder alle transacties via het Transactie-scherm, of verwijder de app om de lokale opslag te wissen.</li>
+                        <li class="en"><strong>Web app:</strong> Close the browser tab at any time — all data is immediately and permanently deleted.</li>
+                        <li class="nl"><strong>Webapp:</strong> Sluit het browsertabblad op elk moment — alle gegevens worden direct en permanent verwijderd.</li>
+                        <li class="en"><strong>Contentsquare (marketing pages):</strong> You may opt out via your browser's "Do Not Track" setting or a consent management tool. Contentsquare respects the Global Privacy Control (GPC) signal.</li>
+                        <li class="nl"><strong>Contentsquare (marketingpagina's):</strong> Je kunt je afmelden via de "Do Not Track"-instelling van je browser of een toestemmingsbeheertools. Contentsquare respecteert het Global Privacy Control (GPC)-signaal.</li>
                     </ul>
+                </section>
+
+                <!-- 7. LEGAL BASIS (GDPR) -->
+                <section>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">7. Legal basis (GDPR)</h2>
+                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">7. Rechtsgrondslag (AVG)</h2>
+                    <p>
+                        <span class="en">For users in the European Economic Area: the use of Contentsquare on marketing pages is based on our legitimate interest in understanding how visitors interact with our website (Art. 6(1)(f) GDPR). No financial data is processed; the web app contains no tracking. For questions, contact us at the address on the App Store listing.</span>
+                        <span class="nl">Voor gebruikers in de Europese Economische Ruimte: het gebruik van Contentsquare op marketingpagina's is gebaseerd op ons gerechtvaardigd belang om te begrijpen hoe bezoekers met onze website omgaan (Art. 6(1)(f) AVG). Er worden geen financiële gegevens verwerkt; de webapp bevat geen tracking. Neem voor vragen contact op via het adres in de App Store-vermelding.</span>
+                    </p>
                 </section>
 
                 <footer class="pt-10 border-t border-gray-100 italic text-sm text-gray-400">
                     <p>
-                        <span class="en">This app provides educational and informational tooling, not tax, legal, or investment advice.</span>
-                        <span class="nl">Deze app biedt educatieve en informatieve hulpmiddelen, geen belasting-, juridisch- of beleggingsadvies.</span>
+                        <span class="en">This app provides educational and informational tooling only — not tax, legal, or investment advice. Tax calculations are estimates; consult a tax adviser for official filings.</span>
+                        <span class="nl">Deze app biedt uitsluitend educatieve en informatieve hulpmiddelen — geen belasting-, juridisch of beleggingsadvies. Belastingberekeningen zijn schattingen; raadpleeg een belastingadviseur voor officiële aangifte.</span>
                     </p>
                 </footer>
+
             </div>
         </div>
-        
+
         <div class="mt-12 text-center">
             <a href="index.html" class="text-brand font-semibold hover:underline decoration-2 underline-offset-4">
                 <span class="en">← Back to home</span>
