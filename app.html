@@ -614,9 +614,18 @@ function hideDrop(){document.getElementById('tf-drop').style.display='none';}
 
 function esc(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
 
+async function yFetch(url){
+  const proxies=['',`https://corsproxy.io/?${encodeURIComponent(url)}`];
+  proxies[0]=url;
+  for(const u of proxies){
+    try{const r=await fetch(u,{signal:AbortSignal.timeout(5000)});if(r.ok)return await r.json();}catch{}
+  }
+  throw new Error('network');
+}
+
 async function fetchTickerSearch(q){
-  const r=await fetch(`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=8&newsCount=0`);
-  const d=await r.json();
+  const url=`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=8&newsCount=0`;
+  const d=await yFetch(url);
   const typeMap={EQUITY:{label:'Stock',cls:'stock'},ETF:{label:'ETF',cls:'etf'},CRYPTOCURRENCY:{label:'Crypto',cls:'crypto'},MUTUALFUND:{label:'Fund',cls:'other'}};
   return(d?.quotes||[]).filter(q=>q.symbol&&(q.shortname||q.longname)).slice(0,8).map(q=>{
     const tm=typeMap[q.quoteType]||{label:q.quoteType||'—',cls:'other'};
@@ -789,8 +798,8 @@ async function refreshPrices(){
 
 async function tryFetchQuote(sym){
   try{
-    const r=await fetch(`https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=1d`);
-    const d=await r.json();
+    const url=`https://query2.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?range=1d&interval=1d`;
+    const d=await yFetch(url);
     const res=d?.chart?.result?.[0];
     if(!res?.meta?.regularMarketPrice)return null;
     return{price:res.meta.regularMarketPrice,currency:res.meta.currency||'USD'};
@@ -969,8 +978,8 @@ function importDEGIRO(ev){
 
 async function searchYahooIsin(q){
   try{
-    const r=await fetch(`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=5&newsCount=0`);
-    const d=await r.json();
+    const url=`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=5&newsCount=0`;
+    const d=await yFetch(url);
     const quote=d?.quotes?.[0];if(!quote?.symbol)return null;
     const typeMap={EQUITY:'stock',ETF:'etf',CRYPTOCURRENCY:'crypto'};
     return{symbol:quote.symbol,assetType:typeMap[quote.quoteType]||'stock'};
