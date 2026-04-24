@@ -4,109 +4,323 @@
     <script src="https://t.contentsquare.net/uxa/8c97f5ee65968.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rendementje - Geen stress om jouw succes</title>
+    <title>Rendementje — Geen stress om jouw succes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root { --brand-green: #2ecc71; }
         .bg-brand { background-color: var(--brand-green); }
         .text-brand { color: var(--brand-green); }
-
-        /* Logic: Hide NL by default, show EN */
+        .border-brand { border-color: var(--brand-green); }
         .nl { display: none; }
         .en { display: inline; }
-
-        /* Logic: When 'show-dutch' class is on body, swap them */
         body.show-dutch .en { display: none; }
         body.show-dutch .nl { display: inline; }
-        
-        /* Ensure block elements stay block when shown */
-        body.show-dutch h1.nl, body.show-dutch h3.nl, body.show-dutch p.nl { display: block; }
+        body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl,
+        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl,
+        body.show-dutch span.nl { display: block; }
+        body.show-dutch span.nl.inline { display: inline; }
+        h1.en, h2.en, h3.en, p.en, div.en, li.en { display: block; }
+        span.en.inline { display: inline; }
+        .feature-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .feature-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased">
+<body class="bg-white font-sans antialiased">
 
-    <nav class="p-6 flex justify-between items-center max-w-6xl mx-auto">
+    <!-- NAV -->
+    <nav class="px-6 py-5 flex justify-between items-center max-w-6xl mx-auto">
         <div class="flex items-center space-x-3">
             <img src="AppIcon.png" alt="Logo" class="w-10 h-10 rounded-xl shadow-sm">
             <span class="text-2xl font-bold tracking-tight text-gray-900">Rendementje</span>
         </div>
-        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-100 transition shadow-sm">
-            <span class="nl">🇳🇱 Nederlands</span>
-            <span class="en">🇬🇧 English</span>
+        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 transition shadow-sm text-gray-600">
+            <span class="nl inline">🇳🇱 Nederlands</span>
+            <span class="en inline">🇬🇧 English</span>
         </button>
     </nav>
 
-    <header class="max-w-6xl mx-auto px-6 py-16 text-center md:py-24">
-        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6">
-            <span class="en">No stress, <br><span class="text-brand">for your success.</span></span>
-            <span class="nl">Geen stress, <br><span class="text-brand">om jouw succes.</span></span>
+    <!-- ══════════════ ATTENTION — Hero ══════════════ -->
+    <header class="max-w-6xl mx-auto px-6 pt-12 pb-20 text-center md:pt-20 md:pb-28">
+
+        <!-- Pain-point badge -->
+        <div class="inline-flex items-center gap-2 bg-amber-50 border border-amber-200 text-amber-800 text-sm font-medium px-4 py-1.5 rounded-full mb-8">
+            <span>⏱️</span>
+            <span class="en">Dutch investors spend hours on tax returns every year</span>
+            <span class="nl">Nederlandse beleggers verliezen uren aan belastingaangifte</span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight">
+            <span class="en">No stress,<br><span class="text-brand">for your success.</span></span>
+            <span class="nl">Geen stress,<br><span class="text-brand">om jouw succes.</span></span>
         </h1>
-        <p class="text-xl text-gray-600 mb-10 max-w-2xl mx-auto">
-            <span class="en">The all-in-one investment tracker for Dutch investors. Import DEGIRO, and master your tax box 3.</span>
-            <span class="nl">De alles-in-één beleggingsapp voor Nederlandse investeerders. Importeer DEGIRO en beheer je box 3 belasting.</span>
+
+        <p class="text-xl text-gray-500 mb-4 max-w-2xl mx-auto leading-relaxed">
+            <span class="en">Import your DEGIRO transactions, track every investment, and instantly see your Box 3 or Box 2 tax — in one free app built for Dutch investors.</span>
+            <span class="nl">Importeer je DEGIRO-transacties, volg al je beleggingen en zie direct je Box 3 of Box 2 belasting — in één gratis app gebouwd voor Nederlandse beleggers.</span>
         </p>
+
+        <p class="text-sm text-gray-400 mb-10">
+            <span class="en">📱 iOS app · data stored on your device &nbsp;|&nbsp; 🌐 Web app · data only in your browser tab</span>
+            <span class="nl">📱 iOS-app · data opgeslagen op je apparaat &nbsp;|&nbsp; 🌐 Webapp · data alleen in je browsertabblad</span>
+        </p>
+
         <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="app.html" class="bg-brand text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:opacity-90 transition">
-                <span class="en">Open Web App</span>
-                <span class="nl">Open Webapp</span>
+            <a href="app.html" class="bg-brand text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:opacity-90 transition inline-flex items-center justify-center gap-2">
+                <span>🌐</span>
+                <span class="en">Open Free Web App</span>
+                <span class="nl">Open Gratis Webapp</span>
             </a>
-            <a href="https://apps.apple.com/nl/app/rendementje/id6762527792" class="bg-white text-gray-800 border border-gray-200 px-8 py-4 rounded-2xl font-bold text-lg shadow-sm hover:opacity-90 transition">
-                <span class="en">📱 Download iOS App</span>
-                <span class="nl">📱 Download iOS App</span>
+            <a href="https://apps.apple.com/nl/app/rendementje/id6762527792" class="bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-sm hover:opacity-90 transition inline-flex items-center justify-center gap-2">
+                <span>🍎</span>
+                <span class="en">Download iOS App</span>
+                <span class="nl">Download iOS App</span>
             </a>
         </div>
-        <p class="text-sm text-gray-400 mt-4">
-            <span class="en">Web app runs entirely in your browser — no account, no data stored on servers.</span>
-            <span class="nl">Webapp draait volledig in je browser — geen account, geen data op servers.</span>
-        </p>
+
+        <!-- trust signals -->
+        <div class="flex flex-wrap justify-center gap-6 mt-10 text-sm text-gray-400">
+            <span class="flex items-center gap-1.5"><span class="text-green-500">✓</span> <span class="en">No account needed</span><span class="nl">Geen account nodig</span></span>
+            <span class="flex items-center gap-1.5"><span class="text-green-500">✓</span> <span class="en">100% free</span><span class="nl">100% gratis</span></span>
+            <span class="flex items-center gap-1.5"><span class="text-green-500">✓</span> <span class="en">Privacy-first</span><span class="nl">Privacy-first</span></span>
+            <span class="flex items-center gap-1.5"><span class="text-green-500">✓</span> <span class="en">Built for the Dutch tax system</span><span class="nl">Gebouwd voor de Nederlandse belasting</span></span>
+        </div>
     </header>
 
-    <section class="max-w-6xl mx-auto px-6 py-20 grid md:grid-cols-3 gap-12">
-        <div class="text-center">
-            <div class="text-4xl mb-4">📊</div>
-            <h3 class="font-bold text-xl mb-2 en">Smart Tracking</h3>
-            <h3 class="font-bold text-xl mb-2 nl">Slim Volgen</h3>
-            <p class="text-gray-600">
-                <span class="en">Track stocks, ETFs, and crypto in one unified dashboard with real-time prices.</span>
-                <span class="nl">Volg aandelen, ETF's en crypto in één dashboard met live koersen.</span>
-            </p>
+    <!-- ══════════════ INTEREST — Features ══════════════ -->
+    <section class="bg-gray-50 py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">
+                    <span class="en">Everything a Dutch investor needs</span>
+                    <span class="nl">Alles wat een Nederlandse belegger nodig heeft</span>
+                </h2>
+                <p class="text-gray-500 text-lg max-w-xl mx-auto">
+                    <span class="en">From DEGIRO import to Box 3 and Box 2 tax — Rendementje handles it all.</span>
+                    <span class="nl">Van DEGIRO-import tot Box 3 en Box 2 belasting — Rendementje regelt het.</span>
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- DEGIRO import -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">📥</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">DEGIRO Import</span>
+                        <span class="nl">DEGIRO Import</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en">Upload your DEGIRO CSV export and all transactions are imported automatically. ISINs are resolved to Yahoo Finance tickers.</span>
+                        <span class="nl">Upload je DEGIRO CSV-export en alle transacties worden automatisch ingeladen. ISINs worden automatisch gekoppeld aan tickers.</span>
+                    </p>
+                </div>
+
+                <!-- Box 3 -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">🏛️</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">Box 3 Tax (Personal)</span>
+                        <span class="nl">Box 3 Belasting (Privé)</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en">Instantly compare <strong>forfaitaire rendement</strong> vs <strong>werkelijk rendement</strong> and see which saves you more tax. Includes heffingsvrij vermogen (€57,684 in 2025).</span>
+                        <span class="nl">Vergelijk direct <strong>forfaitair rendement</strong> versus <strong>werkelijk rendement</strong> en zie welke methode je meer belasting bespaart. Inclusief heffingsvrij vermogen (€57.684 in 2025).</span>
+                    </p>
+                </div>
+
+                <!-- Box 2 / VPB -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">🏢</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">Box 2 + VPB (Company / BV)</span>
+                        <span class="nl">Box 2 + VPB (BV)</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en">Invest through a BV? Calculate <strong>vennootschapsbelasting</strong> (VPB: 19%/25.8%) and <strong>Box 2</strong> dividend tax (24.5%/31%) on your portfolio gains — all in one overview.</span>
+                        <span class="nl">Beleg je via een BV? Bereken de <strong>vennootschapsbelasting</strong> (VPB: 19%/25,8%) en <strong>Box 2</strong> aanmerkelijk-belang-heffing (24,5%/31%) op je rendement — alles in één overzicht.</span>
+                    </p>
+                </div>
+
+                <!-- Portfolio tracking -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">📊</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">Smart Portfolio Tracking</span>
+                        <span class="nl">Slim Portefeuille Volgen</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en">Live prices via Yahoo Finance. Allocation chart, performance by asset, Sharpe ratio and portfolio weight optimisation.</span>
+                        <span class="nl">Live koersen via Yahoo Finance. Verdelingsgrafieken, prestaties per aandeel, Sharpe ratio en optimale gewichtsverdeling.</span>
+                    </p>
+                </div>
+
+                <!-- Debt tracking -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">🏦</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">Debt & Interest Tracker</span>
+                        <span class="nl">Schulden & Rentetracker</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en">Add your mortgage, DUO student loan, or other debts. Track remaining balance and see how interest is deducted from your Box 3 return.</span>
+                        <span class="nl">Voeg je hypotheek, DUO-studieschuld of andere leningen toe. Volg het saldo en zie hoe rente wordt afgetrokken van je Box 3 rendement.</span>
+                    </p>
+                </div>
+
+                <!-- Privacy -->
+                <div class="feature-card bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
+                    <div class="text-3xl mb-4">🔒</div>
+                    <h3 class="font-bold text-lg text-gray-900 mb-2">
+                        <span class="en">100% Private</span>
+                        <span class="nl">100% Privé</span>
+                    </h3>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        <span class="en"><strong>iOS app:</strong> all data stored on your device via SwiftData — never leaves your phone.<br><strong>Web app:</strong> data lives only in your browser tab and is automatically deleted when you close it.</span>
+                        <span class="nl"><strong>iOS-app:</strong> alle data opgeslagen op je eigen apparaat via SwiftData — verlaat nooit je telefoon.<br><strong>Webapp:</strong> data leeft alleen in je browsertabblad en wordt automatisch verwijderd bij sluiten.</span>
+                    </p>
+                </div>
+
+            </div>
         </div>
-        <div class="text-center">
-            <div class="text-4xl mb-4">🔗</div>
-            <h3 class="font-bold text-xl mb-2 en">Easy Imports</h3>
-            <h3 class="font-bold text-xl mb-2 nl">Simpele Import</h3>
-            <p class="text-gray-600">
-                <span class="en">Direct integration with CSV support for DEGIRO. No more manual typing.</span>
-                <span class="nl">Directe koppeling met CSV-ondersteuning voor DEGIRO. Geen handmatig gedoe.</span>
-            </p>
+    </section>
+
+    <!-- ══════════════ DESIRE — Why / How it works ══════════════ -->
+    <section class="py-20 max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6">
+                    <span class="en">Stop doing tax maths by hand</span>
+                    <span class="nl">Stop met handmatig belasting uitrekenen</span>
+                </h2>
+                <div class="space-y-5">
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-green-600 font-bold text-sm">1</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">
+                                <span class="en">Import or add your transactions</span>
+                                <span class="nl">Importeer of voeg transacties toe</span>
+                            </p>
+                            <p class="text-gray-500 text-sm mt-1">
+                                <span class="en">Upload your DEGIRO CSV or add manually. Tickers are searched automatically.</span>
+                                <span class="nl">Upload je DEGIRO CSV of voeg handmatig toe. Tickers worden automatisch gezocht.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-green-600 font-bold text-sm">2</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">
+                                <span class="en">Fetch live prices in one tap</span>
+                                <span class="nl">Haal live koersen op met één tik</span>
+                            </p>
+                            <p class="text-gray-500 text-sm mt-1">
+                                <span class="en">Prices update automatically via Yahoo Finance. EUR conversion included.</span>
+                                <span class="nl">Koersen worden automatisch bijgewerkt via Yahoo Finance. EUR-omrekening inbegrepen.</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-green-600 font-bold text-sm">3</span>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-gray-900">
+                                <span class="en">See your exact tax — Box 3 or Box 2</span>
+                                <span class="nl">Zie je exacte belasting — Box 3 of Box 2</span>
+                            </p>
+                            <p class="text-gray-500 text-sm mt-1">
+                                <span class="en">Forfaitaire vs werkelijk rendement compared side by side. Copy the numbers straight into your tax return (Belastingdienst).</span>
+                                <span class="nl">Forfaitair versus werkelijk rendement naast elkaar vergeleken. Kopieer de cijfers direct naar je belastingaangifte.</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right side: callout boxes -->
+            <div class="space-y-4">
+                <div class="bg-green-50 border border-green-200 rounded-2xl p-6">
+                    <p class="font-bold text-green-900 text-lg mb-1">
+                        <span class="en">📱 iOS App — data on your device</span>
+                        <span class="nl">📱 iOS-app — data op je apparaat</span>
+                    </p>
+                    <p class="text-green-800 text-sm">
+                        <span class="en">The iOS app uses SwiftData to store everything locally on your iPhone or iPad. Your financial data never leaves your device — not even to our servers.</span>
+                        <span class="nl">De iOS-app gebruikt SwiftData om alles lokaal op je iPhone of iPad op te slaan. Je financiële gegevens verlaten je apparaat nooit — ook niet naar onze servers.</span>
+                    </p>
+                </div>
+                <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6">
+                    <p class="font-bold text-blue-900 text-lg mb-1">
+                        <span class="en">🌐 Web App — data in your browser only</span>
+                        <span class="nl">🌐 Webapp — data alleen in je browser</span>
+                    </p>
+                    <p class="text-blue-800 text-sm">
+                        <span class="en">The web app runs entirely in your browser using sessionStorage. Data is automatically deleted the moment you close the tab. No account, no backend, no tracking.</span>
+                        <span class="nl">De webapp draait volledig in je browser via sessionStorage. Data wordt automatisch verwijderd zodra je het tabblad sluit. Geen account, geen backend, geen tracking.</span>
+                    </p>
+                </div>
+                <div class="bg-purple-50 border border-purple-200 rounded-2xl p-6">
+                    <p class="font-bold text-purple-900 text-lg mb-1">
+                        <span class="en">🧮 Dutch tax system, built-in</span>
+                        <span class="nl">🧮 Nederlands belastingstelsel, ingebouwd</span>
+                    </p>
+                    <p class="text-purple-800 text-sm">
+                        <span class="en">Heffingsvrij vermogen, forfaitaire percentages, tegenbewijsregeling, VPB brackets, Box 2 rates — all 2025 definitive rates are pre-loaded.</span>
+                        <span class="nl">Heffingsvrij vermogen, forfaitaire percentages, tegenbewijsregeling, VPB-schijven, Box 2-tarieven — alle 2025-definitieve tarieven zijn ingebouwd.</span>
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="text-center">
-            <div class="text-4xl mb-4">🏛️</div>
-            <h3 class="font-bold text-xl mb-2 en">Tax Ready</h3>
-            <h3 class="font-bold text-xl mb-2 nl">Belasting Klaar</h3>
-            <p class="text-gray-600">
-                <span class="en">Calculate your Box 3 wealth tax effortlessly. Built specifically for the Dutch system.</span>
-                <span class="nl">Bereken moeiteloos je Box 3 vermogensbelasting. Speciaal gebouwd voor Nederland.</span>
+    </section>
+
+    <!-- ══════════════ ACTION — Final CTA ══════════════ -->
+    <section class="bg-gray-900 py-20">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4">
+                <span class="en">Ready to take control?</span>
+                <span class="nl">Klaar om de controle te nemen?</span>
+            </h2>
+            <p class="text-gray-400 text-lg mb-10">
+                <span class="en">Start in 30 seconds — no sign-up, no installation for the web app.</span>
+                <span class="nl">Start in 30 seconden — geen aanmelding, geen installatie voor de webapp.</span>
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="app.html" class="bg-brand text-white px-8 py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition inline-flex items-center justify-center gap-2">
+                    <span>🌐</span>
+                    <span class="en">Open Free Web App</span>
+                    <span class="nl">Open Gratis Webapp</span>
+                </a>
+                <a href="https://apps.apple.com/nl/app/rendementje/id6762527792" class="bg-white text-gray-900 px-8 py-4 rounded-2xl font-bold text-lg hover:opacity-90 transition inline-flex items-center justify-center gap-2">
+                    <span>🍎</span>
+                    <span class="en">Download iOS App</span>
+                    <span class="nl">Download iOS App</span>
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm mt-8">
+                <span class="en">Web app: data deleted on tab close. iOS app: data stored on your device only.</span>
+                <span class="nl">Webapp: data verwijderd bij sluiten tab. iOS-app: data opgeslagen op je eigen apparaat.</span>
             </p>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-gray-100 py-12 mt-20">
-    <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
-        <p class="mb-4">&copy; 2026 Rendementje. <span class="en">All rights reserved.</span><span class="nl">Alle rechten voorbehouden.</span></p>
-        
-        <div class="flex justify-center space-x-6">
-            <a href="privacy.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200 hover:decoration-brand">
-                <span class="en">Privacy Policy</span>
-                <span class="nl">Privacybeleid</span>
-            </a>
-            <a href="terms.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200 hover:decoration-brand">
-                <span class="en">Terms of Service</span>
-                <span class="nl">Voorwaarden</span>
-            </a>
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-100 py-10">
+        <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p class="mb-4">&copy; 2026 Rendementje. <span class="en">All rights reserved.</span><span class="nl">Alle rechten voorbehouden.</span></p>
+            <div class="flex justify-center space-x-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Privacy Policy</span><span class="nl">Privacybeleid</span>
+                </a>
+                <a href="terms.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Terms of Service</span><span class="nl">Voorwaarden</span>
+                </a>
+            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
     <script>
         function toggleLanguage() {
@@ -114,13 +328,10 @@
             const isDutch = document.body.classList.contains('show-dutch');
             localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
         }
-
-        // Auto-detect browser or saved preference
         (function() {
-            const savedLang = localStorage.getItem('preferredLang');
-            const browserLang = navigator.language || navigator.userLanguage;
-            
-            if (savedLang === 'nl' || (!savedLang && browserLang.startsWith('nl'))) {
+            const saved = localStorage.getItem('preferredLang');
+            const browser = navigator.language || navigator.userLanguage;
+            if (saved === 'nl' || (!saved && browser.startsWith('nl'))) {
                 document.body.classList.add('show-dutch');
             }
         })();
