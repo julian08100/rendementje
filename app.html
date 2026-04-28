@@ -62,7 +62,11 @@ progress.orange::-webkit-progress-value{background:#f59e0b}
         <span style="font-weight:700;font-size:17px;color:#111">Rendementje</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <button id="langBtn" onclick="toggleLang()" style="font-size:12px;color:#6b7280;border:1px solid #e5e7eb;padding:4px 10px;border-radius:20px;background:#fff;cursor:pointer">🇬🇧 EN</button>
+        <div style="display:flex;border:1px solid #e5e7eb;border-radius:20px;overflow:hidden">
+          <button onclick="setLang('nl')" id="lang-nl" style="border:none;border-right:1px solid #e5e7eb;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer;background:var(--g);color:#fff">NL</button>
+          <button onclick="setLang('en')" id="lang-en" style="border:none;border-right:1px solid #e5e7eb;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280">EN</button>
+          <button onclick="setLang('de')" id="lang-de" style="border:none;padding:4px 9px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#6b7280">DE</button>
+        </div>
         <a href="index.html" style="font-size:12px;color:#6b7280;border:1px solid #e5e7eb;padding:4px 10px;border-radius:20px;text-decoration:none" id="backLink">← Website</a>
       </div>
     </div>
@@ -484,6 +488,35 @@ en:{
   isinTitle:'Resolve Tickers',isinSub:'Some products could not be matched automatically. Enter the Yahoo Finance ticker, or leave blank to use the ISIN.',
   isinSkip:'Skip all',isinImport:'Import',
   box3Title:'Personal (Box 3)',bvTitle:'Company (Box 2 + VPB)',
+},
+de:{
+  tabPortfolio:'Portfolio',tabTransactions:'Transaktionen',tabTax:'Steuer',tabDebt:'Schulden',
+  add:'Hinzufügen',transaction:'Transaktion',cancel:'Abbrechen',save:'Speichern',delete:'Löschen',
+  fetchPrices:'Preise abrufen',
+  privacyTxt:'🔒 <strong>Datenschutz zuerst:</strong> Alle Daten werden nur in diesem Browser-Tab gespeichert und beim Schließen automatisch gelöscht. Es werden keine Daten an externe Server gesendet.',
+  langBtn:'🇩🇪 DE',backLink:'← Website',
+  totalValue:'Gesamtportfoliowert',allocation:'Aufteilung',performance:'Leistung (Gewinn/Verlust %)',holdings:'Positionen',analytics:'Analyse',
+  noPrices:'Keine aktuellen Kurse — auf "Preise abrufen" klicken oder manuell eingeben',
+  noAssets:'Noch keine Anlagen',noAssetsSub:'Fügen Sie Transaktionen im Tab Transaktionen hinzu.',goToTxn:'Transaktionen hinzufügen',
+  txnTitle:'Transaktionen',txnEmpty:'Keine Transaktionen',txnEmptySub:'Manuell hinzufügen oder aus DEGIRO importieren.',
+  boughtLabel:'Gesamt gekauft',soldLabel:'Gesamt verkauft',
+  taxTitle:'Steuerberechnung',taxYearLabel:'Steuerjahr:',
+  debtTitle:'Schulden',noDebts:'Keine Schulden',noDebtsSub:'Hypothek, Studienschulden oder andere Verbindlichkeiten hinzufügen.',addDebt:'Schuld hinzufügen',
+  totalDebt:'Gesamtschulden',monthlyPayments:'Monatliche Zahlungen',avgRate:'Ø Zinssatz',annualInterest:'Jährliche Zinsen',
+  addTxnTitle:'Transaktion hinzufügen',
+  searchLabel:'Aktie / ETF / Krypto suchen',searchPlaceholder:'Apple, VWRL, Bitcoin…',
+  symbolLabel:'Ticker-Symbol',nameLabel:'Name',typeLabel:'Typ',dateLabel:'Datum',
+  qtyLabel:'Anzahl',priceLabel:'Preis/Stück',curLabel:'Währung',costsLabel:'Transaktionskosten (€)',totalLabel:'Gesamt EUR (opt.)',
+  buy:'Kauf',sell:'Verkauf',
+  priceTitle:'Preis aktualisieren',currentPrice:'Aktueller Preis',
+  debtName:'Name',debtType:'Darlehenstyp',totalLoan:'Gesamtdarlehensbetrag (€)',remainBal:'Restschuld (€)',
+  interestRate:'Zinssatz (%/Jahr)',monthlyPay:'Monatliche Zahlung (€)',term:'Laufzeit',startDate:'Startdatum',estimate:'Schätzung',
+  addDebtTitle:'Schuld hinzufügen',editDebtTitle:'Schuld bearbeiten',
+  searchLoading:'Suche…',searchNoResults:'Keine Ergebnisse — Ticker manuell eingeben',searchError:'Suche nicht verfügbar — Ticker manuell eingeben',
+  guideTitle:'Aus DEGIRO importieren',
+  isinTitle:'Ticker auflösen',isinSub:'Einige Produkte konnten nicht automatisch zugeordnet werden. Yahoo Finance Ticker eingeben oder leer lassen für ISIN.',
+  isinSkip:'Alle überspringen',isinImport:'Importieren',
+  box3Title:'Privat (Box 3)',bvTitle:'Unternehmen (Box 2 + KSt)',
 }};
 
 // ════════ STATE ════════
@@ -494,10 +527,11 @@ let currentTab='portfolio';
 function loadState(){try{const r=sessionStorage.getItem(SK);if(r){const p=JSON.parse(r);S={...S,...p};}}catch(e){}}
 function saveState(){try{sessionStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
 function t(k){return(L[S.settings.lang||'nl']||L.nl)[k]||k;}
+function tl(nl,en,de){const l=S.settings.lang||'nl';return l==='nl'?nl:l==='de'?(de!==undefined?de:en):en;}
 
 // ════════ LANGUAGE ════════
-function toggleLang(){
-  S.settings.lang=S.settings.lang==='nl'?'en':'nl';
+function setLang(l){
+  S.settings.lang=l;
   saveState();applyLang();
   showTab(currentTab);
 }
@@ -506,8 +540,11 @@ function applyLang(){
   const l=S.settings.lang||'nl';
   // Banner
   const pt=document.getElementById('privTxt');if(pt)pt.innerHTML=t('privacyTxt');
-  // Language button
-  document.getElementById('langBtn').textContent=t('langBtn');
+  // Language picker active state
+  ['nl','en','de'].forEach(code=>{
+    const btn=document.getElementById('lang-'+code);
+    if(btn){btn.style.background=l===code?'var(--g)':'#fff';btn.style.color=l===code?'#fff':'#6b7280';}
+  });
   // Back link
   document.getElementById('backLink').textContent=t('backLink');
   // Tab labels
@@ -578,9 +615,10 @@ function showTab(tab){
 
 // ════════ HELPERS ════════
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2);}
-function eur(v,dec=2){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',maximumFractionDigits:dec}).format(v);}
+function numLocale(){const l=S.settings.lang||'nl';return l==='en'?'en-GB':l==='de'?'de-DE':'nl-NL';}
+function eur(v,dec=2){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat(numLocale(),{style:'currency',currency:'EUR',maximumFractionDigits:dec}).format(v);}
 function pct(v,dec=1){if(v==null||isNaN(v))return'—';return(v>=0?'+':'')+v.toFixed(dec)+'%';}
-function num(v){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat('nl-NL',{maximumFractionDigits:8}).format(v);}
+function num(v){if(v==null||isNaN(v))return'—';return new Intl.NumberFormat(numLocale(),{maximumFractionDigits:8}).format(v);}
 function toast(msg,ms=2500){const e=document.getElementById('toast');e.textContent=msg;e.style.display='block';setTimeout(()=>e.style.display='none',ms);}
 
 // ════════ TICKER SEARCH ════════
@@ -723,8 +761,8 @@ function renderPortfolio(){
     },options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>v+'%'}}}}});
   }
 
-  const enterLabel=S.settings.lang==='en'?'Enter price':'Prijs invoeren';
-  const tipLabel=S.settings.lang==='en'?'Tip: click "Fetch Prices" for live prices':'Tip: klik op "Prijzen ophalen" voor live koersen';
+  const enterLabel=tl('Prijs invoeren','Enter price','Preis eingeben');
+  const tipLabel=tl('Tip: klik op "Prijzen ophalen" voor live koersen','Tip: click "Fetch Prices" for live prices','Tipp: auf "Preise abrufen" klicken für Live-Kurse');
   document.getElementById('pf-holdings').innerHTML=rows.map(r=>`
     <div style="display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f9fafb">
       <div style="flex:1;min-width:0">
@@ -749,11 +787,10 @@ function renderPortfolio(){
     const anaEl=document.getElementById('pf-analytics');
     anaEl.style.display='block';
     const sharpeColor=sharpe>=1?'var(--g)':sharpe>=0.5?'#f59e0b':'#ef4444';
-    const nl=S.settings.lang==='nl';
-    const sharpeDesc=sharpe>=2?(nl?'Uitstekend':'Excellent'):sharpe>=1?(nl?'Goed':'Good'):sharpe>=0.5?(nl?'Gemiddeld':'Average'):sharpe>=0?(nl?'Onder gemiddeld':'Below average'):(nl?'Negatief':'Negative');
-    const riskLbl=nl?'risicogecorrigeerd rendement':'risk-adjusted return';
-    const indLbl=nl?'Sharpe Ratio (indicatief)':'Sharpe Ratio (indicative)';
-    const basedLbl=nl?'Gebaseerd op huidige koersen':'Based on current prices';
+    const sharpeDesc=sharpe>=2?tl('Uitstekend','Excellent','Ausgezeichnet'):sharpe>=1?tl('Goed','Good','Gut'):sharpe>=0.5?tl('Gemiddeld','Average','Durchschnittlich'):sharpe>=0?tl('Onder gemiddeld','Below average','Unterdurchschnittlich'):tl('Negatief','Negative','Negativ');
+    const riskLbl=tl('risicogecorrigeerd rendement','risk-adjusted return','risikobereinigter Ertrag');
+    const indLbl=tl('Sharpe Ratio (indicatief)','Sharpe Ratio (indicative)','Sharpe-Ratio (indikativ)');
+    const basedLbl=tl('Gebaseerd op huidige koersen','Based on current prices','Basierend auf aktuellen Kursen');
     document.getElementById('pf-analytics-content').innerHTML=`
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
         <div><p style="font-size:13px;font-weight:600;color:#374151;margin:0">${indLbl}</p><p style="font-size:12px;color:#9ca3af;margin:2px 0 0">${basedLbl}</p></div>
@@ -768,10 +805,8 @@ function renderPortfolio(){
 async function refreshPrices(){
   const btn=document.getElementById('refreshBtn');
   const status=document.getElementById('pf-status');
-  const busyLbl=S.settings.lang==='en'?'Fetching…':'Bezig…';
-  btn.querySelector('.tl').textContent=busyLbl;btn.disabled=true;
-  const fetchingLbl=S.settings.lang==='en'?'Fetching live prices…':'Live prijzen ophalen…';
-  status.textContent=fetchingLbl;status.style.color='#9ca3af';
+  btn.querySelector('.tl').textContent=tl('Bezig…','Fetching…','Laden…');btn.disabled=true;
+  status.textContent=tl('Live prijzen ophalen…','Fetching live prices…','Live-Kurse abrufen…');status.style.color='#9ca3af';
 
   const hList=deriveHoldings();
   let ok=0,fail=[];
@@ -784,13 +819,12 @@ async function refreshPrices(){
 
   saveState();
   btn.querySelector('.tl').textContent=t('fetchPrices');btn.disabled=false;
-  const nl=S.settings.lang==='nl';
   if(ok>0){
-    const updLbl=nl?`${ok} prijs(en) bijgewerkt${fail.length?` · Mislukt: ${fail.join(', ')}`:''}`:`${ok} price(s) updated${fail.length?` · Failed: ${fail.join(', ')}`:''} `;
-    status.textContent=updLbl+' · '+new Date().toLocaleTimeString(nl?'nl-NL':'en-GB',{hour:'2-digit',minute:'2-digit'});
+    const updLbl=tl(`${ok} prijs(en) bijgewerkt${fail.length?` · Mislukt: ${fail.join(', ')}`:''} · `,`${ok} price(s) updated${fail.length?` · Failed: ${fail.join(', ')}`:''} · `,`${ok} Kurs(e) aktualisiert${fail.length?` · Fehlgeschlagen: ${fail.join(', ')}`:''} · `);
+    status.textContent=updLbl+new Date().toLocaleTimeString(numLocale(),{hour:'2-digit',minute:'2-digit'});
     status.style.color='var(--g)';
   }else{
-    status.textContent=nl?'Live prijzen niet beschikbaar (CORS). Voer prijzen handmatig in.':'Live prices unavailable (CORS). Enter prices manually.';
+    status.textContent=tl('Live prijzen niet beschikbaar (CORS). Voer prijzen handmatig in.','Live prices unavailable (CORS). Enter prices manually.','Live-Kurse nicht verfügbar (CORS). Bitte manuell eingeben.');
     status.style.color='#ef4444';
   }
   renderPortfolio();
@@ -809,8 +843,7 @@ async function tryFetchQuote(sym){
 let priceTarget=null;
 function openPriceModal(sym,cur){
   priceTarget=sym;
-  const nl=S.settings.lang==='nl';
-  document.getElementById('pm-symbol').textContent=(nl?'Actuele prijs voor ':'Current price for ')+sym;
+  document.getElementById('pm-symbol').textContent=tl('Actuele prijs voor ','Current price for ','Aktueller Preis für ')+sym;
   document.getElementById('pm-price').value=S.prices[sym]?.price||'';
   document.getElementById('pm-currency').value=S.prices[sym]?.currency||cur;
   document.getElementById('price-modal').style.display='flex';
@@ -821,7 +854,7 @@ function savePriceUpdate(){
   const c=document.getElementById('pm-currency').value;
   if(priceTarget&&!isNaN(p)&&p>0){
     S.prices[priceTarget]={price:p,currency:c};saveState();closePriceModal();renderPortfolio();
-    toast(S.settings.lang==='en'?'Price updated':'Prijs bijgewerkt');
+    toast(tl('Prijs bijgewerkt','Price updated','Preis aktualisiert'));
   }
 }
 
@@ -838,17 +871,16 @@ function renderTransactions(){
   document.getElementById('txn-sold').textContent=eur(sold);
 
   const grouped={};
-  const locale=S.settings.lang==='en'?'en-GB':'nl-NL';
+  const locale=numLocale();
   for(const t2 of txns){
     const k=new Date(t2.date).toLocaleDateString(locale,{month:'long',year:'numeric'});
     if(!grouped[k])grouped[k]=[];
     grouped[k].push(t2);
   }
 
-  const nl=S.settings.lang==='nl';
-  const typeLabel={buy:nl?'Koop':'Buy',sell:nl?'Verkoop':'Sell',dividend:'Dividend'};
+  const typeLabel={buy:tl('Koop','Buy','Kauf'),sell:tl('Verkoop','Sell','Verkauf'),dividend:'Dividend'};
   const tagClass={buy:'tag-buy',sell:'tag-sell',dividend:'tag-div'};
-  const delLbl=nl?'Verwijderen':'Delete';
+  const delLbl=tl('Verwijderen','Delete','Löschen');
 
   document.getElementById('txn-list').innerHTML=Object.entries(grouped).map(([month,ts])=>`
     <div class="card">
@@ -896,20 +928,18 @@ function saveTxn(e){
     totalEUR
   };
   S.transactions.push(txn);saveState();closeTxnModal();renderTransactions();renderPortfolio();
-  toast(S.settings.lang==='en'?'Transaction saved':'Transactie opgeslagen');
+  toast(tl('Transactie opgeslagen','Transaction saved','Transaktion gespeichert'));
 }
 
 function deleteTxn(id){
-  const nl=S.settings.lang==='nl';
-  if(!confirm(nl?'Transactie verwijderen?':'Delete this transaction?'))return;
+  if(!confirm(tl('Transactie verwijderen?','Delete this transaction?','Transaktion löschen?')))return;
   S.transactions=S.transactions.filter(t2=>t2.id!==id);saveState();renderTransactions();renderPortfolio();
 }
 
 // ════════ DEGIRO GUIDE ════════
 function showDegiroGuide(){
-  const nl=S.settings.lang==='nl';
   document.getElementById('guide-title').textContent=t('guideTitle');
-  document.getElementById('guide-content').innerHTML=nl?`
+  const guideNL=`
     <div class="card" style="background:#f0fdf4;border-color:#86efac;margin-bottom:12px">
       <p style="font-size:13px;font-weight:600;color:#166534;margin:0 0 6px">Stap voor stap:</p>
       <ol style="margin:0;padding-left:18px;font-size:13px;color:#374151;line-height:1.8">
@@ -923,8 +953,8 @@ function showDegiroGuide(){
     <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:12px;color:#92400e">
       <strong>Ondersteund:</strong> CSV/TXT bestanden met komma- of puntkomma-scheiding, UTF-8/UTF-16/Windows-1252 codering.
     </div>
-    <button class="btn btn-g" style="width:100%" onclick="document.getElementById('guide-modal').style.display='none';document.getElementById('csvFile').click()">📂 Bestand selecteren</button>
-  `:`
+    <button class="btn btn-g" style="width:100%" onclick="document.getElementById('guide-modal').style.display='none';document.getElementById('csvFile').click()">📂 Bestand selecteren</button>`;
+  const guideEN=`
     <div class="card" style="background:#f0fdf4;border-color:#86efac;margin-bottom:12px">
       <p style="font-size:13px;font-weight:600;color:#166534;margin:0 0 6px">Step by step:</p>
       <ol style="margin:0;padding-left:18px;font-size:13px;color:#374151;line-height:1.8">
@@ -938,8 +968,23 @@ function showDegiroGuide(){
     <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:12px;color:#92400e">
       <strong>Supported:</strong> CSV/TXT files with comma or semicolon separation, UTF-8/UTF-16/Windows-1252 encoding.
     </div>
-    <button class="btn btn-g" style="width:100%" onclick="document.getElementById('guide-modal').style.display='none';document.getElementById('csvFile').click()">📂 Select file</button>
-  `;
+    <button class="btn btn-g" style="width:100%" onclick="document.getElementById('guide-modal').style.display='none';document.getElementById('csvFile').click()">📂 Select file</button>`;
+  const guideDE=`
+    <div class="card" style="background:#f0fdf4;border-color:#86efac;margin-bottom:12px">
+      <p style="font-size:13px;font-weight:600;color:#166534;margin:0 0 6px">Schritt für Schritt:</p>
+      <ol style="margin:0;padding-left:18px;font-size:13px;color:#374151;line-height:1.8">
+        <li>DEGIRO auf der Website öffnen (degiro.nl)</li>
+        <li>Zu <strong>Aktivität → Transaktionen</strong> navigieren</li>
+        <li>Auf <strong>Exportieren</strong> klicken (oben rechts)</li>
+        <li>CSV-Format wählen und Datei herunterladen</li>
+        <li>Unten auf "Datei auswählen" klicken</li>
+      </ol>
+    </div>
+    <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:12px;color:#92400e">
+      <strong>Unterstützt:</strong> CSV/TXT-Dateien mit Komma- oder Semikolon-Trennung, UTF-8/UTF-16/Windows-1252-Kodierung.
+    </div>
+    <button class="btn btn-g" style="width:100%" onclick="document.getElementById('guide-modal').style.display='none';document.getElementById('csvFile').click()">📂 Datei auswählen</button>`;
+  document.getElementById('guide-content').innerHTML=tl(guideNL,guideEN,guideDE);
   document.getElementById('guide-modal').style.display='flex';
 }
 
@@ -952,8 +997,7 @@ function importDEGIRO(ev){
   rd.onload=async e=>{
     try{
       const txns=parseDEGIROcsv(e.target.result);
-      const nl=S.settings.lang==='nl';
-      toast((nl?`${txns.length} transacties gevonden, ISIN's oplossen…`:`${txns.length} transactions found, resolving ISINs…`));
+      toast(tl(`${txns.length} transacties gevonden, ISIN's oplossen…`,`${txns.length} transactions found, resolving ISINs…`,`${txns.length} Transaktionen gefunden, ISINs auflösen…`));
       const isins=[...new Set(txns.map(t2=>t2.isin))];
       const resolved={};
       for(const isin of isins){const r=await searchYahooIsin(isin);if(r)resolved[isin]=r;}
@@ -964,13 +1008,13 @@ function importDEGIRO(ev){
           <div style="margin-bottom:12px">
             <p style="font-weight:500;font-size:13px;color:#111;margin:0 0 2px">${pendingImport.unresolved[isin]}</p>
             <p style="font-size:11px;color:#9ca3af;margin:0 0 6px">${isin}</p>
-            <input type="text" id="ir_${isin}" placeholder="${nl?'Ticker (bijv. VWRL.AS) — leeg = ISIN gebruiken':'Ticker (e.g. VWRL.AS) — leave blank to use ISIN'}" style="font-size:13px">
+            <input type="text" id="ir_${isin}" placeholder="${tl('Ticker (bijv. VWRL.AS) — leeg = ISIN gebruiken','Ticker (e.g. VWRL.AS) — leave blank to use ISIN','Ticker (z.B. VWRL.AS) — leer lassen für ISIN')}" style="font-size:13px">
           </div>`).join('');
         document.getElementById('isin-modal').style.display='flex';
       }else{
         completeImport(txns,resolved);
       }
-    }catch(err){toast((S.settings.lang==='nl'?'Fout: ':'Error: ')+err.message);}
+    }catch(err){toast(tl('Fout: ','Error: ','Fehler: ')+err.message);}
     ev.target.value='';
   };
   rd.readAsText(f);
@@ -1010,14 +1054,14 @@ function completeImport(degTxns,lookup){
     });count++;
   }
   saveState();renderTransactions();renderPortfolio();
-  toast((S.settings.lang==='nl'?`${count} transacties geïmporteerd`:`${count} transactions imported`));
+  toast(tl(`${count} transacties geïmporteerd`,`${count} transactions imported`,`${count} Transaktionen importiert`));
 }
 
 function parseDEGIROcsv(text){
   const lines=text.replace(/﻿/g,'').split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
-  if(lines.length<2)throw new Error(S.settings.lang==='en'?'File too short':'Bestand te kort');
+  if(lines.length<2)throw new Error(tl('Bestand te kort','File too short','Datei zu kurz'));
   const hdr=lines[0].toLowerCase();
-  if(!hdr.includes('datum')&&!hdr.includes('product'))throw new Error(S.settings.lang==='en'?'Not a valid DEGIRO file':'Geen geldig DEGIRO-bestand');
+  if(!hdr.includes('datum')&&!hdr.includes('product'))throw new Error(tl('Geen geldig DEGIRO-bestand','Not a valid DEGIRO file','Keine gültige DEGIRO-Datei'));
   const delim=hdr.includes(';')?';':(hdr.includes('\t')?'\t':',');
   const results=[];
   for(let i=1;i<lines.length;i++){
@@ -1031,7 +1075,7 @@ function parseDEGIROcsv(text){
     const txCosts=Math.abs(dutchNum(f[14])||0);
     results.push({date,product:f[2],isin:f[3],quantity:qty,pricePerUnit:Math.abs(price),currency,totalEUR,transactionCosts:txCosts});
   }
-  if(!results.length)throw new Error(S.settings.lang==='en'?'No transactions found':'Geen transacties gevonden');
+  if(!results.length)throw new Error(tl('Geen transacties gevonden','No transactions found','Keine Transaktionen gefunden'));
   return results;
 }
 
@@ -1063,7 +1107,6 @@ function renderTax(){
   const jan1=new Date(yr,0,1),dec31=new Date(yr,11,31);
   const isCurYr=yr===new Date().getFullYear();
   const endDate=isCurYr?new Date():dec31;
-  const nl=S.settings.lang==='nl';
 
   const holdJan=deriveHoldings(new Date(yr-1,11,31).toISOString().split('T')[0]);
   const holdEnd=deriveHoldings(endDate.toISOString().split('T')[0]);
@@ -1099,7 +1142,7 @@ function renderTax(){
   },0);
 
   const hasPrices=holdEnd.some(h=>getPrice(h.symbol));
-  const missingNote=!hasPrices?`<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#92400e">⚠️ <strong>${nl?'Geen prijzen beschikbaar.':'No prices available.'}</strong> ${nl?'Haal prijzen op in het Portfolio-tabblad voor nauwkeurige berekeningen.':'Fetch prices in the Portfolio tab for accurate calculations.'}</div>`:'';
+  const missingNote=!hasPrices?`<div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;margin-bottom:14px;font-size:13px;color:#92400e">⚠️ <strong>${tl('Geen prijzen beschikbaar.','No prices available.','Keine Kurse verfügbar.')}</strong> ${tl('Haal prijzen op in het Portfolio-tabblad voor nauwkeurige berekeningen.','Fetch prices in the Portfolio tab for accurate calculations.','Kurse im Portfolio-Tab abrufen für genaue Berechnungen.')}</div>`:'';
 
   let html=missingNote;
 
@@ -1121,13 +1164,13 @@ function renderTax(){
     const forfBetter=forfPay<=werkPay;
     const saving=Math.abs(forfPay-werkPay);
 
-    const cmpTitle=nl?`Vergelijking ${yr}`:`Comparison ${yr}`;
-    const forfLabel=nl?'Forfaitair rendement':'Forfaitaire rendement';
-    const werkLabel=nl?'Werkelijk rendement':'Werkelijk rendement';
-    const lowerLabel=nl?'✓ Lager':'✓ Lower';
-    const chooseLbl=nl?`💡 Kies <strong>${forfBetter?'forfaitair':'werkelijk'} rendement</strong> — besparing: ${eur(saving)}`:`💡 Choose <strong>${forfBetter?'forfaitaire':'werkelijk'} rendement</strong> — you save: ${eur(saving)}`;
-    const sameLbl=nl?'Beide methoden geven hetzelfde resultaat':'Both methods give the same result';
-    const noTaxLbl=nl?'Geen belasting verschuldigd':'No tax due';
+    const cmpTitle=tl(`Vergelijking ${yr}`,`Comparison ${yr}`,`Vergleich ${yr}`);
+    const forfLabel=tl('Forfaitair rendement','Forfaitaire rendement','Pauschalrendite');
+    const werkLabel=tl('Werkelijk rendement','Werkelijk rendement','Tatsächliche Rendite');
+    const lowerLabel=tl('✓ Lager','✓ Lower','✓ Niedriger');
+    const chooseLbl=tl(`💡 Kies <strong>${forfBetter?'forfaitair':'werkelijk'} rendement</strong> — besparing: ${eur(saving)}`,`💡 Choose <strong>${forfBetter?'forfaitaire':'werkelijk'} rendement</strong> — you save: ${eur(saving)}`,`💡 Wählen Sie <strong>${forfBetter?'Pauschalrendite':'tatsächliche Rendite'}</strong> — Ersparnis: ${eur(saving)}`);
+    const sameLbl=tl('Beide methoden geven hetzelfde resultaat','Both methods give the same result','Beide Methoden liefern das gleiche Ergebnis');
+    const noTaxLbl=tl('Geen belasting verschuldigd','No tax due','Keine Steuer fällig');
 
     html+=`
     <div class="card">
@@ -1148,48 +1191,47 @@ function renderTax(){
     </div>
 
     <div class="card">
-      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">Forfaitaire Rendement — ${nl?'detail':'details'}</h3>
-      <p style="font-size:12px;color:#6b7280;margin:0 0 10px">${nl?'Belasting berekend over een fictief rendement op je vermogen op 1 januari. Het forfaitaire percentage hangt af van je vermogenssamenstelling.':'Tax calculated on a fictitious return on your wealth on January 1st. The rate depends on your asset mix.'}</p>
-      ${tr(nl?`Beleggingen (1 jan ${yr})`:`Investments (1 Jan ${yr})`,eur(valJan1),'@ '+pctRaw(TAX.forfInvest))}
-      ${debtJan1>0?tr(nl?'Schulden (1 jan)':'Debts (1 Jan)',eur(-debtJan1),'@ '+pctRaw(TAX.forfDebt),'#ef4444'):''}
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">${tl('Forfaitaire Rendement — detail','Forfaitaire Rendement — details','Pauschalrendite — Details')}</h3>
+      <p style="font-size:12px;color:#6b7280;margin:0 0 10px">${tl('Belasting berekend over een fictief rendement op je vermogen op 1 januari. Het forfaitaire percentage hangt af van je vermogenssamenstelling.','Tax calculated on a fictitious return on your wealth on January 1st. The rate depends on your asset mix.','Steuer auf eine fiktive Rendite Ihres Vermögens zum 1. Januar. Der Satz hängt von der Vermögenszusammensetzung ab.')}</p>
+      ${tr(tl(`Beleggingen (1 jan ${yr})`,`Investments (1 Jan ${yr})`,`Anlagen (1. Jan. ${yr})`),eur(valJan1),'@ '+pctRaw(TAX.forfInvest))}
+      ${debtJan1>0?tr(tl('Schulden (1 jan)','Debts (1 Jan)','Schulden (1. Jan.)'),eur(-debtJan1),'@ '+pctRaw(TAX.forfDebt),'#ef4444'):''}
       <div class="divider"></div>
-      ${tr(nl?'Nettovermogen':'Net wealth',eur(netW),'','','600')}
-      ${tr(nl?'Heffingsvrij vermogen':'Tax-free allowance',eur(-TAX.hffVermogen),nl?'Vrijgesteld van belasting':'Exempt from tax','var(--g)')}
-      ${tr(nl?'Belastbaar vermogen':'Taxable base',eur(txBase),'','','600')}
+      ${tr(tl('Nettovermogen','Net wealth','Nettovermögen'),eur(netW),'','','600')}
+      ${tr(tl('Heffingsvrij vermogen','Tax-free allowance','Steuerfreier Betrag'),eur(-TAX.hffVermogen),tl('Vrijgesteld van belasting','Exempt from tax','Steuerbefreit'),'var(--g)')}
+      ${tr(tl('Belastbaar vermogen','Taxable base','Steuerpflichtiges Vermögen'),eur(txBase),'','','600')}
       <div class="divider"></div>
-      ${tr(nl?'Forfaitair rendement':'Forfaitaire return',eur(forfRet),pctRaw(Math.max(wRate,0))+' '+nl?'gewogen':'weighted')}
+      ${tr(tl('Forfaitair rendement','Forfaitaire return','Pauschalrendite'),eur(forfRet),pctRaw(Math.max(wRate,0))+' '+tl('gewogen','weighted','gewichtet'))}
       <div class="divider"></div>
-      ${tr(nl?'Verschuldigde belasting (36%)':'Tax accrued (36%)',eur(forfAcc),'','#ef4444')}
-      ${divBel>0?tr(nl?'Dividendbelasting verrekening (15%)':'Dividend tax credit (15%)',eur(-divBel),'','var(--g)'):''}
-      ${trBig(nl?'Te betalen belasting':'Tax payable',eur(forfPay),'','#ef4444')}
+      ${tr(tl('Verschuldigde belasting (36%)','Tax accrued (36%)','Geschuldete Steuer (36%)'),eur(forfAcc),'','#ef4444')}
+      ${divBel>0?tr(tl('Dividendbelasting verrekening (15%)','Dividend tax credit (15%)','Dividendensteuerverrechnung (15%)'),eur(-divBel),'','var(--g)'):''}
+      ${trBig(tl('Te betalen belasting','Tax payable','Zu zahlende Steuer'),eur(forfPay),'','#ef4444')}
     </div>
 
     <div class="card">
-      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">Werkelijk Rendement — ${nl?'detail':'details'}</h3>
-      <p style="font-size:12px;color:#6b7280;margin:0 0 10px">${nl?'Tegenbewijsregeling: belasting over je werkelijke rendement. Geen heffingsvrij vermogen. Kan voordeliger zijn bij lage rendementen.':'Counter-evidence rule: tax on your actual return. No tax-free allowance. Can be more favourable when returns are low.'}</p>
+      <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">${tl('Werkelijk Rendement — detail','Werkelijk Rendement — details','Tatsächliche Rendite — Details')}</h3>
+      <p style="font-size:12px;color:#6b7280;margin:0 0 10px">${tl('Tegenbewijsregeling: belasting over je werkelijke rendement. Geen heffingsvrij vermogen. Kan voordeliger zijn bij lage rendementen.','Counter-evidence rule: tax on your actual return. No tax-free allowance. Can be more favourable when returns are low.','Gegenbeweis-Regelung: Steuer auf die tatsächliche Rendite. Kein steuerfreier Betrag. Kann bei niedrigen Renditen günstiger sein.')}</p>
       <div style="display:flex;align-items:center;justify-content:space-around;padding:10px 0;margin-bottom:8px">
         <div style="text-align:center"><p style="font-size:11px;color:#9ca3af;margin:0 0 2px">1 jan ${yr}</p><p style="font-weight:700;color:#111;margin:0">${eur(valJan1)}</p></div>
         <span style="color:#9ca3af">→</span>
-        <div style="text-align:center"><p style="font-size:11px;color:#9ca3af;margin:0 0 2px">${isCurYr?(nl?'Vandaag':'Today'):(nl?'31 dec '+yr:'31 Dec '+yr)}</p><p style="font-weight:700;color:#111;margin:0">${eur(valEnd)}</p></div>
+        <div style="text-align:center"><p style="font-size:11px;color:#9ca3af;margin:0 0 2px">${isCurYr?tl('Vandaag','Today','Heute'):tl('31 dec '+yr,'31 Dec '+yr,'31. Dez. '+yr)}</p><p style="font-weight:700;color:#111;margin:0">${eur(valEnd)}</p></div>
       </div>
       <div class="divider"></div>
-      ${tr(nl?'Koerswinst (excl. nieuwe inleg)':'Capital gains (excl. new capital)',eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
-      ${divInYear>0?tr(nl?'Ontvangen dividenden':'Dividends received',eur(divInYear),'','var(--g)'):''}
-      ${divBel>0?tr(nl?'Dividendbelasting ingehouden (15%)':'Dividend tax withheld (15%)',eur(-divBel),'','#ef4444'):''}
-      ${totalDebtInterest>0?tr(nl?'Betaalde rente (aftrekbaar)':'Interest paid (deductible)',eur(-totalDebtInterest),'','var(--g)'):''}
-      ${tr(nl?'Totaal werkelijk rendement':'Total actual return',eur(werkReturn),'',werkReturn>=0?'var(--g)':'#ef4444','600')}
+      ${tr(tl('Koerswinst (excl. nieuwe inleg)','Capital gains (excl. new capital)','Kursgewinne (exkl. neue Einlagen)'),eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
+      ${divInYear>0?tr(tl('Ontvangen dividenden','Dividends received','Erhaltene Dividenden'),eur(divInYear),'','var(--g)'):''}
+      ${divBel>0?tr(tl('Dividendbelasting ingehouden (15%)','Dividend tax withheld (15%)','Einbehaltene Dividendensteuer (15%)'),eur(-divBel),'','#ef4444'):''}
+      ${totalDebtInterest>0?tr(tl('Betaalde rente (aftrekbaar)','Interest paid (deductible)','Gezahlte Zinsen (abzugsfähig)'),eur(-totalDebtInterest),'','var(--g)'):''}
+      ${tr(tl('Totaal werkelijk rendement','Total actual return','Gesamte tatsächliche Rendite'),eur(werkReturn),'',werkReturn>=0?'var(--g)':'#ef4444','600')}
       <div class="divider"></div>
-      ${tr(nl?'Verschuldigde belasting (36%)':'Tax accrued (36%)',eur(werkTax),'','#ef4444')}
-      ${divBel>0?tr(nl?'Dividendbelasting verrekening':'Dividend tax credit',eur(-divBel),'','var(--g)'):''}
-      ${trBig(nl?'Te betalen belasting':'Tax payable',eur(werkPay),'','#ef4444')}
+      ${tr(tl('Verschuldigde belasting (36%)','Tax accrued (36%)','Geschuldete Steuer (36%)'),eur(werkTax),'','#ef4444')}
+      ${divBel>0?tr(tl('Dividendbelasting verrekening','Dividend tax credit','Dividendensteuerverrechnung'),eur(-divBel),'','var(--g)'):''}
+      ${trBig(tl('Te betalen belasting','Tax payable','Zu zahlende Steuer'),eur(werkPay),'','#ef4444')}
     </div>
 
     <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;font-size:12px;color:#92400e;margin-bottom:14px">
-      <strong>${nl?'Disclaimer':'Disclaimer'}:</strong> ${nl?'Dit is een schatting. Forfaitaire tarieven 2025 (definitief): 5,88% beleggingen, 1,37% spaargeld, 2,70% schuldenaftrek. Prijzen op 1 jan worden benaderd. Raadpleeg een belastingadviseur voor officiële aangifte.':'This is an estimate. 2025 definitive forfaitaire rates: 5.88% investments, 1.37% savings, 2.70% debt deduction. Jan 1 prices are approximated. Consult a tax adviser for official filings.'}
+      <strong>Disclaimer:</strong> ${tl('Dit is een schatting. Forfaitaire tarieven 2025 (definitief): 5,88% beleggingen, 1,37% spaargeld, 2,70% schuldenaftrek. Prijzen op 1 jan worden benaderd. Raadpleeg een belastingadviseur voor officiële aangifte.','This is an estimate. 2025 definitive forfaitaire rates: 5.88% investments, 1.37% savings, 2.70% debt deduction. Jan 1 prices are approximated. Consult a tax adviser for official filings.','Schätzung. Niederländische Box-3-Pauschalrendite 2025: 5,88% Anlagen, 1,37% Ersparnisse, 2,70% Schuldenabzug. Kurse zum 1. Jan. werden angenähert. Steuerberater für offizielle Erklärung hinzuziehen.')}
     </div>`;
   }else{
     // Box 2 / VPB
-    const nl=S.settings.lang==='nl';
     const vpb=Math.min(Math.max(grossGain,0),TAX.vpbLowThresh)*TAX.vpbLow+Math.max(Math.max(grossGain,0)-TAX.vpbLowThresh,0)*TAX.vpbHigh;
     const afterVpb=Math.max(grossGain-vpb,0);
     const box2=Math.min(afterVpb,TAX.box2LowThresh)*TAX.box2Low+Math.max(afterVpb-TAX.box2LowThresh,0)*TAX.box2High;
@@ -1199,24 +1241,24 @@ function renderTax(){
 
     html+=`
     <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;color:#1e40af">
-      <strong>${nl?'Wat is Box 2?':'What is Box 2?'}</strong><br>
-      ${nl?'Box 2 geldt voor aanmerkelijk belang: bezit je ≥5% van aandelen in een BV? Dan betaal je eerst vennootschapsbelasting (VPB) over de winst in de BV, en daarna Box 2-belasting bij uitkering als dividend.':'Box 2 applies to a substantial interest: do you own ≥5% of shares in a company? You first pay corporate tax (VPB) on profit in the BV, then Box 2 tax on dividend distribution.'}
+      <strong>${tl('Wat is Box 2?','What is Box 2?','Was ist Box 2?')}</strong><br>
+      ${tl('Box 2 geldt voor aanmerkelijk belang: bezit je ≥5% van aandelen in een BV? Dan betaal je eerst vennootschapsbelasting (VPB) over de winst in de BV, en daarna Box 2-belasting bij uitkering als dividend.','Box 2 applies to a substantial interest: do you own ≥5% of shares in a company? You first pay corporate tax (VPB) on profit in the BV, then Box 2 tax on dividend distribution.','Box 2 gilt für wesentliche Beteiligungen: Besitzen Sie ≥5% an einer niederländischen BV? Zuerst wird Körperschaftsteuer (KSt) auf den BV-Gewinn fällig, danach Box-2-Steuer bei Dividendenausschüttung.')}
     </div>
     <div class="card">
       <h3 style="font-weight:600;font-size:15px;margin:0 0 12px">BV / Box 2 — ${yr}</h3>
-      ${tr(nl?'BV Winst (koerswinst)':'BV Profit (capital gains)',eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
+      ${tr(tl('BV Winst (koerswinst)','BV Profit (capital gains)','BV-Gewinn (Kursgewinne)'),eur(grossGain),'',grossGain>=0?'var(--g)':'#ef4444')}
       <div class="divider"></div>
-      ${tr(nl?'Vennootschapsbelasting (VPB)':'Corporate tax (VPB)',eur(-vpb),'19% / 25,8%','#ef4444')}
-      ${tr(nl?'Winst na VPB':'Profit after VPB',eur(afterVpb),'','','600')}
+      ${tr(tl('Vennootschapsbelasting (VPB)','Corporate tax (VPB)','Körperschaftsteuer (KSt)'),eur(-vpb),'19% / 25,8%','#ef4444')}
+      ${tr(tl('Winst na VPB','Profit after VPB','Gewinn nach KSt'),eur(afterVpb),'','','600')}
       <div class="divider"></div>
-      ${tr(nl?'Box 2 belasting':'Box 2 tax',eur(-box2),'24,5% / 31%','#ef4444')}
-      ${divCredit>0?tr(nl?'Dividendbelasting verrekening (15%)':'Dividend tax credit (15%)',eur(-divCredit),'','var(--g)'):''}
-      ${tr(nl?'Box 2 te betalen':'Box 2 payable',eur(box2Pay),'','#ef4444')}
+      ${tr(tl('Box 2 belasting','Box 2 tax','Box-2-Steuer'),eur(-box2),'24,5% / 31%','#ef4444')}
+      ${divCredit>0?tr(tl('Dividendbelasting verrekening (15%)','Dividend tax credit (15%)','Dividendensteuerverrechnung (15%)'),eur(-divCredit),'','var(--g)'):''}
+      ${tr(tl('Box 2 te betalen','Box 2 payable','Box 2 fällig'),eur(box2Pay),'','#ef4444')}
       <div class="divider"></div>
-      ${trBig(nl?'Totaal te betalen (VPB + Box 2)':'Total payable (VPB + Box 2)',eur(totalPay),'','#ef4444')}
+      ${trBig(tl('Totaal te betalen (VPB + Box 2)','Total payable (VPB + Box 2)','Gesamt fällig (KSt + Box 2)'),eur(totalPay),'','#ef4444')}
     </div>
     <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px;font-size:12px;color:#92400e;margin-bottom:14px">
-      <strong>Disclaimer:</strong> ${nl?'Vereenvoudigde berekening. VPB-tarieven: 19% t/m €200k, 25,8% daarboven. Box 2: 24,5% t/m €67.804, 31% daarboven. Aanmerkelijk belang = ≥5% aandelen. Raadpleeg een belastingadviseur voor officiële aangifte.':'Simplified calculation. VPB rates: 19% up to €200k, 25.8% above. Box 2: 24.5% up to €67,804, 31% above. Substantial interest = ≥5% shares. Consult a tax adviser for official filings.'}
+      <strong>Disclaimer:</strong> ${tl('Vereenvoudigde berekening. VPB-tarieven: 19% t/m €200k, 25,8% daarboven. Box 2: 24,5% t/m €67.804, 31% daarboven. Aanmerkelijk belang = ≥5% aandelen. Raadpleeg een belastingadviseur voor officiële aangifte.','Simplified calculation. VPB rates: 19% up to €200k, 25.8% above. Box 2: 24.5% up to €67,804, 31% above. Substantial interest = ≥5% shares. Consult a tax adviser for official filings.','Vereinfachte Berechnung für niederl. Box 2. KSt-Sätze: 19% bis €200k, 25,8% darüber. Box 2: 24,5% bis €67.804, 31% darüber. Wesentliche Beteiligung = ≥5% Anteile. Steuerberater für offizielle Erklärung hinzuziehen.')}
     </div>`;
   }
 
@@ -1255,11 +1297,10 @@ function renderDebt(){
   document.getElementById('d-rate').textContent=avgR.toFixed(2)+'%';
   document.getElementById('d-annual').textContent=eur(annInt);
 
-  const nl=S.settings.lang==='nl';
-  const tl={annuity:nl?'Annuïteit':'Annuity',linear:nl?'Lineair':'Linear',interestOnly:nl?'Aflossingsvrij':'Interest-only',studiefinanciering:nl?'Studiefinanciering':'Student loan'};
-  const remLbl=nl?'resterend':'remaining';
-  const paidLbl=nl?'afgelost':'paid off';
-  const payLessLbl=nl?'Betaling < rente':'Payment < interest';
+  const dtl={annuity:tl('Annuïteit','Annuity','Annuität'),linear:tl('Lineair','Linear','Linear'),interestOnly:tl('Aflossingsvrij','Interest-only','Tilgungsfrei'),studiefinanciering:tl('Studiefinanciering','Student loan','Studienfinanzierung')};
+  const remLbl=tl('resterend','remaining','verbleibend');
+  const paidLbl=tl('afgelost','paid off','abbezahlt');
+  const payLessLbl=tl('Betaling < rente','Payment < interest','Zahlung < Zinsen');
 
   document.getElementById('debt-list').innerHTML=S.debts.map(d=>{
     const mr=monthsRem(d);
@@ -1267,15 +1308,15 @@ function renderDebt(){
     const y=Math.floor(mr/12),m=mr%12;
     return`<div class="card" style="cursor:pointer" onclick="openDebtModal('${d.id}')">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
-        <div><p style="font-weight:600;color:#111;margin:0">${d.name}</p><p style="font-size:12px;color:#9ca3af;margin:2px 0 0">${tl[d.debtType]||d.debtType}</p></div>
+        <div><p style="font-weight:600;color:#111;margin:0">${d.name}</p><p style="font-size:12px;color:#9ca3af;margin:2px 0 0">${dtl[d.debtType]||d.debtType}</p></div>
         <p style="font-weight:700;color:#111;margin:0;font-size:16px">${eur(d.remainingBalance)}</p>
       </div>
       <progress value="${paidPct}" max="100" class="${parseFloat(paidPct)>50?'':'orange'}"></progress>
       <div style="display:flex;justify-content:space-between;font-size:12px;color:#6b7280;margin-top:6px">
-        <span>${d.annualInterestRate.toFixed(2)}% · ${eur(d.monthlyPayment)}/mnd</span>
+        <span>${d.annualInterestRate.toFixed(2)}% · ${eur(d.monthlyPayment)}/${tl('mnd','mo','Mon.')}</span>
         <span>${paidPct}% ${paidLbl}</span>
       </div>
-      <p style="font-size:12px;color:#9ca3af;margin:4px 0 0">${mr>0?`${y>0?y+'j ':''}${m}m ${remLbl} · ${eur(d.remainingBalance*d.annualInterestRate/100)}/${nl?'jaar':'yr'}`:mr===-1?`<span style="color:#ef4444">${payLessLbl}</span>`:`<span style="color:var(--g)">${nl?'Afgelost!':'Paid off!'}</span>`}</p>
+      <p style="font-size:12px;color:#9ca3af;margin:4px 0 0">${mr>0?`${y>0?y+tl('j ','y ','J. '):''}${m}${tl('m','m','M.')} ${remLbl} · ${eur(d.remainingBalance*d.annualInterestRate/100)}/${tl('jaar','yr','Jahr')}`:mr===-1?`<span style="color:#ef4444">${payLessLbl}</span>`:`<span style="color:var(--g)">${tl('Afgelost!','Paid off!','Abbezahlt!')}</span>`}</p>
     </div>`;
   }).join('');
 }
@@ -1293,7 +1334,6 @@ function monthsRem(d){
 function openDebtModal(id){
   editDebtId=id||null;
   const d=id?S.debts.find(x=>x.id===id):null;
-  const nl=S.settings.lang==='nl';
   document.getElementById('debt-modal-title').textContent=d?t('editDebtTitle'):t('addDebtTitle');
   document.getElementById('df-delete').style.display=d?'block':'none';
   document.getElementById('df-name').value=d?.name||'';
@@ -1324,14 +1364,13 @@ function updateDebtEst(){
   if(!bal||!rate||!pmt||bal<=0){estEl.style.display='none';return;}
   estEl.style.display='block';
   const r=rate/100/12,mi=r*bal,ai=bal*rate/100;
-  const nl=S.settings.lang==='nl';
-  let html=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${nl?'Maandelijkse rente':'Monthly interest'}</span><span>${eur(mi)}</span></div>
-  <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${nl?'Jaarlijkse rente':'Annual interest'}</span><span>${eur(ai)}</span></div>`;
+  let html=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${tl('Maandelijkse rente','Monthly interest','Monatliche Zinsen')}</span><span>${eur(mi)}</span></div>
+  <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${tl('Jaarlijkse rente','Annual interest','Jährliche Zinsen')}</span><span>${eur(ai)}</span></div>`;
   if(pmt>mi&&r>0){
     const n=-Math.log(1-(r*bal/pmt))/Math.log(1+r);
     const y=Math.floor(n/12),m=Math.ceil(n%12);
-    html+=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${nl?'Tot aflossing':'Until paid off'}</span><span>${y}j ${m}m</span></div>
-    <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${nl?'Totale rente':'Total interest'}</span><span>${eur(Math.ceil(n)*pmt-bal)}</span></div>`;
+    html+=`<div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${tl('Tot aflossing','Until paid off','Bis zur Tilgung')}</span><span>${y}${tl('j','y','J.')} ${m}${tl('m','m','M.')}</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:12px;padding:3px 0"><span style="color:#6b7280">${tl('Totale rente','Total interest','Gesamtzinsen')}</span><span>${eur(Math.ceil(n)*pmt-bal)}</span></div>`;
   }
   document.getElementById('df-est-content').innerHTML=html;
 }
@@ -1360,15 +1399,14 @@ function saveDebt(e){
   if(editDebtId)S.debts=S.debts.map(d=>d.id===editDebtId?debt:d);
   else S.debts.push(debt);
   saveState();closeDebtModal();renderDebt();
-  toast(S.settings.lang==='en'?'Debt saved':'Schuld opgeslagen');
+  toast(tl('Schuld opgeslagen','Debt saved','Schuld gespeichert'));
 }
 
 function deleteDebt(){
-  const nl=S.settings.lang==='nl';
-  if(!editDebtId||!confirm(nl?'Schuld verwijderen?':'Delete this debt?'))return;
+  if(!editDebtId||!confirm(tl('Schuld verwijderen?','Delete this debt?','Schuld löschen?')))return;
   S.debts=S.debts.filter(d=>d.id!==editDebtId);
   saveState();closeDebtModal();renderDebt();
-  toast(nl?'Schuld verwijderd':'Debt deleted');
+  toast(tl('Schuld verwijderd','Debt deleted','Schuld gelöscht'));
 }
 
 // ════════ INIT ════════
