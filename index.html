@@ -33,10 +33,10 @@
             <img src="AppIcon.png" alt="Logo" class="w-10 h-10 rounded-xl shadow-sm">
             <span class="text-2xl font-bold tracking-tight text-gray-900">Rendementje</span>
         </div>
-        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 transition shadow-sm text-gray-600">
-            <span class="nl inline">🇳🇱 Nederlands</span>
-            <span class="en inline">🇬🇧 English</span>
-        </button>
+        <select id="lang-select" onchange="setLanguage(this.value)" class="text-sm font-medium border border-gray-200 px-3 py-2 rounded-full bg-white hover:bg-gray-50 transition shadow-sm text-gray-600 cursor-pointer appearance-none pr-8" style="background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236B7280'/%3E%3C/svg%3E\");background-repeat:no-repeat;background-position:right 10px center;">
+            <option value="en">🇬🇧 EN</option>
+            <option value="nl">🇳🇱 NL</option>
+        </select>
     </nav>
 
     <!-- ══════════════ A — Attention ══════════════ -->
@@ -342,6 +342,7 @@
     <!-- FOOTER -->
     <footer class="bg-white border-t border-gray-100 py-10">
         <div class="max-w-6xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p class="mb-2 text-xs text-gray-400">🇪🇺 Made in Europe</p>
             <p class="mb-4">&copy; 2026 Rendementje. <span class="en">All rights reserved.</span><span class="nl">Alle rechten voorbehouden.</span></p>
             <div class="flex justify-center space-x-6">
                 <a href="privacy.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
@@ -355,16 +356,17 @@
     </footer>
 
     <script>
-        function toggleLanguage() {
-            document.body.classList.toggle('show-dutch');
-            localStorage.setItem('preferredLang', document.body.classList.contains('show-dutch') ? 'nl' : 'en');
+        function setLanguage(lang) {
+            document.body.classList.toggle('show-dutch', lang === 'nl');
+            localStorage.setItem('preferredLang', lang);
+            document.getElementById('lang-select').value = lang;
         }
         (function() {
             var saved = localStorage.getItem('preferredLang');
-            var browser = navigator.language || navigator.userLanguage;
-            if (saved === 'nl' || (!saved && browser.startsWith('nl'))) {
-                document.body.classList.add('show-dutch');
-            }
+            var browser = navigator.language || navigator.userLanguage || '';
+            var lang = (saved === 'nl' || (!saved && browser.startsWith('nl'))) ? 'nl' : 'en';
+            if (lang === 'nl') document.body.classList.add('show-dutch');
+            document.getElementById('lang-select').value = lang;
         })();
 
         function revealEmail(btn) {
