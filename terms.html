@@ -3,173 +3,314 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - Rendementje</title>
+    <title>Rendementje — Terms of Service</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --brand-green: #2ecc71; }
-        .bg-brand { background-color: var(--brand-green); }
+        :root { --brand-green: #16a34a; }
         .text-brand { color: var(--brand-green); }
-
+        .border-brand { border-color: var(--brand-green); }
         .nl { display: none; }
         .en { display: inline; }
-
         body.show-dutch .en { display: none; }
         body.show-dutch .nl { display: inline; }
         body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl,
-        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl { display: block; }
+        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl,
+        body.show-dutch span.nl { display: block; }
+        body.show-dutch span.nl.inline { display: inline; }
+        h1.en, h2.en, h3.en, p.en, div.en, li.en { display: block; }
+        span.en.inline { display: inline; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased text-gray-900">
+<body class="bg-white font-sans antialiased text-gray-800">
 
-    <nav class="p-6 flex justify-between items-center max-w-4xl mx-auto">
-        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
-            <img src="AppIcon.png" alt="Logo" class="w-8 h-8 rounded-lg shadow-sm">
-            <span class="text-xl font-bold tracking-tight">Rendementje</span>
+    <!-- NAV -->
+    <nav class="px-6 py-5 flex justify-between items-center max-w-4xl mx-auto border-b border-gray-100">
+        <a href="index.html" class="flex items-center space-x-3">
+            <img src="AppIcon.png" alt="Logo" class="w-9 h-9 rounded-xl shadow-sm">
+            <span class="text-xl font-bold tracking-tight text-gray-900">Rendementje</span>
         </a>
-        <button onclick="toggleLanguage()" class="text-xs font-medium border border-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 transition shadow-sm">
-            <span class="nl">🇳🇱 Nederlands</span>
-            <span class="en">🇬🇧 English</span>
+        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 transition shadow-sm text-gray-600">
+            <span class="nl inline">🇳🇱 Nederlands</span>
+            <span class="en inline">🇬🇧 English</span>
         </button>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
-        <div class="bg-white rounded-3xl p-8 md:p-16 shadow-sm border border-gray-100">
+    <main class="max-w-4xl mx-auto px-6 py-12">
 
-            <header class="mb-12 text-center md:text-left">
-                <h1 class="text-4xl font-extrabold mb-4">
-                    <span class="en">Terms of Service</span>
-                    <span class="nl">Gebruiksvoorwaarden</span>
-                </h1>
-                <p class="text-gray-400 font-medium">
-                    <span class="en">Last updated: April 23, 2026</span>
-                    <span class="nl">Laatst bijgewerkt: 23 april 2026</span>
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-2">
+            <span class="en">Terms of Service</span>
+            <span class="nl">Gebruiksvoorwaarden</span>
+        </h1>
+        <p class="text-gray-500 text-sm mb-10">
+            <span class="en">Last updated: May 2, 2026</span>
+            <span class="nl">Laatst bijgewerkt: 2 mei 2026</span>
+        </p>
+
+        <!-- SECTION 1 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">1. Acceptance of terms</span>
+                <span class="nl">1. Acceptatie van de voorwaarden</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">By downloading or using the Rendementje iOS app or visiting rendementje.nl ("the Services"), you agree to these Terms of Service. If you do not agree, do not use the Services. These terms are governed by Dutch law (Netherlands).</span>
+                <span class="nl">Door de Rendementje iOS-app te downloaden of te gebruiken, of door rendementje.nl te bezoeken ("de Diensten"), ga je akkoord met deze Gebruiksvoorwaarden. Als je niet akkoord gaat, gebruik de Diensten dan niet. Deze voorwaarden vallen onder Nederlands recht.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 2 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">2. Description of the service</span>
+                <span class="nl">2. Beschrijving van de dienst</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Rendementje is an investment education app. It provides interactive learning modules, quizzes, and gamified streaks to help users build financial knowledge. The app does not execute trades, manage portfolios, or provide personalised financial advice. Optional cloud account features (sign-in and progress sync) are provided via Firebase and Apple Sign-In.</span>
+                <span class="nl">Rendementje is een beleggingseducatie-app. Het biedt interactieve leermodules, quizzen en gamified streaks om gebruikers financiële kennis te laten opbouwen. De app voert geen transacties uit, beheert geen portefeuilles en geeft geen persoonlijk financieel advies. Optionele cloudaccountfuncties (inloggen en voortgangsynchronisatie) worden aangeboden via Firebase en Apple Aanmelden.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 3 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">3. Educational content — not financial advice</span>
+                <span class="nl">3. Educatieve inhoud — geen financieel advies</span>
+            </h2>
+            <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-4">
+                <p class="text-amber-900 font-semibold mb-1">
+                    <span class="en">Important disclaimer</span>
+                    <span class="nl">Belangrijke disclaimer</span>
                 </p>
-                <p class="mt-4 text-gray-600">
-                    <span class="en">By using Rendementje — including the iOS app, the web app at rendementje.nl/app, or the rendementje.nl website — you agree to these terms.</span>
-                    <span class="nl">Door gebruik te maken van Rendementje — inclusief de iOS-app, de webapp op rendementje.nl/app of de rendementje.nl-website — ga je akkoord met deze voorwaarden.</span>
+                <p class="text-amber-800 text-sm leading-relaxed">
+                    <span class="en">All content in Rendementje — including articles, quizzes, examples, and explanations — is provided for <strong>general educational purposes only</strong>. It does not constitute financial, investment, tax, or legal advice. Individual financial situations vary, and past investment performance does not guarantee future results. Always consult a qualified financial or tax professional before making investment or tax decisions.</span>
+                    <span class="nl">Alle inhoud in Rendementje — inclusief artikelen, quizzen, voorbeelden en uitleg — wordt aangeboden uitsluitend voor <strong>algemene educatieve doeleinden</strong>. Het vormt geen financieel, beleggings-, fiscaal of juridisch advies. Individuele financiële situaties variëren en in het verleden behaalde beleggingsresultaten bieden geen garantie voor de toekomst. Raadpleeg altijd een gekwalificeerde financieel of fiscaal adviseur voordat je beleggings- of belastingbeslissingen neemt.</span>
                 </p>
-            </header>
-
-            <div class="grid gap-10">
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">1.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Informational Use Only</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Uitsluitend Informatief Gebruik</h2>
-                        <p class="text-gray-600">
-                            <span class="en">Rendementje is a personal portfolio tracking, debt management, and tax estimation tool. It is not financial, tax, legal, or investment advice. Tax calculations are estimates based on published Dutch tax rates and should not be used as a substitute for a tax return or professional advice.</span>
-                            <span class="nl">Rendementje is een hulpmiddel voor het bijhouden van je persoonlijke portfolio, schuldbeheer en belastingschattingen. Het is geen financieel, fiscaal, juridisch of beleggingsadvies. Belastingberekeningen zijn schattingen op basis van gepubliceerde Nederlandse belastingtarieven en mogen niet worden gebruikt als vervanging voor een belastingaangifte of professioneel advies.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">2.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">No Trading Capability</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Geen Handelsfunctionaliteit</h2>
-                        <p class="text-gray-600">
-                            <span class="en">Rendementje does not execute trades, withdrawals, or orders on any exchange or broker on your behalf. DEGIRO import is a read-only CSV parsing feature — it does not connect to DEGIRO's systems or APIs.</span>
-                            <span class="nl">Rendementje voert geen transacties, opnames of orders uit bij een beurs of broker in jouw naam. DEGIRO-import is een read-only CSV-parserfunctie — het maakt geen verbinding met de systemen of API's van DEGIRO.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">3.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Web App — Session Data</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Webapp — Sessiegegevens</h2>
-                        <p class="text-gray-600">
-                            <span class="en">The web app stores all user-entered data exclusively in your browser's <code>sessionStorage</code>. This data is automatically and permanently deleted when you close the browser tab. You accept that closing the tab will erase all entered data with no possibility of recovery. Rendementje accepts no liability for data loss resulting from tab closure, browser crashes, or device restarts.</span>
-                            <span class="nl">De webapp slaat alle door de gebruiker ingevoerde gegevens uitsluitend op in de <code>sessionStorage</code> van je browser. Deze gegevens worden automatisch en permanent verwijderd wanneer je het browsertabblad sluit. Je accepteert dat het sluiten van het tabblad alle ingevoerde gegevens permanent wist zonder mogelijkheid tot herstel. Rendementje aanvaardt geen aansprakelijkheid voor gegevensverlies als gevolg van het sluiten van een tabblad, browsercrashes of het opnieuw opstarten van apparaten.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">4.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Analytics on the Marketing Website</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Analyse op de Marketingwebsite</h2>
-                        <p class="text-gray-600">
-                            <span class="en">The rendementje.nl marketing pages (home, privacy, terms) use Contentsquare for website analytics. By visiting these pages you acknowledge this. The web app at rendementje.nl/app does not include Contentsquare or any other analytics or tracking scripts. See our <a href="privacy.html" class="text-brand underline">Privacy Policy</a> for full details.</span>
-                            <span class="nl">De rendementje.nl-marketingpagina's (home, privacy, voorwaarden) maken gebruik van Contentsquare voor websiteanalyse. Door deze pagina's te bezoeken erken je dit. De webapp op rendementje.nl/app bevat geen Contentsquare of andere analyse- of trackingscripts. Zie ons <a href="privacy.html" class="text-brand underline">Privacybeleid</a> voor volledige details.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">5.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Data Accuracy</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Nauwkeurigheid van Gegevens</h2>
-                        <p class="text-gray-600">
-                            <span class="en">Market prices fetched from Yahoo Finance may contain delays, gaps, or inaccuracies. Tax rate constants are based on published Dutch fiscal year 2025 rates and may not reflect future changes. You remain responsible for verifying all values before making financial or tax decisions.</span>
-                            <span class="nl">Marktprijzen opgehaald via Yahoo Finance kunnen vertragingen, hiaten of onnauwkeurigheden bevatten. Belastingtarieven zijn gebaseerd op gepubliceerde Nederlandse tarieven voor belastingjaar 2025 en kunnen toekomstige wijzigingen niet weerspiegelen. Je blijft zelf verantwoordelijk voor het controleren van alle waarden voordat je financiële of fiscale beslissingen neemt.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">6.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">User Responsibility</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Verantwoordelijkheid Gebruiker</h2>
-                        <p class="text-gray-600">
-                            <span class="en">You are responsible for the accuracy of data you manually enter or import. You are responsible for keeping your device and browser secure. Because the web app stores data only in your browser tab, you are responsible for exporting or recording any values you wish to retain before closing the tab.</span>
-                            <span class="nl">Je bent verantwoordelijk voor de juistheid van gegevens die je handmatig invoert of importeert. Je bent verantwoordelijk voor het beveiligen van je apparaat en browser. Omdat de webapp gegevens alleen in je browsertabblad opslaat, ben je zelf verantwoordelijk voor het exporteren of noteren van waarden die je wilt bewaren voordat je het tabblad sluit.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4 bg-gray-50 p-6 rounded-2xl border border-gray-100">
-                    <div class="text-brand font-bold text-xl">7.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Limitation of Liability</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Beperking van Aansprakelijkheid</h2>
-                        <p class="text-gray-600">
-                            <span class="en">The app and web app are provided "as is" without warranties of any kind. The developer is not liable for financial losses, incorrect tax filings, investment outcomes, or data loss — including data lost due to browser tab closure or session expiry in the web app.</span>
-                            <span class="nl">De app en webapp worden geleverd "zoals ze zijn" (as is) zonder enige garanties. De ontwikkelaar is niet aansprakelijk voor financiële verliezen, onjuiste belastingaangiften, beleggingsresultaten of gegevensverlies — inclusief gegevens die verloren gaan door het sluiten van een browsertabblad of het verlopen van de sessie in de webapp.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <section class="flex gap-4">
-                    <div class="text-brand font-bold text-xl">8.</div>
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 en">Changes to These Terms</h2>
-                        <h2 class="text-xl font-bold text-gray-900 mb-2 nl">Wijzigingen in deze Voorwaarden</h2>
-                        <p class="text-gray-600">
-                            <span class="en">These terms may be updated when significant changes are made to the app, web app, or the services they rely on. The "last updated" date at the top of this page reflects the most recent revision.</span>
-                            <span class="nl">Deze voorwaarden kunnen worden bijgewerkt wanneer er significante wijzigingen worden aangebracht in de app, de webapp of de diensten waarvan zij afhankelijk zijn. De datum "Laatst bijgewerkt" bovenaan deze pagina geeft de meest recente versie aan.</span>
-                        </p>
-                    </div>
-                </section>
-
             </div>
-        </div>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">The developer is not a registered investment adviser, financial planner, broker, or tax professional. No content in the app creates a professional relationship or constitutes personalised advice.</span>
+                <span class="nl">De ontwikkelaar is geen geregistreerd beleggingsadviseur, financieel planner, broker of belastingprofessional. Geen enkele inhoud in de app creëert een professionele relatie of vormt persoonlijk advies.</span>
+            </p>
+        </section>
 
-        <div class="mt-12 text-center">
-            <a href="index.html" class="text-brand font-semibold hover:underline decoration-2 underline-offset-4">
-                <span class="en">← Back to home</span>
-                <span class="nl">← Terug naar home</span>
+        <!-- SECTION 4 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">4. Account and Apple Sign-In</span>
+                <span class="nl">4. Account en Apple Aanmelden</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                <span class="en">Creating an account is optional. If you choose to sign in with Apple to enable cloud sync:</span>
+                <span class="nl">Een account aanmaken is optioneel. Als je kiest voor inloggen met Apple voor cloud-synchronisatie:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed">
+                <li>
+                    <span class="en inline">You must comply with Apple's Terms of Service.</span>
+                    <span class="nl inline">Je dient te voldoen aan de gebruiksvoorwaarden van Apple.</span>
+                </li>
+                <li>
+                    <span class="en inline">You are responsible for keeping your Apple account secure.</span>
+                    <span class="nl inline">Je bent verantwoordelijk voor de beveiliging van je Apple-account.</span>
+                </li>
+                <li>
+                    <span class="en inline">You may delete your Rendementje account at any time via Settings → Delete account.</span>
+                    <span class="nl inline">Je kunt je Rendementje-account te allen tijde verwijderen via Instellingen → Account verwijderen.</span>
+                </li>
+                <li>
+                    <span class="en inline">You must be at least 16 years old to create an account (GDPR minimum age for consent-based services).</span>
+                    <span class="nl inline">Je moet minimaal 16 jaar oud zijn om een account aan te maken (AVG-minimumleeftijd voor diensten op basis van toestemming).</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SECTION 5 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">5. Third-party services</span>
+                <span class="nl">5. Diensten van derden</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                <span class="en">Rendementje uses the following third-party services. Each is governed by its own terms:</span>
+                <span class="nl">Rendementje maakt gebruik van de volgende diensten van derden. Elk heeft zijn eigen voorwaarden:</span>
+            </p>
+            <div class="space-y-3">
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <p class="font-semibold text-gray-800 mb-1">
+                        <span class="en inline">Google Firebase (Analytics, Crashlytics, Firestore, Cloud Messaging)</span>
+                        <span class="nl inline">Google Firebase (Analytics, Crashlytics, Firestore, Cloud Messaging)</span>
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <span class="en">Provided by Google LLC under the <a href="https://firebase.google.com/terms" target="_blank" rel="noopener" class="text-brand underline">Firebase Terms of Service</a>. Rendementje is not affiliated with Google.</span>
+                        <span class="nl">Aangeboden door Google LLC onder de <a href="https://firebase.google.com/terms" target="_blank" rel="noopener" class="text-brand underline">Firebase Gebruiksvoorwaarden</a>. Rendementje is niet gelieerd aan Google.</span>
+                    </p>
+                </div>
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <p class="font-semibold text-gray-800 mb-1">
+                        <span class="en inline">Apple Sign-In</span>
+                        <span class="nl inline">Apple Aanmelden</span>
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <span class="en">Provided by Apple Inc. and subject to <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener" class="text-brand underline">Apple's terms</a>.</span>
+                        <span class="nl">Aangeboden door Apple Inc. en onderworpen aan <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/" target="_blank" rel="noopener" class="text-brand underline">Apple's voorwaarden</a>.</span>
+                    </p>
+                </div>
+                <div class="border border-gray-200 rounded-xl p-4">
+                    <p class="font-semibold text-gray-800 mb-1">
+                        <span class="en inline">Contentsquare (rendementje.nl website only)</span>
+                        <span class="nl inline">Contentsquare (alleen website rendementje.nl)</span>
+                    </p>
+                    <p class="text-gray-600 text-sm">
+                        <span class="en">Session analytics on the marketing website. Subject to Contentsquare's own <a href="https://contentsquare.com/terms-of-service/" target="_blank" rel="noopener" class="text-brand underline">terms of service</a>.</span>
+                        <span class="nl">Sessie-analyses op de marketingwebsite. Onderworpen aan de eigen <a href="https://contentsquare.com/terms-of-service/" target="_blank" rel="noopener" class="text-brand underline">gebruiksvoorwaarden</a> van Contentsquare.</span>
+                    </p>
+                </div>
+            </div>
+            <p class="text-gray-600 leading-relaxed mt-4">
+                <span class="en">Rendementje does not guarantee the availability, accuracy, or continued operation of any third-party service.</span>
+                <span class="nl">Rendementje garandeert niet de beschikbaarheid, nauwkeurigheid of voortdurende werking van diensten van derden.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 6 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">6. Acceptable use</span>
+                <span class="nl">6. Acceptabel gebruik</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                <span class="en">You agree not to:</span>
+                <span class="nl">Je gaat ermee akkoord niet:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed">
+                <li>
+                    <span class="en inline">Attempt to reverse-engineer, decompile, or disassemble the app.</span>
+                    <span class="nl inline">Te proberen de app te reverse-engineeren, decompileren of te demonteren.</span>
+                </li>
+                <li>
+                    <span class="en inline">Redistribute or resell the app or its content.</span>
+                    <span class="nl inline">De app of de inhoud ervan te herverdelen of door te verkopen.</span>
+                </li>
+                <li>
+                    <span class="en inline">Use the app in any way that violates applicable law.</span>
+                    <span class="nl inline">De app te gebruiken op een manier die in strijd is met toepasselijk recht.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SECTION 7 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">7. Limitation of liability</span>
+                <span class="nl">7. Beperking van aansprakelijkheid</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                <span class="en">To the maximum extent permitted by Dutch consumer law, Julian de Haas (the developer) is not liable for:</span>
+                <span class="nl">Voor zover toegestaan door Nederlands consumentenrecht is Julian de Haas (de ontwikkelaar) niet aansprakelijk voor:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed mb-4">
+                <li>
+                    <span class="en inline">Investment losses or missed gains based on educational content in the app.</span>
+                    <span class="nl inline">Beleggingsverliezen of gemiste winsten op basis van educatieve inhoud in de app.</span>
+                </li>
+                <li>
+                    <span class="en inline">Loss of learning progress due to app errors, device failure, or Firebase service interruptions.</span>
+                    <span class="nl inline">Verlies van leervoortgang door app-fouten, apparaatdefecten of Firebase-serviceonderbrekingen.</span>
+                </li>
+                <li>
+                    <span class="en inline">Inaccuracies in educational content (financial markets and tax rules change).</span>
+                    <span class="nl inline">Onnauwkeurigheden in de educatieve inhoud (financiële markten en belastingregels veranderen).</span>
+                </li>
+                <li>
+                    <span class="en inline">Interruption or discontinuation of the service.</span>
+                    <span class="nl inline">Onderbreking of beëindiging van de dienst.</span>
+                </li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Nothing in these terms excludes liability for gross negligence or intentional misconduct, or excludes statutory consumer rights under Dutch law that cannot be waived.</span>
+                <span class="nl">Niets in deze voorwaarden sluit aansprakelijkheid uit voor grove nalatigheid of opzettelijk wangedrag, of sluit wettelijke consumentenrechten onder Nederlands recht uit die niet kunnen worden afgestaan.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 8 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">8. Intellectual property</span>
+                <span class="nl">8. Intellectueel eigendom</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">The Rendementje app, name, logo, mascot Rennie, and all app content are the intellectual property of Julian de Haas. You may not copy, redistribute, or create derivative works without prior written permission.</span>
+                <span class="nl">De Rendementje-app, naam, logo, mascotte Rennie en alle app-inhoud zijn het intellectueel eigendom van Julian de Haas. Je mag zonder voorafgaande schriftelijke toestemming niet kopiëren, herverdelen of afgeleide werken maken.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 9 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">9. Governing law and disputes</span>
+                <span class="nl">9. Toepasselijk recht en geschillen</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">These terms are governed by the laws of the Netherlands. Any disputes shall first be attempted to be resolved through direct contact (<a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>). If no resolution is reached, disputes will be submitted to the competent court in the Netherlands, without prejudice to your rights as a consumer to bring a claim in your country of residence within the EU.</span>
+                <span class="nl">Deze voorwaarden vallen onder Nederlands recht. Eventuele geschillen worden eerst geprobeerd op te lossen via direct contact (<a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>). Als er geen oplossing wordt bereikt, worden geschillen voorgelegd aan de bevoegde rechter in Nederland, onverminderd je rechten als consument om een vordering in te dienen in je woonplaats binnen de EU.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 10 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">10. Changes to terms</span>
+                <span class="nl">10. Wijzigingen in de voorwaarden</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">These terms may be updated when the app or its third-party services change significantly. The "Last updated" date at the top reflects the most recent revision. Continued use after changes are published constitutes acceptance of the revised terms.</span>
+                <span class="nl">Deze voorwaarden kunnen worden bijgewerkt wanneer de app of de gebruikte diensten van derden ingrijpend veranderen. De datum "Laatst bijgewerkt" bovenaan geeft de meest recente versie aan. Voortgezet gebruik na publicatie van wijzigingen houdt acceptatie van de herziene voorwaarden in.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 11 -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">11. Contact</span>
+                <span class="nl">11. Contact</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Questions about these terms? Contact Julian de Haas at <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>.</span>
+                <span class="nl">Vragen over deze voorwaarden? Neem contact op met Julian de Haas via <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>.</span>
+            </p>
+        </section>
+
+        <div class="mt-12 pt-8 border-t border-gray-100 text-center">
+            <a href="index.html" class="text-brand font-semibold hover:underline">
+                <span class="en">← Back to Rendementje</span>
+                <span class="nl">← Terug naar Rendementje</span>
             </a>
         </div>
+
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-100 py-10 mt-10">
+        <div class="max-w-4xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p class="mb-4">&copy; 2026 Rendementje. <span class="en">All rights reserved.</span><span class="nl">Alle rechten voorbehouden.</span></p>
+            <div class="flex justify-center space-x-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Privacy Policy</span><span class="nl">Privacybeleid</span>
+                </a>
+                <a href="terms.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Terms of Service</span><span class="nl">Voorwaarden</span>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function toggleLanguage() {
             document.body.classList.toggle('show-dutch');
-            const isDutch = document.body.classList.contains('show-dutch');
-            localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
+            localStorage.setItem('preferredLang', document.body.classList.contains('show-dutch') ? 'nl' : 'en');
         }
-
         (function() {
-            const savedLang = localStorage.getItem('preferredLang');
-            const browserLang = navigator.language || navigator.userLanguage;
-            if (savedLang === 'nl' || (!savedLang && browserLang.startsWith('nl'))) {
+            var saved = localStorage.getItem('preferredLang');
+            var browser = navigator.language || navigator.userLanguage;
+            if (saved === 'nl' || (!saved && browser.startsWith('nl'))) {
                 document.body.classList.add('show-dutch');
             }
         })();

@@ -3,201 +3,450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - Rendementje</title>
+    <title>Rendementje — Privacy Policy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --brand-green: #2ecc71; }
-        .bg-brand { background-color: var(--brand-green); }
+        :root { --brand-green: #16a34a; }
         .text-brand { color: var(--brand-green); }
         .border-brand { border-color: var(--brand-green); }
-
         .nl { display: none; }
         .en { display: inline; }
-
         body.show-dutch .en { display: none; }
         body.show-dutch .nl { display: inline; }
         body.show-dutch h1.nl, body.show-dutch h2.nl, body.show-dutch h3.nl,
-        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl { display: block; }
+        body.show-dutch p.nl, body.show-dutch div.nl, body.show-dutch li.nl,
+        body.show-dutch span.nl { display: block; }
+        body.show-dutch span.nl.inline { display: inline; }
+        h1.en, h2.en, h3.en, p.en, div.en, li.en { display: block; }
+        span.en.inline { display: inline; }
     </style>
 </head>
-<body class="bg-gray-50 font-sans antialiased text-gray-900">
+<body class="bg-white font-sans antialiased text-gray-800">
 
-    <nav class="p-6 flex justify-between items-center max-w-4xl mx-auto">
-        <a href="index.html" class="flex items-center space-x-3 hover:opacity-80 transition">
-            <img src="AppIcon.png" alt="Logo" class="w-8 h-8 rounded-lg shadow-sm">
-            <span class="text-xl font-bold tracking-tight">Rendementje</span>
+    <!-- NAV -->
+    <nav class="px-6 py-5 flex justify-between items-center max-w-4xl mx-auto border-b border-gray-100">
+        <a href="index.html" class="flex items-center space-x-3">
+            <img src="AppIcon.png" alt="Logo" class="w-9 h-9 rounded-xl shadow-sm">
+            <span class="text-xl font-bold tracking-tight text-gray-900">Rendementje</span>
         </a>
-        <button onclick="toggleLanguage()" class="text-xs font-medium border border-gray-300 px-3 py-1.5 rounded-full hover:bg-gray-100 transition shadow-sm">
-            <span class="nl">🇳🇱 Nederlands</span>
-            <span class="en">🇬🇧 English</span>
+        <button onclick="toggleLanguage()" class="text-sm font-medium border border-gray-200 px-4 py-2 rounded-full hover:bg-gray-50 transition shadow-sm text-gray-600">
+            <span class="nl inline">🇳🇱 Nederlands</span>
+            <span class="en inline">🇬🇧 English</span>
         </button>
     </nav>
 
-    <main class="max-w-4xl mx-auto px-6 py-12 md:py-20">
-        <div class="bg-white rounded-3xl p-8 md:p-16 shadow-sm border border-gray-100">
+    <main class="max-w-4xl mx-auto px-6 py-12">
 
-            <header class="mb-12">
-                <h1 class="text-4xl font-extrabold mb-4">
-                    <span class="en">Privacy Policy</span>
-                    <span class="nl">Privacybeleid</span>
-                </h1>
-                <p class="text-gray-400 font-medium">
-                    <span class="en">Last updated: April 23, 2026</span>
-                    <span class="nl">Laatst bijgewerkt: 23 april 2026</span>
-                </p>
-                <p class="mt-4 text-gray-600">
-                    <span class="en">This policy covers the Rendementje iOS app, the Rendementje web app (rendementje.nl/app), and the rendementje.nl marketing website.</span>
-                    <span class="nl">Dit beleid is van toepassing op de Rendementje iOS-app, de Rendementje webapp (rendementje.nl/app) en de rendementje.nl-marketingwebsite.</span>
-                </p>
-            </header>
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-2">
+            <span class="en">Privacy Policy</span>
+            <span class="nl">Privacybeleid</span>
+        </h1>
+        <p class="text-gray-500 text-sm mb-3">
+            <span class="en">Last updated: May 2, 2026</span>
+            <span class="nl">Laatst bijgewerkt: 2 mei 2026</span>
+        </p>
+        <p class="text-gray-500 text-sm mb-10">
+            <span class="en">This policy covers the Rendementje iOS app and the rendementje.nl website.</span>
+            <span class="nl">Dit beleid is van toepassing op de Rendementje iOS-app en de website rendementje.nl.</span>
+        </p>
 
-            <div class="space-y-10 text-gray-600 leading-relaxed">
-
-                <!-- 1. iOS APP -->
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">1. iOS App — data storage</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">1. iOS-app — gegevensopslag</h2>
-                    <p>
-                        <span class="en">The iOS app stores all your portfolio data — transactions, assets, debts, and settings — exclusively on your device using Apple SwiftData. No account is required and no data is transmitted to Rendementje servers.</span>
-                        <span class="nl">De iOS-app slaat al je portfoliogegevens — transacties, bezittingen, schulden en instellingen — uitsluitend op je eigen apparaat op via Apple SwiftData. Er is geen account vereist en er worden geen gegevens naar Rendementje-servers verstuurd.</span>
-                    </p>
-                </section>
-
-                <!-- 2. WEB APP -->
-                <section class="bg-green-50 rounded-2xl p-6 border-l-4 border-brand">
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">2. Web app — session-only storage</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">2. Webapp — alleen sessie-opslag</h2>
-                    <p class="mb-3">
-                        <span class="en">The web app (<strong>rendementje.nl/app</strong>) stores all data exclusively in your browser's <code>sessionStorage</code>. This means:</span>
-                        <span class="nl">De webapp (<strong>rendementje.nl/app</strong>) slaat alle gegevens uitsluitend op in de <code>sessionStorage</code> van je browser. Dit betekent:</span>
-                    </p>
-                    <ul class="list-disc ml-5 space-y-2">
-                        <li class="en">Your data is <strong>automatically and permanently deleted</strong> when you close the browser tab.</li>
-                        <li class="nl">Je gegevens worden <strong>automatisch en permanent verwijderd</strong> zodra je het browsertabblad sluit.</li>
-                        <li class="en">Your data is never sent to Rendementje servers or any third-party server.</li>
-                        <li class="nl">Je gegevens worden nooit verstuurd naar Rendementje-servers of servers van derden.</li>
-                        <li class="en">No account, login, or registration is required or possible.</li>
-                        <li class="nl">Er is geen account, inlog of registratie vereist of mogelijk.</li>
-                        <li class="en">No tracking or analytics scripts run inside the web app.</li>
-                        <li class="nl">Er worden geen tracking- of analysescripts uitgevoerd binnen de webapp.</li>
-                    </ul>
-                    <p class="mt-3 text-sm text-gray-500">
-                        <span class="en">You are informed of this at the top of every web app session via an in-app notice.</span>
-                        <span class="nl">Je wordt hierover geïnformeerd bovenaan elke webapp-sessie via een melding in de app.</span>
-                    </p>
-                </section>
-
-                <!-- 3. CONTENTSQUARE -->
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">3. Analytics on the marketing website — Contentsquare</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">3. Analyse op de marketingwebsite — Contentsquare</h2>
-                    <p class="mb-3">
-                        <span class="en">The <strong>rendementje.nl marketing pages</strong> (home, privacy, terms) use <a href="https://contentsquare.com" target="_blank" rel="noopener" class="text-brand underline">Contentsquare</a>, a digital experience analytics service. Contentsquare may collect:</span>
-                        <span class="nl">De <strong>rendementje.nl-marketingpagina's</strong> (home, privacy, voorwaarden) maken gebruik van <a href="https://contentsquare.com" target="_blank" rel="noopener" class="text-brand underline">Contentsquare</a>, een dienst voor digitale ervaringsanalyse. Contentsquare kan het volgende verzamelen:</span>
-                    </p>
-                    <ul class="list-disc ml-5 space-y-2 mb-3">
-                        <li class="en">Page views and navigation patterns.</li>
-                        <li class="nl">Paginaweergaven en navigatiepatronen.</li>
-                        <li class="en">Mouse movements, clicks, and scroll behaviour (session replay).</li>
-                        <li class="nl">Muisbewegingen, klikken en scrollgedrag (sessieopname).</li>
-                        <li class="en">Device type, browser, and approximate location (country/region level).</li>
-                        <li class="nl">Apparaattype, browser en globale locatie (land/regio).</li>
-                    </ul>
-                    <p class="mb-3">
-                        <span class="en">This data is processed by Contentsquare under their own privacy policy. Contentsquare acts as a data processor on behalf of Rendementje.</span>
-                        <span class="nl">Deze gegevens worden verwerkt door Contentsquare op basis van hun eigen privacybeleid. Contentsquare treedt op als gegevensverwerker namens Rendementje.</span>
-                    </p>
-                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                        <p class="font-semibold text-gray-800 mb-1">
-                            <span class="en">⚠️ Contentsquare does NOT run inside the web app.</span>
-                            <span class="nl">⚠️ Contentsquare draait NIET binnen de webapp.</span>
-                        </p>
-                        <p class="text-sm">
-                            <span class="en">The web app at <strong>rendementje.nl/app</strong> deliberately excludes all analytics scripts, including Contentsquare. No behavioural tracking of any kind occurs while you use your financial data in the web app.</span>
-                            <span class="nl">De webapp op <strong>rendementje.nl/app</strong> sluit bewust alle analysescripts uit, inclusief Contentsquare. Er vindt geen enkel gedragstracking plaats terwijl je je financiële gegevens gebruikt in de webapp.</span>
-                        </p>
-                    </div>
-                </section>
-
-                <!-- 4. PRICE DATA -->
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">4. Third-party price data</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">4. Koersgegevens van derden</h2>
-                    <p>
-                        <span class="en">Both the iOS app and the web app may request current market prices and currency exchange rates from Yahoo Finance. These requests include the ticker symbols you look up and are made directly from your device or browser to Yahoo Finance's servers — not via Rendementje. Yahoo Finance's own privacy policy applies to these requests. No personal financial data (quantities, purchase prices, account details) is included in these requests.</span>
-                        <span class="nl">Zowel de iOS-app als de webapp kunnen actuele marktprijzen en wisselkoersen opvragen bij Yahoo Finance. Deze verzoeken bevatten de tickersymbolen die je opzoekt en worden rechtstreeks verstuurd van jouw apparaat of browser naar de servers van Yahoo Finance — niet via Rendementje. Het privacybeleid van Yahoo Finance is van toepassing op deze verzoeken. Er worden geen persoonlijke financiële gegevens (aantallen, aankoopprijzen, accountgegevens) meegestuurd in deze verzoeken.</span>
-                    </p>
-                </section>
-
-                <!-- 5. WHAT WE DO NOT DO -->
-                <section class="bg-gray-50 rounded-2xl p-6 border-l-4 border-brand">
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">5. What we do not do</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">5. Wat we niet doen</h2>
-                    <ul class="list-disc ml-5 space-y-2">
-                        <li class="en">We do not collect or store any personal financial data on our servers.</li>
-                        <li class="nl">Wij verzamelen of bewaren geen persoonlijke financiële gegevens op onze servers.</li>
-                        <li class="en">We do not execute broker or exchange orders.</li>
-                        <li class="nl">Wij voeren geen broker- of exchange-orders uit.</li>
-                        <li class="en">We do not sell data to third parties.</li>
-                        <li class="nl">Wij verkopen geen gegevens aan derden.</li>
-                        <li class="en">We do not use cookies for advertising or cross-site tracking.</li>
-                        <li class="nl">Wij gebruiken geen cookies voor reclame of cross-site tracking.</li>
-                    </ul>
-                </section>
-
-                <!-- 6. YOUR CONTROL -->
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">6. Your control</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">6. Jouw controle</h2>
-                    <ul class="list-disc ml-5 space-y-2">
-                        <li class="en"><strong>iOS app:</strong> Delete all transactions via the Transactions screen, or remove the app to wipe local storage.</li>
-                        <li class="nl"><strong>iOS-app:</strong> Verwijder alle transacties via het Transactie-scherm, of verwijder de app om de lokale opslag te wissen.</li>
-                        <li class="en"><strong>Web app:</strong> Close the browser tab at any time — all data is immediately and permanently deleted.</li>
-                        <li class="nl"><strong>Webapp:</strong> Sluit het browsertabblad op elk moment — alle gegevens worden direct en permanent verwijderd.</li>
-                        <li class="en"><strong>Contentsquare (marketing pages):</strong> You may opt out via your browser's "Do Not Track" setting or a consent management tool. Contentsquare respects the Global Privacy Control (GPC) signal.</li>
-                        <li class="nl"><strong>Contentsquare (marketingpagina's):</strong> Je kunt je afmelden via de "Do Not Track"-instelling van je browser of een toestemmingsbeheertools. Contentsquare respecteert het Global Privacy Control (GPC)-signaal.</li>
-                    </ul>
-                </section>
-
-                <!-- 7. LEGAL BASIS (GDPR) -->
-                <section>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 en">7. Legal basis (GDPR)</h2>
-                    <h2 class="text-xl font-bold text-gray-900 mb-3 nl">7. Rechtsgrondslag (AVG)</h2>
-                    <p>
-                        <span class="en">For users in the European Economic Area: the use of Contentsquare on marketing pages is based on our legitimate interest in understanding how visitors interact with our website (Art. 6(1)(f) GDPR). No financial data is processed; the web app contains no tracking. For questions, contact us at the address on the App Store listing.</span>
-                        <span class="nl">Voor gebruikers in de Europese Economische Ruimte: het gebruik van Contentsquare op marketingpagina's is gebaseerd op ons gerechtvaardigd belang om te begrijpen hoe bezoekers met onze website omgaan (Art. 6(1)(f) AVG). Er worden geen financiële gegevens verwerkt; de webapp bevat geen tracking. Neem voor vragen contact op via het adres in de App Store-vermelding.</span>
-                    </p>
-                </section>
-
-                <footer class="pt-10 border-t border-gray-100 italic text-sm text-gray-400">
-                    <p>
-                        <span class="en">This app provides educational and informational tooling only — not tax, legal, or investment advice. Tax calculations are estimates; consult a tax adviser for official filings.</span>
-                        <span class="nl">Deze app biedt uitsluitend educatieve en informatieve hulpmiddelen — geen belasting-, juridisch of beleggingsadvies. Belastingberekeningen zijn schattingen; raadpleeg een belastingadviseur voor officiële aangifte.</span>
-                    </p>
-                </footer>
-
-            </div>
+        <!-- SUMMARY -->
+        <div class="bg-green-50 border border-green-200 rounded-2xl p-6 mb-10">
+            <p class="font-bold text-green-900 text-lg mb-2">
+                <span class="en">The short version</span>
+                <span class="nl">De korte versie</span>
+            </p>
+            <p class="text-green-800 text-sm leading-relaxed">
+                <span class="en">Rendementje is an investment education app. Your learning progress is stored on your device and optionally synced to the cloud via Firebase Firestore when you sign in with Apple. The app uses Firebase Analytics and Crashlytics (Google services, US-based) to improve app quality. Push notifications are sent via Firebase Cloud Messaging if you grant permission. The rendementje.nl website uses Contentsquare for session analytics. We are transparent about all of this below.</span>
+                <span class="nl">Rendementje is een educatieve beleggingsapp. Je leervoortgang wordt opgeslagen op je apparaat en optioneel gesynchroniseerd naar de cloud via Firebase Firestore als je inlogt met Apple. De app gebruikt Firebase Analytics en Crashlytics (Google-diensten, gebaseerd in de VS) om de app te verbeteren. Pushmeldingen worden via Firebase Cloud Messaging verstuurd als je toestemming geeft. De website rendementje.nl gebruikt Contentsquare voor sessie-analyses. We zijn hierover transparant in onderstaand beleid.</span>
+            </p>
         </div>
 
-        <div class="mt-12 text-center">
-            <a href="index.html" class="text-brand font-semibold hover:underline decoration-2 underline-offset-4">
-                <span class="en">← Back to home</span>
-                <span class="nl">← Terug naar home</span>
+        <!-- SECTION 1: CONTROLLER -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">1. Who is responsible for your data</span>
+                <span class="nl">1. Wie verantwoordelijk is voor je gegevens</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">The data controller is <strong>Julian de Haas</strong> (sole developer), reachable at <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. Questions or requests about this policy can be sent to that address.</span>
+                <span class="nl">De verwerkingsverantwoordelijke is <strong>Julian de Haas</strong> (zelfstandig ontwikkelaar), bereikbaar via <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. Vragen of verzoeken over dit beleid kunnen naar dat adres worden gestuurd.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 2: LOCAL APP DATA -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">2. Data stored locally on your device</span>
+                <span class="nl">2. Gegevens die lokaal op je apparaat worden opgeslagen</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">The following data is stored on your iPhone using Apple's UserDefaults and standard iOS storage. It remains on your device unless you are signed in, in which case it is also synced to Firebase Firestore (see section 4).</span>
+                <span class="nl">De volgende gegevens worden opgeslagen op je iPhone via Apple's UserDefaults en standaard iOS-opslag. Ze blijven op je apparaat, tenzij je bent ingelogd — in dat geval worden ze ook gesynchroniseerd via Firebase Firestore (zie sectie 4).</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed">
+                <li>
+                    <span class="en inline"><strong>Learning progress</strong> — completed modules, quiz scores, and current streak.</span>
+                    <span class="nl inline"><strong>Leervoortgang</strong> — voltooide modules, quizscores en huidige streak.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Achievements and badges</strong> — unlocked milestones in the gamification system.</span>
+                    <span class="nl inline"><strong>Prestaties en badges</strong> — vrijgespeelde mijlpalen in het gamificatiesysteem.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>App preferences</strong> — your chosen language, notification settings, and onboarding state.</span>
+                    <span class="nl inline"><strong>App-voorkeuren</strong> — je gekozen taal, meldingsinstellingen en onboarding-status.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SECTION 3: APPLE SIGN-IN -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">3. Apple Sign-In</span>
+                <span class="nl">3. Inloggen met Apple</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">Signing in is optional. If you choose to sign in with Apple, the following happens:</span>
+                <span class="nl">Inloggen is optioneel. Als je kiest voor inloggen met Apple, gebeurt het volgende:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed mb-4">
+                <li>
+                    <span class="en inline">Apple provides us with a stable anonymous user identifier (a string like <code>000123.abc…</code>), and optionally your email address and name if you choose to share them at first sign-in.</span>
+                    <span class="nl inline">Apple verstrekt ons een stabiele anonieme gebruikers-ID (een string zoals <code>000123.abc…</code>), en optioneel je e-mailadres en naam als je ervoor kiest deze bij eerste aanmelding te delen.</span>
+                </li>
+                <li>
+                    <span class="en inline">This identifier is used to link your learning progress to a Firebase Firestore account so that your data is available across devices or after reinstalling the app.</span>
+                    <span class="nl inline">Deze ID wordt gebruikt om je leervoortgang te koppelen aan een Firebase Firestore-account, zodat je gegevens beschikbaar zijn op meerdere apparaten of na herinstallatie.</span>
+                </li>
+                <li>
+                    <span class="en inline">Your email address (if shared) is stored in Firebase Firestore solely for account identification. It is never used for marketing.</span>
+                    <span class="nl inline">Je e-mailadres (indien gedeeld) wordt uitsluitend opgeslagen in Firebase Firestore voor accountidentificatie. Het wordt nooit gebruikt voor marketing.</span>
+                </li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Legal basis:</strong> Article 6(1)(b) GDPR — performance of a service you have requested (cloud sync of your learning progress). <strong>Retention:</strong> Until you delete your account (Settings → Sign out → Delete account).</span>
+                <span class="nl"><strong>Rechtsgrond:</strong> Artikel 6(1)(b) AVG — uitvoering van een dienst die je hebt aangevraagd (cloud-synchronisatie van je leervoortgang). <strong>Bewaartermijn:</strong> Tot je je account verwijdert (Instellingen → Uitloggen → Account verwijderen).</span>
+            </p>
+        </section>
+
+        <!-- SECTION 4: FIREBASE FIRESTORE -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">4. Firebase Firestore (cloud sync)</span>
+                <span class="nl">4. Firebase Firestore (cloud-synchronisatie)</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">When you are signed in, your learning progress, quiz scores, streak, and achievements are stored in Google Firebase Firestore, a cloud database operated by Google LLC (US). This allows your data to persist across devices and app reinstalls.</span>
+                <span class="nl">Als je bent ingelogd, worden je leervoortgang, quizscores, streak en prestaties opgeslagen in Google Firebase Firestore, een clouddatabase van Google LLC (VS). Hierdoor blijft je voortgang beschikbaar op meerdere apparaten en na herinstallatie.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Data stored:</strong> User ID (from Apple), learning module completion records, quiz results, streak count, badge unlocks, and last-active timestamp. No financial data is stored. <strong>Legal basis:</strong> Art. 6(1)(b) GDPR — performance of the cloud sync service you opted into. <strong>Transfer:</strong> Google Cloud servers may be located in the US — see Section 10 on transfers.</span>
+                <span class="nl"><strong>Opgeslagen gegevens:</strong> Gebruikers-ID (van Apple), voortgang per leermodule, quizresultaten, streakteller, vrijgespeelde badges en tijdstip van laatste activiteit. Er worden geen financiële gegevens opgeslagen. <strong>Rechtsgrond:</strong> Art. 6(1)(b) AVG — uitvoering van de cloud-synchronisatiedienst die je hebt ingeschakeld. <strong>Doorgifte:</strong> Google Cloud-servers kunnen in de VS staan — zie Sectie 10 over internationale doorgiften.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 5: FIREBASE ANALYTICS -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">5. Firebase Analytics</span>
+                <span class="nl">5. Firebase Analytics</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">The app uses Google Firebase Analytics to understand how the app is used. Firebase Analytics collects:</span>
+                <span class="nl">De app gebruikt Google Firebase Analytics om te begrijpen hoe de app wordt gebruikt. Firebase Analytics verzamelt:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed mb-4">
+                <li>
+                    <span class="en inline">App events (e.g., which modules are opened, quiz completions, session length).</span>
+                    <span class="nl inline">App-gebeurtenissen (bijv. welke modules worden geopend, quizvoltooiingen, sessieduur).</span>
+                </li>
+                <li>
+                    <span class="en inline">Device type and operating system version.</span>
+                    <span class="nl inline">Apparaattype en versie van het besturingssysteem.</span>
+                </li>
+                <li>
+                    <span class="en inline">Approximate location derived from IP address (country/city level, not precise location).</span>
+                    <span class="nl inline">Geschatte locatie afgeleid van IP-adres (op land-/stadsniveau, geen nauwkeurige locatie).</span>
+                </li>
+                <li>
+                    <span class="en inline">An anonymous instance ID generated by Firebase (not linked to your Apple account).</span>
+                    <span class="nl inline">Een anonieme instantie-ID gegenereerd door Firebase (niet gekoppeld aan je Apple-account).</span>
+                </li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed mb-2">
+                <span class="en">No financial data, names, or email addresses are included in Analytics events. Data is processed by Google LLC (US) — see Section 10.</span>
+                <span class="nl">Er worden geen financiële gegevens, namen of e-mailadressen meegestuurd in Analytics-gebeurtenissen. Gegevens worden verwerkt door Google LLC (VS) — zie Sectie 10.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Legal basis:</strong> Art. 6(1)(f) GDPR — our legitimate interest in understanding app usage to improve the product. <strong>Opt-out:</strong> You can disable Analytics data sharing in iOS Settings → Privacy &amp; Security → Apple Advertising (limits ad tracking). You can also enable "Limit Ad Tracking" which signals Firebase to disable advertising-related features.</span>
+                <span class="nl"><strong>Rechtsgrond:</strong> Art. 6(1)(f) AVG — ons gerechtvaardigd belang bij het begrijpen van app-gebruik om het product te verbeteren. <strong>Opt-out:</strong> Je kunt gegevens delen voor Analytics beperken via iOS-instellingen → Privacy &amp; beveiliging → Apple adverteren. Je kunt ook "Beperk advertentietracking" inschakelen, wat Firebase instrueert reclame-gerelateerde functies uit te schakelen.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 6: FIREBASE CRASHLYTICS -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">6. Firebase Crashlytics</span>
+                <span class="nl">6. Firebase Crashlytics</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">The app uses Firebase Crashlytics to automatically report crashes and errors. When a crash occurs, a report is sent to Google containing:</span>
+                <span class="nl">De app gebruikt Firebase Crashlytics om crashes en fouten automatisch te rapporteren. Wanneer een crash optreedt, wordt een rapport verstuurd naar Google met:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed mb-4">
+                <li>
+                    <span class="en inline">Stack trace and exception type.</span>
+                    <span class="nl inline">Stack trace en uitzonderingstype.</span>
+                </li>
+                <li>
+                    <span class="en inline">Device model, iOS version, and app version.</span>
+                    <span class="nl inline">Apparaatmodel, iOS-versie en app-versie.</span>
+                </li>
+                <li>
+                    <span class="en inline">A Crashlytics installation UUID (not linked to your name or Apple account).</span>
+                    <span class="nl inline">Een Crashlytics installatie-UUID (niet gekoppeld aan je naam of Apple-account).</span>
+                </li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Crash reports do not contain your learning data or any personal content from within the app. <strong>Legal basis:</strong> Art. 6(1)(f) GDPR — legitimate interest in diagnosing and fixing software defects. Data is processed by Google LLC (US) — see Section 10.</span>
+                <span class="nl">Crashrapporten bevatten geen leergegevens of persoonlijke inhoud uit de app. <strong>Rechtsgrond:</strong> Art. 6(1)(f) AVG — gerechtvaardigd belang bij het diagnosticeren en oplossen van softwarefouten. Gegevens worden verwerkt door Google LLC (VS) — zie Sectie 10.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 7: FIREBASE CLOUD MESSAGING -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">7. Firebase Cloud Messaging (push notifications)</span>
+                <span class="nl">7. Firebase Cloud Messaging (pushmeldingen)</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">If you grant notification permission (iOS will ask), the app registers a push token with Firebase Cloud Messaging (FCM) to enable learning reminders and streak notifications. The push token is a device-level identifier managed by Apple and Firebase. We send notifications only for app-related purposes (e.g., "You have a 3-day streak!"). We do not send marketing messages.</span>
+                <span class="nl">Als je toestemming geeft voor meldingen (iOS vraagt dit), registreert de app een push-token bij Firebase Cloud Messaging (FCM) voor leerherinneringen en streaknotificaties. Het push-token is een apparaat-ID die beheerd wordt door Apple en Firebase. We versturen meldingen uitsluitend voor app-gerelateerde doeleinden (bijv. "Je hebt een streak van 3 dagen!"). We versturen geen marketingberichten.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Legal basis:</strong> Art. 6(1)(a) GDPR — your consent, given when iOS asks "Allow Rendementje to send you notifications?" You can withdraw consent at any time via iOS Settings → Rendementje → Notifications → Allow Notifications (off).</span>
+                <span class="nl"><strong>Rechtsgrond:</strong> Art. 6(1)(a) AVG — jouw toestemming, gegeven wanneer iOS vraagt "Mag Rendementje je meldingen sturen?" Je kunt toestemming te allen tijde intrekken via iOS-instellingen → Rendementje → Meldingen → Sta meldingen toe (uit).</span>
+            </p>
+        </section>
+
+        <!-- SECTION 8: WEBSITE / CONTENTSQUARE -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">8. rendementje.nl website — Contentsquare</span>
+                <span class="nl">8. Website rendementje.nl — Contentsquare</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">The rendementje.nl marketing website uses <strong>Contentsquare</strong>, a web analytics service that collects session data including page scrolling behaviour, click patterns, and mouse movements to produce aggregate heatmaps and usage reports. Contentsquare may process your IP address, browser type, and session duration.</span>
+                <span class="nl">De marketingwebsite rendementje.nl maakt gebruik van <strong>Contentsquare</strong>, een webanalysedienst die sessiegegevens verzamelt, waaronder scrollgedrag, klikpatronen en muisbewegingen, om geaggregeerde heatmaps en gebruiksrapporten te maken. Contentsquare kan je IP-adres, browsertype en sessieduur verwerken.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed mb-3">
+                <span class="en">Contentsquare is a French company operating under EU data protection rules and subject to a Data Processing Agreement. Session data collected on rendementje.nl is not linked to your in-app account or learning progress.</span>
+                <span class="nl">Contentsquare is een Frans bedrijf dat opereert onder de Europese privacyregels en gebonden is aan een verwerkersovereenkomst. Sessiegegevens die op rendementje.nl worden verzameld, zijn niet gekoppeld aan je in-app-account of leervoortgang.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Legal basis:</strong> Art. 6(1)(f) GDPR — legitimate interest in understanding how visitors use the website to improve it. <strong>Opt-out:</strong> You can opt out of Contentsquare data collection at <a href="https://privacy.contentsquare.com/opt-out" target="_blank" rel="noopener" class="text-brand underline">privacy.contentsquare.com/opt-out</a>.</span>
+                <span class="nl"><strong>Rechtsgrond:</strong> Art. 6(1)(f) AVG — gerechtvaardigd belang bij het begrijpen hoe bezoekers de website gebruiken om deze te verbeteren. <strong>Opt-out:</strong> Je kunt je afmelden voor gegevensverzameling door Contentsquare via <a href="https://privacy.contentsquare.com/opt-out" target="_blank" rel="noopener" class="text-brand underline">privacy.contentsquare.com/opt-out</a>.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 9: WHAT WE DO NOT DO -->
+        <section class="mb-10">
+            <div class="bg-green-50 border-l-4 border-green-500 rounded-xl p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                    <span class="en">9. What we do not do</span>
+                    <span class="nl">9. Wat we niet doen</span>
+                </h2>
+                <ul class="list-disc list-inside space-y-2 text-gray-700 leading-relaxed">
+                    <li>
+                        <span class="en inline">We do not sell your data to third parties.</span>
+                        <span class="nl inline">Wij verkopen je gegevens niet aan derden.</span>
+                    </li>
+                    <li>
+                        <span class="en inline">We do not collect or process any financial data (portfolio, transactions, tax figures).</span>
+                        <span class="nl inline">Wij verzamelen of verwerken geen financiële gegevens (portefeuille, transacties, belastingcijfers).</span>
+                    </li>
+                    <li>
+                        <span class="en inline">We do not use advertising identifiers for ad targeting.</span>
+                        <span class="nl inline">Wij gebruiken geen advertentie-ID's voor advertentietargeting.</span>
+                    </li>
+                    <li>
+                        <span class="en inline">We do not send marketing emails (we have no email list).</span>
+                        <span class="nl inline">Wij sturen geen marketinge-mails (we hebben geen mailinglijst).</span>
+                    </li>
+                    <li>
+                        <span class="en inline">We do not use automated decision-making or profiling that produces legal effects.</span>
+                        <span class="nl inline">Wij gebruiken geen geautomatiseerde besluitvorming of profilering met juridische gevolgen.</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SECTION 10: INTERNATIONAL TRANSFERS -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">10. International data transfers</span>
+                <span class="nl">10. Internationale gegevensdoorgiften</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">Firebase Firestore, Firebase Analytics, Firebase Crashlytics, and Firebase Cloud Messaging are services of Google LLC, which may store and process data on servers in the United States. These transfers are covered by Google's Standard Contractual Clauses (SCCs) approved by the European Commission, as described in <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener" class="text-brand underline">Firebase's privacy documentation</a>. Google is also certified under the EU–US Data Privacy Framework.</span>
+                <span class="nl">Firebase Firestore, Firebase Analytics, Firebase Crashlytics en Firebase Cloud Messaging zijn diensten van Google LLC, die gegevens kunnen opslaan en verwerken op servers in de Verenigde Staten. Deze doorgiften zijn gedekt door de door de Europese Commissie goedgekeurde Standaardcontractbepalingen (SCC's) van Google, zoals beschreven in <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener" class="text-brand underline">Firebase's privacydocumentatie</a>. Google is ook gecertificeerd onder het EU–VS Gegevensprivacyraamwerk.</span>
+            </p>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Contentsquare is a French company and processes data within the EU/EEA.</span>
+                <span class="nl">Contentsquare is een Frans bedrijf en verwerkt gegevens binnen de EU/EER.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 11: YOUR RIGHTS -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">11. Your rights under GDPR</span>
+                <span class="nl">11. Jouw rechten onder de AVG</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed mb-4">
+                <span class="en">If you are in the EU/EEA, you have the following rights regarding your personal data:</span>
+                <span class="nl">Als je in de EU/EER woont, heb je de volgende rechten met betrekking tot je persoonsgegevens:</span>
+            </p>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed mb-4">
+                <li>
+                    <span class="en inline"><strong>Access (Art. 15):</strong> Request a copy of the data we hold about you.</span>
+                    <span class="nl inline"><strong>Inzage (Art. 15):</strong> Vraag een kopie op van de gegevens die wij over jou bewaren.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Rectification (Art. 16):</strong> Request correction of inaccurate data.</span>
+                    <span class="nl inline"><strong>Rectificatie (Art. 16):</strong> Verzoek om correctie van onjuiste gegevens.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Erasure (Art. 17):</strong> Request deletion of your data ("right to be forgotten").</span>
+                    <span class="nl inline"><strong>Wissing (Art. 17):</strong> Verzoek om verwijdering van je gegevens ("recht op vergetelheid").</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Restriction (Art. 18):</strong> Request that processing of your data is restricted.</span>
+                    <span class="nl inline"><strong>Beperking (Art. 18):</strong> Verzoek om beperking van de verwerking van je gegevens.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Portability (Art. 20):</strong> Receive your data in a structured, machine-readable format.</span>
+                    <span class="nl inline"><strong>Overdraagbaarheid (Art. 20):</strong> Ontvang je gegevens in een gestructureerd, machineleesbaar formaat.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Objection (Art. 21):</strong> Object to processing based on legitimate interests (e.g., Analytics, Crashlytics).</span>
+                    <span class="nl inline"><strong>Bezwaar (Art. 21):</strong> Maak bezwaar tegen verwerking op basis van gerechtvaardigde belangen (bijv. Analytics, Crashlytics).</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Withdraw consent (Art. 7):</strong> Withdraw any consent you have given (e.g., push notifications) at any time without affecting prior processing.</span>
+                    <span class="nl inline"><strong>Toestemming intrekken (Art. 7):</strong> Trek gegeven toestemming (bijv. pushmeldingen) te allen tijde in, zonder dat dit gevolgen heeft voor eerdere verwerking.</span>
+                </li>
+            </ul>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">To exercise any of these rights, email <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. We will respond within 30 days. You also have the right to lodge a complaint with the Dutch supervisory authority: <strong>Autoriteit Persoonsgegevens</strong> — <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener" class="text-brand underline">autoriteitpersoonsgegevens.nl</a>.</span>
+                <span class="nl">Om een van deze rechten uit te oefenen, stuur een e-mail naar <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. We reageren binnen 30 dagen. Je hebt ook het recht een klacht in te dienen bij de Nederlandse toezichthouder: <strong>Autoriteit Persoonsgegevens</strong> — <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener" class="text-brand underline">autoriteitpersoonsgegevens.nl</a>.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 12: DELETING YOUR DATA -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">12. Deleting your data</span>
+                <span class="nl">12. Je gegevens verwijderen</span>
+            </h2>
+            <ul class="list-disc list-inside space-y-2 text-gray-600 leading-relaxed">
+                <li>
+                    <span class="en inline"><strong>Delete cloud data:</strong> Settings → Delete account. This removes your Firestore document and disassociates your Apple Sign-In account.</span>
+                    <span class="nl inline"><strong>Cloudgegevens verwijderen:</strong> Instellingen → Account verwijderen. Dit verwijdert je Firestore-document en ontkoppelt je Apple-account.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Delete local data:</strong> Delete the Rendementje app from your iPhone. All local progress and preferences are removed.</span>
+                    <span class="nl inline"><strong>Lokale gegevens verwijderen:</strong> Verwijder de Rendementje-app van je iPhone. Alle lokale voortgang en voorkeuren worden gewist.</span>
+                </li>
+                <li>
+                    <span class="en inline"><strong>Disable push notifications:</strong> iOS Settings → Rendementje → Notifications → Allow Notifications (off).</span>
+                    <span class="nl inline"><strong>Pushmeldingen uitschakelen:</strong> iOS-instellingen → Rendementje → Meldingen → Sta meldingen toe (uit).</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- SECTION 13: RETENTION -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">13. Data retention</span>
+                <span class="nl">13. Bewaartermijnen</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en"><strong>Firestore (cloud sync):</strong> Retained until you delete your account. <strong>Firebase Analytics:</strong> Event data is retained by Google for up to 14 months by default. <strong>Firebase Crashlytics:</strong> Crash reports are retained by Google for 90 days. <strong>Push tokens (FCM):</strong> Retained until you disable notifications or delete the app. <strong>Local device data:</strong> Retained until you delete the app.</span>
+                <span class="nl"><strong>Firestore (cloud sync):</strong> Bewaard totdat je je account verwijdert. <strong>Firebase Analytics:</strong> Gebeurtenisdata wordt door Google standaard maximaal 14 maanden bewaard. <strong>Firebase Crashlytics:</strong> Crashrapporten worden door Google 90 dagen bewaard. <strong>Push-tokens (FCM):</strong> Bewaard totdat je meldingen uitschakelt of de app verwijdert. <strong>Lokale apparaatgegevens:</strong> Bewaard totdat je de app verwijdert.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 14: CHILDREN -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">14. Children's privacy</span>
+                <span class="nl">14. Privacy van minderjarigen</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Rendementje is not directed at children under 16. If you are under 16, please do not create an account or use the cloud sync features. We do not knowingly collect personal data from children under 16. If we become aware that we have done so, we will delete that data promptly.</span>
+                <span class="nl">Rendementje is niet gericht op kinderen onder de 16 jaar. Als je jonger dan 16 bent, maak dan geen account aan en gebruik de cloud-synchronisatiefuncties niet. We verzamelen bewust geen persoonsgegevens van kinderen onder de 16 jaar. Als we hiervan op de hoogte raken, verwijderen we die gegevens onmiddellijk.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 15: CHANGES -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">15. Changes to this policy</span>
+                <span class="nl">15. Wijzigingen in dit beleid</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Material changes will be reflected by updating the "Last updated" date at the top of this page. If a change significantly affects your rights (e.g., a new category of personal data collected), we will also post a notice in the app.</span>
+                <span class="nl">Wezenlijke wijzigingen worden doorgevoerd door de datum "Laatst bijgewerkt" bovenaan deze pagina bij te werken. Als een wijziging significant van invloed is op je rechten (bijv. een nieuwe categorie persoonsgegevens), plaatsen we ook een melding in de app.</span>
+            </p>
+        </section>
+
+        <!-- SECTION 16: CONTACT -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+                <span class="en">16. Contact</span>
+                <span class="nl">16. Contact</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed">
+                <span class="en">Privacy questions or requests: <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. We aim to respond within 30 days. For unresolved complaints, contact the <strong>Autoriteit Persoonsgegevens</strong> at <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener" class="text-brand underline">autoriteitpersoonsgegevens.nl</a>.</span>
+                <span class="nl">Privacyvragen of -verzoeken: <a href="mailto:dehaasjulian@gmail.com" class="text-brand underline">dehaasjulian@gmail.com</a>. We streven naar een reactie binnen 30 dagen. Voor onopgeloste klachten kun je terecht bij de <strong>Autoriteit Persoonsgegevens</strong> op <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener" class="text-brand underline">autoriteitpersoonsgegevens.nl</a>.</span>
+            </p>
+        </section>
+
+        <div class="mt-12 pt-8 border-t border-gray-100 text-center">
+            <a href="index.html" class="text-brand font-semibold hover:underline">
+                <span class="en">← Back to Rendementje</span>
+                <span class="nl">← Terug naar Rendementje</span>
             </a>
         </div>
+
     </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-gray-100 py-10 mt-10">
+        <div class="max-w-4xl mx-auto px-6 text-center text-gray-500 text-sm">
+            <p class="mb-4">&copy; 2026 Rendementje. <span class="en">All rights reserved.</span><span class="nl">Alle rechten voorbehouden.</span></p>
+            <div class="flex justify-center space-x-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Privacy Policy</span><span class="nl">Privacybeleid</span>
+                </a>
+                <a href="terms.html" class="text-gray-400 hover:text-brand transition underline underline-offset-4 decoration-gray-200">
+                    <span class="en">Terms of Service</span><span class="nl">Voorwaarden</span>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function toggleLanguage() {
             document.body.classList.toggle('show-dutch');
-            const isDutch = document.body.classList.contains('show-dutch');
-            localStorage.setItem('preferredLang', isDutch ? 'nl' : 'en');
+            localStorage.setItem('preferredLang', document.body.classList.contains('show-dutch') ? 'nl' : 'en');
         }
-
         (function() {
-            const savedLang = localStorage.getItem('preferredLang');
-            const browserLang = navigator.language || navigator.userLanguage;
-            if (savedLang === 'nl' || (!savedLang && browserLang.startsWith('nl'))) {
+            var saved = localStorage.getItem('preferredLang');
+            var browser = navigator.language || navigator.userLanguage;
+            if (saved === 'nl' || (!saved && browser.startsWith('nl'))) {
                 document.body.classList.add('show-dutch');
             }
         })();
